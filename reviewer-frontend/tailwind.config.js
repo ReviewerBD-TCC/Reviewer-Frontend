@@ -8,19 +8,19 @@ export default {
   ],
   theme: {
     extend: {
-    //   colors: {
-    //     'bosch-white': '#FFFFFF',
-    //     'bosch-black': '#000000',
-    //     'bosch-gray-50': '#71767C',
-    //     'bosch-red-50': '#ED0007',
-    //     'bosch-purple-40': '#9E2896',
-    //     'bosch-blue-50': '#007BC0',
-    //     'bosch-turquoise-50': '#18837E',
-    //     'bosch-green-50': '#00884A',
-    //     'bosch-yellow-85': '#FFCF00',
+      colors: {
+        'bosch-white': '#FFFFFF',
+        'bosch-black': '#000000',
+        'bosch-gray-50': '#71767C',
+        'bosch-red-50': '#ED0007',
+        'bosch-purple-40': '#9E2896',
+        'bosch-blue-50': '#007BC0',
+        'bosch-turquoise-50': '#18837E',
+        'bosch-green-50': '#00884A',
+        'bosch-yellow-85': '#FFCF00',
       }
     },
   
   plugins: [],
 }
-
+}
