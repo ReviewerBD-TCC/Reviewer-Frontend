@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Menu from './pages/Menu/Menu'
 import './index.css'
+import Indication from './pages/Indication/Indication'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Menu/>
+    <Indication/>
   </React.StrictMode>,
 )
