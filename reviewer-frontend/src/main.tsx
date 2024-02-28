@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Register from './pages/Register/Register'
-import Indication from './pages/Indicacation/Indication'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routers'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Indication/>
+    <RouterProvider router={router}/>
   </React.StrictMode>
 )

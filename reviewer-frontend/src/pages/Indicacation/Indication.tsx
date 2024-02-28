@@ -5,15 +5,15 @@ function Indication() {
   return (
     <>
       <Header/>
-        <div className={`bg-[#D0D0D0] w-full h-full overflow-hidden flex justify-center items-center`}>
+        <div className={`bg-[#D0D0D0] w-full flex justify-center items-center`}>
           <div className="bg-bosch-white h-screen w-[90%] flex items-center justify-center">
-            <div className="w-[1234px] h-[729px] flex flex-col justify-center gap-20">
-              <div className="bottom-">
+            <div className="w-[80%] h-auto flex flex-col justify-center gap-10">
+              <div className="flex flex-col gap-2 mb-10">
                 <h1 className="font-bold text-4xl">Olá, Santos, Keven.</h1>
-                <p className="font-bold ">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
+                <p className="font-regular text-xs">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               </div>
               <SparkSearchBar inputs="{&quot;placeholder&quot;:&quot;Digite o nome do colaborador&quot;,&quot;label&quot;:&quot;Nome&quot;}"/>
-              <div className="flex justify-end ">
+              <div className="flex justify-end mt-20 ">
                 <SparkButton text="Enviar" type="submit" customWidth="8rem" />
               </div>
             </div>
