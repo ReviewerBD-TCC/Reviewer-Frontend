@@ -17,7 +17,7 @@ function Cadastrar() {
       <div className="bg-bosch-white h-screen w-[90%] flex items-center justify-center">
         <div className="w-[1234px] h-[729px] flex flex-col justify-center items-center gap-8">
             <div className="w-[50%] flex flex-col justify-center items-start">
-                <h1 className="font-bold text-4xl text-start w-[50%] ">Cadastro</h1>
+                <h1 className="font-bold text-4xl text-start w-[50%] ">Cadastro de colaborador</h1>
                 <h2 className="text-start w-[60%] text-xl">Adicione um colaborador ao seu time</h2>
             </div>
             <div className="w-[50%] flex flex-col justify-center gap-6">
