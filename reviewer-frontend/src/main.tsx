@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Cadastro from './pages/Cadastro/Cadastro'
+import Register from './pages/Register/Register'
+import Indication from './pages/Indicacation/Indication'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Cadastro/>
+    <Indication/>
   </React.StrictMode>
 )
