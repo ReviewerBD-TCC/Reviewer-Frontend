@@ -1,6 +1,6 @@
 import { SparkButton, SparkSearchBar } from "@bosch-web-dds/spark-ui-react";
 
-function Bars (){
+function Indicar (){
   return (
     <div className={`bg-[#D0D0D0] w-full h-full overflow-hidden flex justify-center items-center`}>
       <div className="bg-bosch-white h-screen w-[90%] flex items-center justify-center">
@@ -19,4 +19,4 @@ function Bars (){
   );
 };
 
-export default Bars;
+export default Indicar;
