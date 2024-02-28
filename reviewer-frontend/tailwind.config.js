@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+        'login-background': "url('/src/assets/images/Login-Background.jpg')"
+      },
       colors: {
         'bosch-white': '#FFFFFF',
         'bosch-black': '#000000',
