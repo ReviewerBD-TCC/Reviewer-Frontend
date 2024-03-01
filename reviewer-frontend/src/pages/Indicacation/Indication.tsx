@@ -17,8 +17,7 @@ function Indication() {
                 <p className="font-regular text-xs">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               </div>
               <SparkSearchBar
-                inputs={{ "placeholder": "Digite o nome do colaborador", "label": "Nome" }}
-                onClick={() => {
+                inputs={{ "placeholder": "Digite o nome do colaborador", "label": "Nome" }}  whenSearch={() => {
                   setShowNotify(true);
                 }}
               />
