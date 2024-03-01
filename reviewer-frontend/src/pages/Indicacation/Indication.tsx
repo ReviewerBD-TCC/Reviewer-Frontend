@@ -14,7 +14,7 @@ function Indication() {
             <div className="w-[80%] h-auto flex flex-col justify-center gap-10">
               <div className="flex flex-col gap-2 mb-10">
                 <h1 className="font-bold text-4xl">Olá, Santos, Keven.</h1>
-                <p className="font-regular text-xs">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
+                <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               </div>
               <SparkSearchBar
                 inputs={{ "placeholder": "Digite o nome do colaborador", "label": "Nome" }}  whenSearch={() => {
