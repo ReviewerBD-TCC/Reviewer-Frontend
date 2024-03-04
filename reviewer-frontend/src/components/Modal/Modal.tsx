@@ -18,7 +18,7 @@ function Modal(props: ModalProps) {
         <>{props.isOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={props.toggle}>
                 <div className="flex justify-center items-center bg-black bg-opacity-40 w-full h-full ">
-                    <div className="flex bg-white w-[50%] h-[55%] rounded" onClick={(e)=>e.stopPropagation()}>
+                    <div className="flex bg-white w-[60%] 2xl:h-[60%] md:h-[75%]" onClick={(e)=>e.stopPropagation()}>
                         {props.children}
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
@@ -32,7 +32,7 @@ function Modal(props: ModalProps) {
                             <div className="w-[40%]">
                                 <SparkDropdown whenChange={()=>{}} label="Tipo da questão" options={dropdownOptions}/>
                             </div>
-                            <div className="flex items-end justify-end">
+                            <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Cancelar" pallete="secondary" onClick={props.toggle}/>
                                 <SparkButton text="Adicionar" onClick={props.toggle}/>
                             </div> 
