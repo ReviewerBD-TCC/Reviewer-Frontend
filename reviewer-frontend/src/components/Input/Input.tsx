@@ -6,8 +6,9 @@ interface InputProps {
 
 const Input: React.FC<InputProps> = () => {
   return (
-        <div className='bg-[#D0D4D8] w-[570px] h-[40px] border-2'>
-            <Question title="Primeira questão" isActive="false" />
+        <div className='bg-[#D0D4D8]  w-[100%] h-[40px] border-b-[1px] border-black'>
+            <Question title='Lorem ipsum dolor sit amet. Eos quia obcaecati aut totam provident 
+            sit totam obcaecati aut esse expedita ut numquam incidunt. ' isActive="false" />
         </div>
   )
 }
