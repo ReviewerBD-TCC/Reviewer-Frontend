@@ -13,11 +13,11 @@ const Question: React.FC<QuestionProps> = (props) => {
 
 
     return (
-        <div className='m-2 flex justify-between'>
+        <div className='p-2 flex justify-between items-center'>
             <button onClick={toggle}>
                 <h1>{props.title}</h1>
             </button>
-            <Modal isOpen={isOpen} toggle={toggle}/>
+            <Modal title='Editor de pergunta' isOpen={isOpen} toggle={toggle}/>
             <div>
                 <SparkToggle guid="spark-toggle-right-label" selected={props.isActive} disabled={false} whenChange={()=>{}}/>
             </div>
