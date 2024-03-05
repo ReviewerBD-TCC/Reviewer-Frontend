@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
       element: <QuestionDb/>
     },
     {
-      path: "/create/form",
+      path: "/createform",
       element: <CreateForms/>
     }
   ]);

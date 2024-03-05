@@ -16,15 +16,15 @@ function CreateForms() {
                     <div className="flex justify-end">
                         <SparkButton text="Personalizar"/>
                     </div>
-                    <div className="flex w-[100%] justify-between items-center">
+                    <div className="flex w-full justify-between items-center">
                         <div className="w-[70%]">
-                            <SparkTextfield label="Título do feedback" placeholder="Feedback" />
+                            <SparkTextfield label="Títu=lo do feedback" placeholder="Feedback" />
                         </div>
                         <div className="w-[20%]">
                             <SparkDropdown label="Ano" options={yearsOptions} whenChange={()=>{}}/>
                         </div>
                     </div>
-                    <div className="bg-[#f1f1f1]">
+                    <div className="bg-[#f1f1f1] w-[95%] flex justify-center items-center  ">
                         <SparkDropdown label="Pergunta" options={yearsOptions} whenChange={()=>{}}/>
                     </div>
                     <div className="">
