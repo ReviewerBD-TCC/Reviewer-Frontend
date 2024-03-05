@@ -11,7 +11,7 @@ interface ModalProps{
 function Modal(props: ModalProps) {
 
     const dropdownOptions =
-     '[{"label":"Multipla escolha","value":"1"},{"label":"Dissertativa","value":"2"}]'
+     '[{"label":"Dissertativa","value":"2"}]'
 
 
     return (
@@ -28,9 +28,6 @@ function Modal(props: ModalProps) {
                             <div className="flex flex-col gap-4">
                                 <SparkTextfield placeholder="Digite a pergunta em português"/>
                                 <SparkTextfield placeholder="Digite a pergunta em inglês"/>
-                            </div>
-                            <div className="w-[40%]">
-                                <SparkDropdown whenChange={()=>{}} label="Tipo da questão" options={dropdownOptions}/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Cancelar" pallete="secondary" onClick={props.toggle}/>
