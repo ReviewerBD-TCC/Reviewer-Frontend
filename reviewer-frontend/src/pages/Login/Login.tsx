@@ -12,8 +12,8 @@ export const Login = () => {
   console.log(password)
   
   return (
-    <React.StrictMode>
-      <form className="w-full h-screen bg-login-background bg-no-repeat bg-center bg-cover flex justify-center flex-col items-center" >
+    
+      <div className="w-full h-screen bg-login-background bg-no-repeat bg-center bg-cover flex justify-center flex-col items-center" >
         <div className='top-0 absolute'>
           <img src={Supergraphic} alt=""  />
           <img src={Logo} width={150}/>
@@ -47,8 +47,8 @@ export const Login = () => {
           </div>
          
         </div>
-      </form>
-    </React.StrictMode>
+      </div>
+    
     
   )
 }
