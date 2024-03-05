@@ -1,7 +1,11 @@
 import Header from "../../components/Header/Header"
-import { SparkButton, SparkSearchBar } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkSearchBar, SparkNotification } from "@bosch-web-dds/spark-ui-react";
+import { useState } from "react";
 
 function Indication() {
+
+  const [showNotify, setShowNotify] = useState(false);
+
   return (
     <>
       <Header/>
@@ -10,9 +14,14 @@ function Indication() {
             <div className="w-[80%] h-auto flex flex-col justify-center gap-10">
               <div className="flex flex-col gap-2 mb-10">
                 <h1 className="font-bold text-4xl">Olá, Santos, Keven.</h1>
-                <p className="font-regular text-xs">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
+                <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               </div>
-              <SparkSearchBar inputs="{&quot;placeholder&quot;:&quot;Digite o nome do colaborador&quot;,&quot;label&quot;:&quot;Nome&quot;}"/>
+              <SparkSearchBar
+                inputs={{ "placeholder": "Digite o nome do colaborador", "label": "Nome" }}  whenSearch={() => {
+                  setShowNotify(true);
+                }}
+              />
+              {showNotify && <SparkNotification type="bar" variant="error" ><p>Algo deu errado, tente novamente!</p></SparkNotification>}
               <div className="flex justify-end mt-20 ">
                 <SparkButton text="Enviar" type="submit" customWidth="8rem" />
               </div>
