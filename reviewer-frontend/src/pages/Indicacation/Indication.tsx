@@ -4,15 +4,12 @@ import { useState } from "react";
 
 function Indication() {
   const [showNotify, setShowNotify] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const [showChip, setShowChip] = useState(false);
-
   const [chips, setChips] = useState<string[]>([]);
 
 
   const handleSearch = (value: string) => {
     if (value !== '') {
-      setInputValue(value);
       console.log(`${value}`);    
       setChips(i => [...i, value])
       console.log(chips)
@@ -42,7 +39,7 @@ function Indication() {
                 whenSearch={(value) => handleSearch(value.toString())}
 
               />
-              <div className="flex gap-4">
+              <div className="flex gap-4 overflow-auto">
                 {showChip && chips.map((item)=> <SparkChip content={item} whenClose={()=>{}} selected />)  }
               </div>
               {showNotify && <SparkNotification type="bar" variant="error" ><p>Algo deu errado, tente novamente!</p></SparkNotification>}
