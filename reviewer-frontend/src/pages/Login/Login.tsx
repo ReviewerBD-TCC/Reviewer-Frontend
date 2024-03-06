@@ -18,7 +18,7 @@ const Login = () => {
           <img src={Supergraphic} alt=""/>
           <img src={Logo} width={150}/>
         </div>
-        <form className='w-[24rem] h-[30rem] bg-bosch-white flex flex-col justify-center items-center'>
+        <form className='w-[24rem] h-[30rem] bg-boschWhite flex flex-col justify-center items-center'>
           <div className='w-[20rem]'>
             <h2 className='font-bold text-3xl'>Login</h2>
           </div>
