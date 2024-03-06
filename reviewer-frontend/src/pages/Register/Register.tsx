@@ -1,7 +1,37 @@
+import { useForm} from "react-hook-form"
+
 import Header from "../../components/Header/Header"
 import { SparkTextfield, SparkButton, SparkToggle  } from "@bosch-web-dds/spark-ui-react"
 
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  user: z.string().min(6, 'O usuário precisa ter pelo menos 6 digitos'),
+  name: z.string(),
+  email: z.string().email("Por favor, informe um E-mail inválido"),
+  department: z.string(),
+  manager: z.string(),
+  password: z.string(),
+  role: z.enum(['admin', 'user'])
+})
+
+type FormProps = z.infer<typeof schema>;
+
 function Register() {
+
+  const { handleSubmit, register, formState: {errors} } = useForm<FormProps>({
+    mode: 'all',
+    reValidateMode: 'onChange',
+    resolver: zodResolver(schema) 
+  });
+
+  console.log(errors)
+
+  const handleForm = (props: FormProps) => {
+    console.log({props})
+  }
+
   return (
     <>
       <Header/>
@@ -13,24 +43,45 @@ function Register() {
                     <p className="text-start w-full text-xl">Adicione um colaborador ao seu time</p>
                 </div>
                 <div className="w-[50%] flex flex-col justify-center gap-6">
-                    <SparkTextfield type="text" label="Usuário" placeholder="Nome de usuário"/>
-                    <SparkTextfield type="text" label="Nome" placeholder="Nome completo do colaborador"/>
-                    <SparkTextfield type="text" label="E-mail" placeholder="E-mail do colaborador"/>
-                    <SparkTextfield type="text" label="Departamento" placeholder="Departamento do colaborador"/>
-                    <SparkTextfield type="text" label="Gestor" placeholder="Gestor do colaborador"/>
-                    <SparkTextfield type="password" label="Senha" placeholder="Senha do colaborador"/>
-                    
-                    {/*<SparkDropdown guid="dropdown-id" label="" selectedOption="" whenChange={(newValue) => {setSelectedOption(newValue)}}
-                    options={options}/>*/}
+                    <SparkTextfield type="text"
+                      label="Usuário"
+                      placeholder="Nome de usuário"
+                      {...register('user')}
+                    />
+                    <SparkTextfield type="text"
+                      label="Nome" 
+                      placeholder="Nome completo do colaborador" 
+                      {...register('name')}
+                    />
+                    <SparkTextfield type="text" 
+                      label="E-mail" 
+                      placeholder="E-mail do colaborador" 
+                      {...register('email')}
+                    />
+                    <SparkTextfield type="text" 
+                      label="Departamento" 
+                      placeholder="Departamento do colaborador" 
+                      {...register('department')}
+                    />
+                    <SparkTextfield type="text" 
+                      label="Gestor" 
+                      placeholder="Gestor do colaborador"
+                      {...register('manager')}
+                    />
+                    <SparkTextfield type="password" 
+                      label="Senha" 
+                      placeholder="Senha do colaborador" 
+                      {...register('password')}
+                    />
                 </div>
                 <div className="w-[50%] flex flex-col gap-8">
                     <SparkToggle guid="spark-toggle-right-label" selected={false} disabled={false} rightLabel="Usuário administrador" whenChange={()=>{}} />
-                    <SparkButton text="Cadastrar" customWidth="15rem"/>
+                    <SparkButton text="Cadastrar" customWidth="15rem" type="submit" onClick={handleSubmit(handleForm)}/>
                 </div>
+              </div>  
             </div>
           </div>
-        </div>
-      </>
+    </>
   )
-  }
+}
 export default Register
