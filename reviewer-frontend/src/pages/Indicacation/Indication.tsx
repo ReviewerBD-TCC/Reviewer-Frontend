@@ -14,10 +14,13 @@ function Indication() {
     }
   }
 
-  const removeChip = (item: string)=>{
-    const valueChip = chips.indexOf(item)
-    chips.splice(valueChip)
-    setShowChip(false);
+  const removeChip = (item: string) => {
+    const valueChip = chips.indexOf(item);
+    console.log(valueChip);
+    if (valueChip > -1) {
+        chips.splice(valueChip, 1);
+        setShowChip(false);
+    }
   }
 
   if(showChip==false){
@@ -39,7 +42,7 @@ function Indication() {
   return (
     <>
       <Header/>
-        <div className={`bg-[#D0D0D0] w-full flex justify-center items-center`}>
+        <div className={`bg-[#D0D0D0] w-full h-screen flex justify-center items-center`}>
           <div className="bg-bosch-white h-screen w-[90%] flex items-center justify-center">
             <div className="w-[80%] h-auto flex flex-col justify-center gap-10">
               <div className="flex flex-col gap-2 mb-10">
@@ -53,7 +56,7 @@ function Indication() {
               />
               <div className="flex gap-4 overflow-auto">
                 {chips.map((item)=>
-                 <SparkChip content={item} onClick={removeChip} selected close={showChip} />)}
+                 <SparkChip content={item} onClick={()=>removeChip(item)} selected close={showChip} />)}
               </div>
               {showNotify && <SparkNotification type="bar" variant="error" ><p>Algo deu errado, tente novamente!</p></SparkNotification>}
               <div className="flex justify-end mt-20 ">
