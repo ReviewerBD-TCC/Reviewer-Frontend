@@ -1,10 +1,34 @@
 import Header from "../../components/Header/Header"
-import { SparkButton, SparkSearchBar, SparkNotification } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkSearchBar, SparkNotification, SparkChip } from "@bosch-web-dds/spark-ui-react";
 import { useState } from "react";
 
 function Indication() {
-
   const [showNotify, setShowNotify] = useState(false);
+  const [showChip, setShowChip] = useState(false);
+  const [chips, setChips] = useState<string[]>([]);
+
+  const addChip = (value: string)=>{
+    if(chips.length < 5){
+      setChips(i => [...i, value])
+      
+    }
+  }
+
+  const handleSearch = (value: string) => {
+    if (value !== '') {
+      console.log(`${value}`);    
+      addChip(value)
+      console.log(chips)
+      setShowChip(true);
+      setShowNotify(false);
+    } else {
+      setShowNotify(true);
+      setShowChip(false);
+    }
+  };
+
+
+
 
   return (
     <>
@@ -17,10 +41,13 @@ function Indication() {
                 <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               </div>
               <SparkSearchBar
-                inputs={{ "placeholder": "Digite o nome do colaborador", "label": "Nome" }}  whenSearch={() => {
-                  setShowNotify(true);
-                }}
+                inputs={{ "placeholder": "Digite o nome do colaborador", "label": "Nome" }}
+                whenSearch={(value) => handleSearch(value.toString())}
+
               />
+              <div className="flex gap-4 overflow-auto">
+                {showChip && chips.map((item)=> <SparkChip content={item} whenClose={()=>{}} selected onClick={()=>setShowChip(false)} />)  }
+              </div>
               {showNotify && <SparkNotification type="bar" variant="error" ><p>Algo deu errado, tente novamente!</p></SparkNotification>}
               <div className="flex justify-end mt-20 ">
                 <SparkButton text="Enviar" type="submit" customWidth="8rem" />
@@ -29,6 +56,6 @@ function Indication() {
           </div>
         </div>
     </>
-)}
-
+)
+};
 export default Indication
