@@ -4,26 +4,32 @@ import { useState } from "react";
 
 function Indication() {
   const [showNotify, setShowNotify] = useState(false);
-  const [showChip, setShowChip] = useState(false);
+  const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<string[]>([]);
 
   const addChip = (value: string)=>{
     if(chips.length < 5){
       setChips(i => [...i, value])
-      
+      setShowChip(true);
     }
+  }
+
+  const removeChip = (item: string)=>{
+    const valueChip = chips.indexOf(item)
+    chips.splice(valueChip)
+    setShowChip(false);
+  }
+
+  if(showChip==false){
+    setShowChip(true)
   }
 
   const handleSearch = (value: string) => {
     if (value !== '') {
-      console.log(`${value}`);    
       addChip(value)
-      console.log(chips)
-      setShowChip(true);
       setShowNotify(false);
     } else {
       setShowNotify(true);
-      setShowChip(false);
     }
   };
 
@@ -46,7 +52,8 @@ function Indication() {
 
               />
               <div className="flex gap-4 overflow-auto">
-                {showChip && chips.map((item)=> <SparkChip content={item} whenClose={()=>{}} selected onClick={()=>setShowChip(false)} />)  }
+                {chips.map((item)=>
+                 <SparkChip content={item} onClick={removeChip} selected close={showChip} />)}
               </div>
               {showNotify && <SparkNotification type="bar" variant="error" ><p>Algo deu errado, tente novamente!</p></SparkNotification>}
               <div className="flex justify-end mt-20 ">
