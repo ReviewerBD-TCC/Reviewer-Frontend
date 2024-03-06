@@ -3,7 +3,7 @@ import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import React, { useState } from 'react'
 
-export const Login = () => {
+const Login = () => {
 
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
@@ -52,3 +52,4 @@ export const Login = () => {
   
   )
 }
+export default Login

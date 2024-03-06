@@ -10,7 +10,7 @@ function CreateForms() {
     <div className="h-screen">
         <Header/>
         <div className={`bg-[#D0D0D0] w-full overflow-hidden flex justify-center items-center`}>
-            <div className="bg-bosch-white w-[90%] h-screen flex items-center justify-center">
+            <div className="bg-boschWhite w-[90%] h-screen flex items-center justify-center">
                 <div className="w-[90%]  flex flex-col gap-12">
                     <h1 className="text-3xl font-bold">Criação de formulário</h1>
                     <div className="flex justify-end">

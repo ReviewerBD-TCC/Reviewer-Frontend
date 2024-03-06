@@ -6,7 +6,7 @@ function Register() {
     <>
       <Header/>
         <div className={`bg-[#D0D0D0] w-full h-full overflow-hidden flex justify-center items-center`}>
-          <div className="bg-bosch-white w-[90%] h-auto flex items-center justify-center">
+          <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
             <div className="w-[1234px] h-[729px] flex flex-col justify-center items-center gap-8">
                 <div className="w-[50%] flex flex-col justify-center items-start">
                     <h1 className="font-bold text-4xl text-start w-full ">Cadastro de colaborador</h1>

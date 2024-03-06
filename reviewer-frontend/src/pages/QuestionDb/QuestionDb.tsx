@@ -13,7 +13,7 @@ function QuestionDb() {
     <div className="h-screen">
         <Header/>
         <div className={`bg-[#D0D0D0] w-full overflow-hidden flex justify-center items-center`}>
-          <div className="bg-bosch-white w-[90%] h-screen flex items-center justify-center">
+          <div className="bg-boschWhite w-[90%] h-screen flex items-center justify-center">
             <div className="w-[1234px] h-[729px] flex flex-col justify-center items-center gap-8">
                 <div className="2xl:w-[100%] flex flex-col justify-center items-start gap-2 lg:w-[90%]">
                     <h1 className="font-bold text-4xl text-start w-full ">Banco de perguntas</h1>
