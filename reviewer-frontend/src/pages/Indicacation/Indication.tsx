@@ -7,11 +7,17 @@ function Indication() {
   const [showChip, setShowChip] = useState(false);
   const [chips, setChips] = useState<string[]>([]);
 
+  const addChip = (value: string)=>{
+    if(chips.length < 5){
+      setChips(i => [...i, value])
+      
+    }
+  }
 
   const handleSearch = (value: string) => {
     if (value !== '') {
       console.log(`${value}`);    
-      setChips(i => [...i, value])
+      addChip(value)
       console.log(chips)
       setShowChip(true);
       setShowNotify(false);
@@ -40,7 +46,7 @@ function Indication() {
 
               />
               <div className="flex gap-4 overflow-auto">
-                {showChip && chips.map((item)=> <SparkChip content={item} whenClose={()=>{}} selected />)  }
+                {showChip && chips.map((item)=> <SparkChip content={item} whenClose={()=>{}} selected onClick={()=>setShowChip(false)} />)  }
               </div>
               {showNotify && <SparkNotification type="bar" variant="error" ><p>Algo deu errado, tente novamente!</p></SparkNotification>}
               <div className="flex justify-end mt-20 ">
