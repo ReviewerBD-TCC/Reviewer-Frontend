@@ -37,9 +37,8 @@ const Login = () => {
               label="Senha" 
               placeholder="**********" 
               value={password} 
-              whenChange={(e: React.ChangeEvent<HTMLInputElement>)=> {const passwordUser = e.target.value; setPassword(passwordUser)}}
-              
-              />
+              whenChange={(e: React.ChangeEvent<HTMLInputElement>)=> {const passwordUser = e.target.value; 
+              setPassword(passwordUser)}}/>
             <SparkLink type="primary" href="" target="" label="Esqueceu sua senha?" icon-position="" size="6xl" />
             <p>{email}</p>
           </div>
