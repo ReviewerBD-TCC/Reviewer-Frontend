@@ -12,15 +12,15 @@ export default {
         'login-background': "url('/src/assets/images/Login-Background.jpg')"
       },
       colors: {
-        'bosch-white': '#FFFFFF',
-        'bosch-black': '#000000',
-        'bosch-gray-50': '#71767C',
-        'bosch-red-50': '#ED0007',
-        'bosch-purple-40': '#9E2896',
-        'bosch-blue-50': '#007BC0',
-        'bosch-turquoise-50': '#18837E',
-        'bosch-green-50': '#00884A',
-        'bosch-yellow-85': '#FFCF00',
+        boschWhite: '#FFFFFF',
+        boschBlack: '#000',
+        boschGray: '#71767C',
+        boschRed: '#ED0007',
+        boschPurple: '#9E2896',
+        boschBlue: '#007BC0',
+        boschTurquoise: '#18837E',
+        boschGreen: '#00884A',
+        boschYellow: '#FFCF00',
       }
     },
   
