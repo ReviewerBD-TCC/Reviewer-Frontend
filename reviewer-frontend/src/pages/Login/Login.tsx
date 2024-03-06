@@ -18,7 +18,7 @@ export const Login = () => {
           <img src={Supergraphic} alt=""  />
           <img src={Logo} width={150}/>
         </div>
-        <div className='w-[24rem] h-[30rem] bg-bosch-white flex flex-col justify-center items-center'>
+        <form className='w-[24rem] h-[30rem] bg-bosch-white flex flex-col justify-center items-center'>
           <div className='w-[20rem]'>
             <h2 className='font-bold text-3xl'>Login</h2>
           </div>
@@ -37,18 +37,17 @@ export const Login = () => {
               label="Senha" 
               placeholder="**********" 
               value={password} 
-              whenChange={(e: React.ChangeEvent<HTMLInputElement>)=> {const passwordUser = e.target.value; setPassword(passwordUser)}}/>
+              whenChange={(e: React.ChangeEvent<HTMLInputElement>)=> {const passwordUser = e.target.value; setPassword(passwordUser)}}
+              
+              />
             <SparkLink type="primary" href="" target="" label="Esqueceu sua senha?" icon-position="" size="6xl" />
             <p>{email}</p>
           </div>
           
           <div className='flex w-full h-[25%] justify-center items-end'>
-            <SparkButton type="button" text="Login" pallete="primary" custom-width="20rem" />
+            <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem" />
           </div>
-         
-        </div>
+        </form>
       </div>
-    
-    
   )
 }
