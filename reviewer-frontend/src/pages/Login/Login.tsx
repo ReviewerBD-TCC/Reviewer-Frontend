@@ -6,6 +6,12 @@ import Supergraphic from '../../assets/images/Supergraphic.png'
 import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import React, { useState } from 'react'
+// import { useForm } from 'react-hook-form'
+
+// interface UserData{
+//   email:string
+//   password:string
+// }
 
 function Login() {
 
@@ -15,7 +21,7 @@ function Login() {
   async function handleLogin() {
     try {
       const response: AxiosResponse = await api.post('auth/login', {
-        email: email,
+        email:email,
         password: password,
       },{
         headers: {
