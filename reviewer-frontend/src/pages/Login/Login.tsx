@@ -7,17 +7,23 @@ import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import React, { useState } from 'react'
 
-const Login: React.FC = () => {
+function Login() {
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   async function handleLogin() {
     try {
       const response: AxiosResponse = await api.post('auth/login', {
-
         email: email,
         password: password,
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
       });
+
       console.log(response);
     } catch (error) {
       console.error(error);
