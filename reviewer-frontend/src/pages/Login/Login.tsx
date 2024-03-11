@@ -1,18 +1,40 @@
+import api from '../../services/Api/Api'
+
+import { AxiosResponse } from 'axios'
+
 import Supergraphic from '../../assets/images/Supergraphic.png'
 import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import React, { useState } from 'react'
+// import { useForm } from 'react-hook-form'
 
-const Login = () => {
+// interface UserData{
+//   email:string
+//   password:string
+// }
 
-  const [email, setEmail] = useState<string>()
-  const [password, setPassword] = useState<string>()
-  
-  console.log(email);
-  console.log(password)
+function Login() {
 
-  
-  
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  async function handleLogin() {
+    try {
+      const response: AxiosResponse = await api.post('auth/login', {
+        email:email,
+        password: password,
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   return (
     
@@ -40,14 +62,14 @@ const Login = () => {
               label="Senha" 
               placeholder="**********" 
               value={password} 
-              whenChange={(e: React.ChangeEvent<HTMLInputElement>)=> {const passwordUser = e.target.value; 
-              setPassword(passwordUser)}}/>
+              whenChange={(e: React.ChangeEvent<HTMLInputElement>)=> {const passwordUser = e.target.value; setPassword(passwordUser)}}
+              
+              />
             <SparkLink type="primary" href="" target="" label="Esqueceu sua senha?" icon-position="" size="6xl" />
-            <p>{email}</p>
           </div>
           
           <div className='flex w-full h-[25%] justify-center items-end'>
-            <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem" />
+            <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem" onClick={handleLogin} />
           </div>
         </form>
       </div>
