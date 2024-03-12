@@ -11,75 +11,90 @@ import { AxiosResponse } from 'axios'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import  z  from 'zod'
-import { useEffect } from "react";
+import  z, { string }  from 'zod'
+import { useEffect, useState } from "react";
 
 
-const schema = z.object({
-    question: z.string(),
-    active: z.boolean().default(true),
-});
+// const schema = z.object({
+//     question: z.string(),
+//     active: z.boolean().default(true),
+// });
 
-type QuestionProps = z.infer<typeof schema>;
+// type QuestionProps = z.infer<typeof schema>;
 
-function QuestionDb() {
+interface QuestionProps{
+  question: string,
+  active: boolean
+}
 
-  const { isOpen, toggle } = useModal();
-
+function QuestionDb(props: QuestionProps) {
   
-const schema = z.object({
-  question: z.string(),
-  active: z.boolean().default(true),
-});
-
-type QuestionProps = z.infer<typeof schema>;
-
-function QuestionDb() {
   const { isOpen, toggle } = useModal();
 
-  const {
-    handleSubmit,
-    register,
-    formState: { isValid },
-  } = useForm<QuestionProps>({
-    defaultValues: { question: '', active: true },
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    resolver: zodResolver(schema),
-  });
+  // const {
+  //   formState: { defaultValues },
+  // } = useForm<QuestionProps>({
+  //   defaultValues: { question: '', active: true },
+  //   mode: 'onChange',
+  //   reValidateMode: 'onChange',
+  //   resolver: zodResolver(schema),
+  // });
 
-  const handleQuestion = async (props: QuestionProps) => {
-    try {
-      const response: AxiosResponse<QuestionProps> = await api.get('question', {
-        params: {
-          question: props.question,
-          active: props.active,
-        },
-      });
-      console.log(response.data.question);
-    } catch (error) {
-      console.error(error as Error);
-    }
-  };
+  // const handleQuestion = async (props: QuestionProps) => {
+  //   try {
+  //     const response: AxiosResponse<QuestionProps> = await api.get('question', {
+  //       params: {
+  //         question: props.question,
+  //         active: props.active,
+  //       },
+  //       headers: {
+  //         'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0BnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6NSwiZXhwIjoxNzEwMjY1ODQzfQ.YPltkQIsoNwstpkQalgoGCODiV5sM-i6wdfSXLzvWjs'
+  //       }
+  //     });
+  //       console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error as Error);
+  //   }
+  // };
+
+  const [responseList, setResponseList] = useState<QuestionProps[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response: AxiosResponse<QuestionProps> = await api.get('question', {
-          params: {
-            question: '',
-            active: true,
-          },
+          
+          headers: {
+          'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0BnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwMjc3ODQ4fQ.egFORZDViQtQJhUFr-qWuooKlDiB2DdPTfjm81gFOns'
+        }
+      }
+        );
+        const responseJson = response.data
+
+        responseJson.forEach((item: any) => {
+          console.log(item.question, item.active);
+          // setResponseList({
+          //   question: item.question,
+          //   active: item.active
+          // })
+          setResponseList(prevState => [
+            ...prevState, 
+            {question: item.question, active: item.active}
+          ])
         });
-        console.log(response.data.question);
+
+        
+        console.log('responselist', responseList)
+
+        console.log(responseJson);
       } catch (error) {
-        console.error(error as Error);
+        console.error(error);
       }
     };
 
     fetchData();
   }, []); 
-}
+
 
   return (
     <div className="h-screen">
@@ -95,7 +110,18 @@ function QuestionDb() {
                       </SparkNotification>
                     </div>
                     <div className="w-[100%]">
-                      <Input title="WADW" isActive={false} />
+                      {/* {responseList !== undefined && responseList.map((t: QuestionProps) => (
+                        <Input key={t.question} title={t.question} isActive={t.active} />
+                      ))} */}
+
+                        {
+                          //responseList !== undefined && 
+                          responseList.map((t: any) => (
+                          <Input key={t.question} title={t.question} isActive={t.active} /> 
+                        ))
+                      }
+
+                      {/* <Input title={props.question} isActive={props.active} /> */}
                     </div>
                 </div>
                 <div className="2xl:w-[100%] flex flex-col gap-8 justify-end items-end lg:w-[90%]">
