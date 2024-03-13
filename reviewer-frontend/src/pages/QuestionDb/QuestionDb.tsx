@@ -23,8 +23,10 @@ import { useEffect, useState } from "react";
 // type QuestionProps = z.infer<typeof schema>;
 
 interface QuestionProps{
-  question: string,
-  active: boolean
+  questionPt: string,
+  questionEn: string,
+  active: boolean,
+  id: number,
 }
 
 function QuestionDb(props: QuestionProps) {
@@ -39,7 +41,7 @@ function QuestionDb(props: QuestionProps) {
         const response: AxiosResponse<QuestionProps> = await api.get('question', {
           
           headers: {
-          'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwMzM5ODc4fQ.RDAR4XH32473KD6CCX-mGEEiMArvXCSVa-5ktxo_hAI'
+          'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwMzU1Njg2fQ.MOH-uiQnA2FL3xEltw5GUciHq-tiBJV0-JMjk8ma3_4'
         }
       }
         );
@@ -48,10 +50,10 @@ function QuestionDb(props: QuestionProps) {
         setResponseList([]);
 
         responseJson.forEach((item: any) => {
-          console.log(item.question, item.active);
+          console.log(item.id, item.questionPt, item.questionEn, item.active);
           setResponseList(prevState => [
             ...prevState, 
-            {question: item.question, active: item.active}
+            {id: item.id, questionPt: item.questionPt, questionEn: item.questionEn, active: item.active}
           ])
         });
 
@@ -83,14 +85,14 @@ function QuestionDb(props: QuestionProps) {
                     <div className="w-[100%] flex flex-col gap-4 ">
                       {
                         responseList.map((t: any, index: number) => (
-                          <Input key={`${t.question}_${t.active}_${index}`} title={t.question} isActive={t.active} /> 
+                          <Input key={t.id} titlePt={t.questionPt} titleEn={t.questionEn} isActive={t.active} id={t.id} /> 
                         ))
                       }
                     </div>
                 </div>
                 <div className="2xl:w-[100%] flex flex-col gap-8 justify-end items-end lg:w-[90%]">
-                    <SparkButton text="Adicionar pergunta" customWidth="12rem" onClick={()=>{}}/>
-                    <Modal title="Criação de pergunta" isOpen={isOpen} toggle={toggle}/>
+                    <SparkButton text="Adicionar pergunta" customWidth="12rem" onClick={toggle}/>
+                    <Modal title="Criação de pergunta" id={props.id} activeValue={props.active} titlePtValue={props.questionPt} titleEnValue={props.questionEn} isOpen={isOpen} toggle={toggle}/>
                 </div>
             </div>
           </div>

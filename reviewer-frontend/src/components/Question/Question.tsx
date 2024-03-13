@@ -3,8 +3,10 @@ import Modal from '../Modal/Modal';
 import useModal from '../../hooks/useModal';
 
 interface QuestionProps{
-    title: string;
+    titlePt: string;
+    titleEn: string;
     isActive: string;
+    id: number;
 }
 
 const Question: React.FC<QuestionProps> = (props) => {
@@ -14,9 +16,9 @@ const Question: React.FC<QuestionProps> = (props) => {
     return (
         <div className='p-2 flex justify-between items-center'>
             <button onClick={toggle}>
-                <h1>{props.title}</h1>
+                <h1>{props.titlePt}</h1>
             </button>
-            <Modal title='Editor de pergunta' titleValue={props.title} activeValue={props.isActive} isOpen={isOpen} toggle={toggle}/>
+            <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} activeValue={props.isActive} isOpen={isOpen} toggle={toggle}/>
             <div>
                 <SparkToggle guid="spark-toggle-right-label" selected={props.isActive} disabled={false} whenChange={()=>{}}/>
             </div>
