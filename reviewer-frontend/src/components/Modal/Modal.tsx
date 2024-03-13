@@ -2,13 +2,15 @@ import { SparkButton, SparkDropdown, SparkTextfield, SparkToggle } from "@bosch-
 import React, { ReactNode } from "react"
 
 interface ModalProps{
+    titleValue: string,
+    activeValue: boolean,
     title: string,
     children?: ReactNode;
     isOpen: boolean;
     toggle: () => void
 }
 
-function Modal(props: ModalProps) {
+const Modal:React.FC<ModalProps> = (props) => {
 
     const dropdownOptions =
      '[{"label":"Dissertativa","value":"2"}]'
@@ -23,11 +25,11 @@ function Modal(props: ModalProps) {
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
                             <div className="flex justify-end items-end">
-                                <SparkToggle whenChange={()=>{}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label"/>
+                                <SparkToggle whenChange={()=>{}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={props.activeValue}/>
                             </div>
                             <div className="flex flex-col gap-4">
-                                <SparkTextfield placeholder="Digite a pergunta em português"/>
-                                <SparkTextfield placeholder="Digite a pergunta em inglês"/>
+                                <SparkTextfield label="Português" value={props.titleValue} placeholder="Digite a pergunta em português"/>
+                                <SparkTextfield label="Inglês" value={props.titleValue} placeholder="Digite a pergunta em inglês"/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Cancelar" pallete="secondary" onClick={props.toggle}/>

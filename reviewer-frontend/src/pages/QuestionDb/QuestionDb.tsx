@@ -31,32 +31,6 @@ function QuestionDb(props: QuestionProps) {
   
   const { isOpen, toggle } = useModal();
 
-  // const {
-  //   formState: { defaultValues },
-  // } = useForm<QuestionProps>({
-  //   defaultValues: { question: '', active: true },
-  //   mode: 'onChange',
-  //   reValidateMode: 'onChange',
-  //   resolver: zodResolver(schema),
-  // });
-
-  // const handleQuestion = async (props: QuestionProps) => {
-  //   try {
-  //     const response: AxiosResponse<QuestionProps> = await api.get('question', {
-  //       params: {
-  //         question: props.question,
-  //         active: props.active,
-  //       },
-  //       headers: {
-  //         'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0BnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6NSwiZXhwIjoxNzEwMjY1ODQzfQ.YPltkQIsoNwstpkQalgoGCODiV5sM-i6wdfSXLzvWjs'
-  //       }
-  //     });
-  //       console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error as Error);
-  //   }
-  // };
-
   const [responseList, setResponseList] = useState<QuestionProps[]>([]);
 
   useEffect(() => {
@@ -65,18 +39,16 @@ function QuestionDb(props: QuestionProps) {
         const response: AxiosResponse<QuestionProps> = await api.get('question', {
           
           headers: {
-          'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0BnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwMjc3ODQ4fQ.egFORZDViQtQJhUFr-qWuooKlDiB2DdPTfjm81gFOns'
+          'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwMzM5ODc4fQ.RDAR4XH32473KD6CCX-mGEEiMArvXCSVa-5ktxo_hAI'
         }
       }
         );
         const responseJson = response.data
 
+        setResponseList([]);
+
         responseJson.forEach((item: any) => {
           console.log(item.question, item.active);
-          // setResponseList({
-          //   question: item.question,
-          //   active: item.active
-          // })
           setResponseList(prevState => [
             ...prevState, 
             {question: item.question, active: item.active}
@@ -86,7 +58,6 @@ function QuestionDb(props: QuestionProps) {
         
         console.log('responselist', responseList)
 
-        console.log(responseJson);
       } catch (error) {
         console.error(error);
       }
@@ -109,19 +80,12 @@ function QuestionDb(props: QuestionProps) {
                           <p>Estas são perguntas automáticas, é possível ativa-las ou desativa-las.</p>
                       </SparkNotification>
                     </div>
-                    <div className="w-[100%]">
-                      {/* {responseList !== undefined && responseList.map((t: QuestionProps) => (
-                        <Input key={t.question} title={t.question} isActive={t.active} />
-                      ))} */}
-
-                        {
-                          //responseList !== undefined && 
-                          responseList.map((t: any) => (
-                          <Input key={t.question} title={t.question} isActive={t.active} /> 
+                    <div className="w-[100%] flex flex-col gap-4 ">
+                      {
+                        responseList.map((t: any, index: number) => (
+                          <Input key={`${t.question}_${t.active}_${index}`} title={t.question} isActive={t.active} /> 
                         ))
                       }
-
-                      {/* <Input title={props.question} isActive={props.active} /> */}
                     </div>
                 </div>
                 <div className="2xl:w-[100%] flex flex-col gap-8 justify-end items-end lg:w-[90%]">
