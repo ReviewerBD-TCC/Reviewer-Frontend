@@ -2,7 +2,7 @@ import Header from "../../components/Header/Header"
 import { SparkButton, SparkNotification} from "@bosch-web-dds/spark-ui-react"
 import Input from "../../components/Input/Input"
 import useModal from "../../hooks/useModal";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal/ModalAdd";
 
 import api from "../../services/Api/Api";
 
@@ -12,7 +12,8 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z, { string }  from 'zod'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/Auth";
 
 
 // const schema = z.object({
@@ -23,17 +24,20 @@ import { useEffect, useState } from "react";
 // type QuestionProps = z.infer<typeof schema>;
 
 interface QuestionProps{
-  questionPt: string,
-  questionEn: string,
-  active: boolean,
-  id: number,
+  questionPt?: string,
+  questionEn?: string,
+  active?: boolean,
+  id?: number,
 }
 
 function QuestionDb(props: QuestionProps) {
-  
   const { isOpen, toggle } = useModal();
 
   const [responseList, setResponseList] = useState<QuestionProps[]>([]);
+
+  const {token, setterToken} = useContext(AuthContext)!
+
+  setterToken(token)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,10 +45,11 @@ function QuestionDb(props: QuestionProps) {
         const response: AxiosResponse<QuestionProps> = await api.get('question', {
           
           headers: {
-          'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwMzU1Njg2fQ.MOH-uiQnA2FL3xEltw5GUciHq-tiBJV0-JMjk8ma3_4'
+          'Authorization' : `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwNzcxMjU5fQ.uH6nD5Tz57vcFUqXIspGQX9kzPfI7I-bQBzq1A7OrZU`
         }
       }
         );
+
         const responseJson = response.data
 
         setResponseList([]);

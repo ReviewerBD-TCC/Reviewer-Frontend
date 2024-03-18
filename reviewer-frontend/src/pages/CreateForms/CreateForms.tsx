@@ -1,8 +1,13 @@
 import { SparkButton, SparkDropdown, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
 import Header from "../../components/Header/Header"
 
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/Auth";
+
 function CreateForms() {
 
+    const  { token } = useContext(AuthContext)!
+    
     const yearsOptions =
      '[{"label":"2024","value":"2024"},{"label":"2025","value":"2025"}]'
 
@@ -12,7 +17,7 @@ function CreateForms() {
         <div className={`bg-[#D0D0D0] w-full overflow-hidden flex justify-center items-center`}>
             <div className="bg-boschWhite w-[90%] h-screen flex items-center justify-center">
                 <div className="w-[90%]  flex flex-col gap-12">
-                    <h1 className="text-3xl font-bold">Criação de formulário</h1>
+                    <h1 className="text-3xl font-bold">{token}</h1>
                     <div className="flex justify-end">
                         <SparkButton text="Personalizar"/>
                     </div>

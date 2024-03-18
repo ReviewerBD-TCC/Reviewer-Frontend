@@ -16,6 +16,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '../../contexts/Auth'
+
+import * as React from 'react'
+
 
 const schema = z.object({
   email: z.string().email(),
@@ -25,6 +29,8 @@ const schema = z.object({
 type FormProps = z.infer<typeof schema>;
 
 function Login() {
+
+  const {setterToken} = React.useContext(AuthContext)!
 
   const navigate = useNavigate();
 
@@ -53,6 +59,10 @@ function Login() {
     resolver: zodResolver(schema),
   });
 
+  // const handleSaveToken = (token: string | any) =>{{
+  //   setterToken(token)
+  // }}
+
   async function handleLogin(props: FormProps) {
     try {
       const response: AxiosResponse = await api.post(
@@ -68,6 +78,7 @@ function Login() {
           },
         }
       );
+      setterToken(response.data.token)
       console.log(response.data.token);
       showToastMessage()
       setTimeout(()=>{
@@ -111,7 +122,7 @@ function Login() {
           </div>
           
           <div className='flex w-full h-[25%] justify-center items-end'>
-            <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem" disabled={!isValid} onClick={handleSubmit(handleLogin)}/>
+            <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem"  disabled={!isValid} onClick={handleSubmit(handleLogin)}/>
           </div>
           <ToastContainer/>
         </form>
