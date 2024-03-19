@@ -12,8 +12,7 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z, { string }  from 'zod'
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/Auth";
+import { useEffect, useState } from "react";
 
 
 // const schema = z.object({
@@ -35,9 +34,7 @@ function QuestionDb(props: QuestionProps) {
 
   const [responseList, setResponseList] = useState<QuestionProps[]>([]);
 
-  const {token, setterToken} = useContext(AuthContext)!
-
-  setterToken(token)
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +42,7 @@ function QuestionDb(props: QuestionProps) {
         const response: AxiosResponse<QuestionProps> = await api.get('question', {
           
           headers: {
-          'Authorization' : `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwNzcxMjU5fQ.uH6nD5Tz57vcFUqXIspGQX9kzPfI7I-bQBzq1A7OrZU`
+          'Authorization' : `Bearer ${token}`
         }
       }
         );

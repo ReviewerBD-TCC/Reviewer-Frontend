@@ -1,14 +1,13 @@
 import Header from "../../components/Header/Header"
 import { SparkButton, SparkSearchBar, SparkNotification, SparkChip } from "@bosch-web-dds/spark-ui-react";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/Auth";
+
 
 export const Indication = () => {
   const [showNotify, setShowNotify] = useState(false);
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<string[]>([]);
 
-  const {token} = useContext(AuthContext)!
 
 
   const addChip = (value: string)=>{
@@ -50,7 +49,7 @@ export const Indication = () => {
           <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center">
             <div className="w-[80%] h-auto flex flex-col justify-center gap-10">
               <div className="flex flex-col gap-2 mb-10">
-              <h1 className="font-bold text-4xl">Olá Santos, Keven!</h1>
+              <h1 className="font-bold text-4xl">Olá Stos, Keven!</h1>
                 <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               </div>
               <SparkSearchBar

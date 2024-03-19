@@ -1,11 +1,9 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Header from '../../components/Header/Header'
 import { Card } from '../../components/Card/Card'
-import { AuthContext } from '../../contexts/Auth'
 
 export const Homepage = () => {
 
-    const {token} = useContext(AuthContext)!
 
     const [cardList]: any = useState([
         {

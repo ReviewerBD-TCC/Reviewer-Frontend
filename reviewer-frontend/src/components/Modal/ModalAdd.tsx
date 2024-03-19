@@ -29,6 +29,8 @@ const Modal:React.FC<ModalProps> = (props) => {
 
     const id = props.id
 
+    const token = localStorage.getItem('token')
+
     // const dropdownOptions =
     //  '[{"label":"Dissertativa","value":"2"}]'
 
@@ -55,7 +57,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                     active: props.activeValue,
                 },{
                     headers: {
-                        'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXZlbkBnbWFpbC5jb20iLCJpc3MiOiJBUEkgUmV2aWV3ZXIiLCJpZCI6MSwiZXhwIjoxNzEwNzcxMjU5fQ.uH6nD5Tz57vcFUqXIspGQX9kzPfI7I-bQBzq1A7OrZU'
+                        'Authorization' : `Bearer ${token}`
                     }
                 }
             );

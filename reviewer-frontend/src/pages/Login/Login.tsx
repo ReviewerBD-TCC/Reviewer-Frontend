@@ -16,10 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '../../contexts/Auth'
 
 import * as React from 'react'
-
 
 const schema = z.object({
   email: z.string().email(),
@@ -30,7 +28,6 @@ type FormProps = z.infer<typeof schema>;
 
 function Login() {
 
-  const {setterToken} = React.useContext(AuthContext)!
 
   const navigate = useNavigate();
 
@@ -78,8 +75,8 @@ function Login() {
           },
         }
       );
-      setterToken(response.data.token)
-      console.log(response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('token', token)
       showToastMessage()
       setTimeout(()=>{
         navigate('/home')

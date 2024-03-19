@@ -6,6 +6,8 @@ import { SparkTextfield, SparkButton, SparkToggle  } from "@bosch-web-dds/spark-
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { useAuth } from "../../AuthContext";
+
 const schema = z.object({
   user: z.string().min(6, 'O usuário precisa ter pelo menos 6 digitos'),
   name: z.string(),
@@ -19,6 +21,8 @@ const schema = z.object({
 type FormProps = z.infer<typeof schema>;
 
 function Register() {
+
+  const token = useAuth()
 
   const { handleSubmit, register, formState: {errors} } = useForm<FormProps>({
     mode: 'all',

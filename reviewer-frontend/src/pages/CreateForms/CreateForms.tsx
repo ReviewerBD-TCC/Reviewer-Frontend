@@ -2,11 +2,9 @@ import { SparkButton, SparkDropdown, SparkTextfield } from "@bosch-web-dds/spark
 import Header from "../../components/Header/Header"
 
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/Auth";
 
 function CreateForms() {
 
-    const  { token } = useContext(AuthContext)!
     
     const yearsOptions =
      '[{"label":"2024","value":"2024"},{"label":"2025","value":"2025"}]'
