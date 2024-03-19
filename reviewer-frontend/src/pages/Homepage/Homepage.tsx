@@ -4,6 +4,7 @@ import { Card } from '../../components/Card/Card'
 
 export const Homepage = () => {
 
+
     const [cardList]: any = useState([
         {
             key:1,
@@ -38,7 +39,7 @@ export const Homepage = () => {
             <div className="bg-boschWhite h-[100vh] w-[90%] flex items-center justify-center flex-col">
                 <div className='bg-[#fff] w-[90%] h-full flex flex-col justify-center items-center'>
                     <div className='w-[95%] h-16 flex'>
-                        <h1 className='font-bold text-3xl'>Administrator panel</h1>
+                        <h1 className='font-bold text-3xl'>Painel Administrador</h1>
                     </div>
                     <div className='w-[95%] h-2/4 flex justify-center items-center flex-row gap-x-12'>
                         {cardList.map((i:any) => (
