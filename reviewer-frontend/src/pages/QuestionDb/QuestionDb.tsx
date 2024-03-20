@@ -1,8 +1,9 @@
 import Header from "../../components/Header/Header"
-import { SparkButton, SparkNotification} from "@bosch-web-dds/spark-ui-react"
+import { SparkButton, SparkNotification, SparkActivityIndicator, SparkTooltip} from "@bosch-web-dds/spark-ui-react"
 import Input from "../../components/Input/Input"
 import useModal from "../../hooks/useModal";
 import Modal from "../../components/Modal/ModalAdd";
+import error404 from "../../assets/images/404.png";
 
 import api from "../../services/Api/Api";
 
@@ -12,8 +13,8 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z, { string }  from 'zod'
-import { useEffect, useState } from "react";
 
+import { useQuery } from "react-query";
 
 // const schema = z.object({
 //     question: z.string(),
@@ -31,44 +32,16 @@ interface QuestionProps{
 
 function QuestionDb(props: QuestionProps) {
   const { isOpen, toggle } = useModal();
+  const token = localStorage.getItem('token');
 
-  const [responseList, setResponseList] = useState<QuestionProps[]>([]);
-
-  const token = localStorage.getItem('token')
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response: AxiosResponse<QuestionProps> = await api.get('question', {
-          
-          headers: {
-          'Authorization' : `Bearer ${token}`
-        }
+  const { data: responseList = [], isLoading, error } = useQuery("question", async () => {
+    const response = await api.get('question', {
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-        );
-
-        const responseJson = response.data
-
-        setResponseList([]);
-
-        responseJson.forEach((item: any) => {
-          console.log(item.id, item.questionPt, item.questionEn, item.active);
-          setResponseList(prevState => [
-            ...prevState, 
-            {id: item.id, questionPt: item.questionPt, questionEn: item.questionEn, active: item.active}
-          ])
-        });
-
-        
-        console.log('responselist', responseList)
-
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []); 
+    });
+    return response.data;
+  },)
 
 
   return (
@@ -88,8 +61,14 @@ function QuestionDb(props: QuestionProps) {
                       {
                         responseList.map((t: any, index: number) => (
                           <Input key={t.id} titlePt={t.questionPt} titleEn={t.questionEn} isActive={t.active} id={t.id} /> 
+                          
                         ))
                       }
+                      <div></div>
+                      <div className="flex justify-center">
+                        {isLoading&&<SparkActivityIndicator/>}
+                        {error&&  <img src={error404} alt="GIF 404" />}
+                      </div>
                     </div>
                 </div>
                 <div className="2xl:w-[100%] flex flex-col gap-8 justify-end items-end lg:w-[90%]">
