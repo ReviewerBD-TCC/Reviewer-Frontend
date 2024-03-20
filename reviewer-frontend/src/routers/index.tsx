@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Register from "../pages/Register/Register";
-import Indication from "../pages/Indicacation/Indication";
+import {Indication} from "../pages/Indicacation/Indication";
 import QuestionDb from "../pages/QuestionDb/QuestionDb";
 import CreateForms from "../pages/CreateForms/CreateForms";
 import Login from "../pages/Login/Login";
