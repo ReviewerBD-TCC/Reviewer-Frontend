@@ -16,7 +16,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from 'react-router-dom';
 
-
 import * as React from 'react'
 
 const schema = z.object({
@@ -27,7 +26,6 @@ const schema = z.object({
 type FormProps = z.infer<typeof schema>;
 
 function Login() {
-
 
   const navigate = useNavigate();
 
@@ -55,11 +53,7 @@ function Login() {
     reValidateMode: 'onChange',
     resolver: zodResolver(schema),
   });
-
-  // const handleSaveToken = (token: string | any) =>{{
-  //   setterToken(token)
-  // }}
-
+  
   async function handleLogin(props: FormProps) {
     try {
       const response: AxiosResponse = await api.post(
