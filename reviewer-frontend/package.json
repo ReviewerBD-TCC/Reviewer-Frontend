@@ -33,6 +33,7 @@
     "table": "^6.8.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.4.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
