@@ -1,4 +1,4 @@
-import { SparkButton, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
 import api from "../../services/Api/Api";
@@ -18,7 +18,6 @@ interface ModalProps{
     id: number,
     titlePtValue: string,
     titleEnValue: string,
-    activeValue: boolean,
     title: string,
     children?: ReactNode;
     isOpen: boolean;
@@ -54,7 +53,6 @@ const Modal:React.FC<ModalProps> = (props) => {
                 {
                     questionPt: props.titlePtValue,
                     questionEn: props.titleEnValue,
-                    active: props.activeValue,
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
@@ -76,9 +74,6 @@ const Modal:React.FC<ModalProps> = (props) => {
                         {props.children}
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
-                            <div className="flex justify-end items-end">
-                                <SparkToggle whenChange={()=>{}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={props.activeValue}/>
-                            </div>
                             <div className="flex flex-col gap-4">
                                 <SparkTextfield {...register('titlePtValue')} label="Português" value={props.titlePtValue} placeholder="Digite a pergunta em português"/>
                                 <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
