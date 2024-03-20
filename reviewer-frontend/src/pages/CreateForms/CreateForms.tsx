@@ -2,7 +2,6 @@ import { SparkButton, SparkDropdown, SparkTextfield } from "@bosch-web-dds/spark
 import Header from "../../components/Header/Header"
 
 function CreateForms() {
-
     const yearsOptions =
      '[{"label":"2024","value":"2024"},{"label":"2025","value":"2025"}]'
 
@@ -10,11 +9,12 @@ function CreateForms() {
      '[{"label":"O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.","value":"2024"},{"label":"O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.","value":"2025"}]'
 
   return (
-    <>
+    <div className="h-screen w-full">
         <Header/>
         <div className={`bg-[#D0D0D0] w-full overflow-hidden flex justify-center items-center`}>
             <div className="bg-boschWhite w-[90%] h-screen flex items-center justify-center">
-                <div className="w-[90%] h-auto flex flex-col gap-9">
+
+                <div className="w-[85%] h-auto flex flex-col gap-9">
                     <h1 className="text-3xl font-bold">Criação de formulário</h1>
                     <div className="flex justify-end">
                         <SparkButton type="button" text="Personalizar"/>
@@ -29,8 +29,10 @@ function CreateForms() {
                     </div>
 
                     <div className="w-full h-[125px] flex justify-center items-center ">
-                        <div className="bg-[#F1F1F1] w-[90%] h-full flex justify-center items-center">
-                            <SparkDropdown label="Pergunta" options={questionsOptions} whenChange={()=>{}} />
+                        <div className="bg-[#F1F1F1] w-full h-full flex justify-center items-center">
+                            <div className="w-[90%]">
+                                <SparkDropdown  label="Pergunta" options={questionsOptions} whenChange={()=>{}} />
+                            </div>
                         </div>
                     </div>
                     
@@ -38,13 +40,11 @@ function CreateForms() {
                         <SparkButton text="Adicionar pergunta" icon="add"/>
                         <SparkButton text="Finalizar" />
                     </div>
-                    <div className="w-full h-auto flex justify-end">
-                        
-                    </div>
+                
                 </div>
             </div>
         </div>
-    </>
+    </div>
   )
 }
 
