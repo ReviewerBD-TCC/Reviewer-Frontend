@@ -1,18 +1,13 @@
 import axios from "axios";
 
-const headers = {
+export const headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "true",
     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-};
+  };
 
-const api = axios.create({
-    baseURL:
-    "http://10.234.84.188:8056/",
-    // baseURL:"http://10.234.91.91:8056/",
-    headers: headers
-})
+export const baseURL = "http://10.234.84.188:8056/"
 
-export default api
+export const Api = axios.create({ baseURL, headers: headers })
