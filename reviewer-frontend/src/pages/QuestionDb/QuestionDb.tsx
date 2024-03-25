@@ -1,5 +1,5 @@
 import Header from "../../components/Header/Header"
-import { SparkButton, SparkNotification, SparkActivityIndicator, SparkTooltip} from "@bosch-web-dds/spark-ui-react"
+import { SparkButton, SparkNotification, SparkActivityIndicator} from "@bosch-web-dds/spark-ui-react"
 import Input from "../../components/Input/Input"
 import useModal from "../../hooks/useModal";
 import Modal from "../../components/Modal/ModalAdd";
@@ -60,8 +60,7 @@ function QuestionDb(props: QuestionProps) {
                     <div className="w-[100%] flex flex-col gap-4 ">
                       {
                         responseList.map((t: any, index: number) => (
-                          <Input key={t.id} titlePt={t.questionPt} titleEn={t.questionEn} isActive={t.active} id={t.id} /> 
-                          
+                          <Input key={t.id} titlePt={t.questionPt} titleEn={t.questionEn} isActive={t.active} id={t.id} />
                         ))
                       }
                       <div></div>
