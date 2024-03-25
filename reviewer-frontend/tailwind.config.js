@@ -21,6 +21,7 @@ export default {
         boschTurquoise: '#18837E',
         boschGreen: '#00884A',
         boschYellow: '#FFCF00',
+        boschLightGray: '#E0E2E5'
       }
     },
   

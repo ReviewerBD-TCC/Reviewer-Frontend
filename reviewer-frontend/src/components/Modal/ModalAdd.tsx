@@ -49,8 +49,8 @@ const Modal:React.FC<ModalProps> = (props) => {
 
     async function updateQuestion(props :ModalProps) {
         try{
-            const response: AxiosResponse = await api.put(
-                `question/${id}`,
+            const response: AxiosResponse = await api.post(
+                `question`,
                 {
                     questionPt: props.titlePtValue,
                     questionEn: props.titleEnValue,
@@ -84,7 +84,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                                 <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
-                                <SparkButton text="Salvar" onClick={handleSubmit(updateQuestion)}/>
+                                <SparkButton text="Adicionar" onClick={handleSubmit(updateQuestion)}/>
                             </div> 
                         </div>
                     </div>

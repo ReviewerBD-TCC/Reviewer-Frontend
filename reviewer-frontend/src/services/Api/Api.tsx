@@ -10,4 +10,4 @@ export const headers = {
 
 export const baseURL = "http://10.234.84.188:8056/"
 
-export const Api = axios.create({ baseURL, headers: headers })
+export const api = axios.create({ baseURL, headers: headers })
