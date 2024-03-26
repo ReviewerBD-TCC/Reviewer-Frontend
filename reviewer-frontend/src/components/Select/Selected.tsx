@@ -25,8 +25,8 @@ export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, 
       {isOpen && (
         <div className="mt-3 pt-1 pr-4 pl-4 pb-1 w-max-[90%] h-auto bg-[#e0e2e5] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           {
-            options?.map((opcao) => (
-              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' onClick={() => {handleOptionClick(opcao); console.log(opcao)}}>{opcao}</div>
+            options?.map((opcao, index) => (
+              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => {handleOptionClick(opcao); console.log(opcao)}}>{opcao}</div>
             ))
           } 
         </div>
