@@ -1,19 +1,19 @@
 import Header from "../../components/Header/Header"
 import { SparkButton, SparkDropdown, SparkNotification, SparkChip} from "@bosch-web-dds/spark-ui-react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import api from "../../services/Api/Api";
+import { useQuery } from "react-query";
 
 interface IndicationProps {
   id: number;
 }
 
 function Indication(props: IndicationProps) {
-  const [showNotify, setShowNotify] = useState(false);
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<string[]>([]);
 
   const [users, setUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]); 
 
   const token = localStorage.getItem('token');
 
@@ -30,33 +30,46 @@ function Indication(props: IndicationProps) {
     setShowChip(false);
   };
 
-  const handleSearch = (value: string) => {
-    if (value !== '') {
-      addChip(value);
-      setShowNotify(false);
-    } else {
-      setShowNotify(true);
+  // const handleSearch = (selectedValue: string) => {
+  //   if (selectedValue !== '') {
+  //     addChip(selectedValue);
+  //     setShowNotify(false);
+  //   } else {
+  //     setShowNotify(true);
+  //   }
+  // };
+
+  const handleDropdownChange = (selectedUser: string, selectedValue: string) => {
+    setSelectedUsers([...selectedUsers, selectedUser]);
+    addChip(selectedValue);
+    console.log(selectedUsers)
+  };
+
+  const handleFormSubmit = async () => {
+    try {
+      const response = await api.post('form_indication', { users: selectedUsers }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log('Usuários enviados com sucesso:', response.data);
+      setSelectedUsers([]);
+    } catch (error) {
+      console.error('Erro ao enviar usuários:', error);
     }
   };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        api.defaults.headers.Authorization = `Bearer ${token}`
-        const response = await api.get(`users`);
-        const formattedOptions = response.data.map(user => ({
-          value: user.id,
-          label: user.name 
-        }));
-        setUsers(formattedOptions);
-      } catch (error) {
-        console.error('Erro ao obter resultados de autocompletar:', error);
+  const { error } = useQuery("question", async () => {
+    const response = await api.get('users',  {
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    };
-    fetchUsers();
-  }, []);
+    });
+    const formattedOptions = response.data.map(user => ({
+      label: user.name 
+    }));
+    setUsers(formattedOptions)
+    return response.data;
+  },)
   
-
   return (
     <>
       <Header />
@@ -68,7 +81,7 @@ function Indication(props: IndicationProps) {
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
             </div>
             <SparkDropdown 
-              whenChange={(value) => (value.toString())}
+              whenChange={()=>{}} 
               label="Selecione o usuário"
               options={users}
             />
@@ -77,9 +90,12 @@ function Indication(props: IndicationProps) {
                 <SparkChip key={index} content={item} onClick={() => removeChip(item)} selected close={showChip} />
               ))}
             </div>
-            {showNotify && <SparkNotification type="bar" variant="error"><p>É necessário informar o colaborador antes de continuar.</p></SparkNotification>}
+            <div className="w-[97%]">
+              {error && <SparkNotification type="bar" variant="error"><p>Não foi possível encontrar nenhum colaborador.</p></SparkNotification>}
+            </div>
             <div className="flex justify-end mt-20 ">
-              <SparkButton text="Enviar" type="submit" customWidth="8rem" />
+              <p>{selectedUsers}</p>
+              <SparkButton text="Enviar" type="submit" customWidth="8rem" onSubmit={()=>handleFormSubmit}/>
             </div>
           </div>
         </div>
