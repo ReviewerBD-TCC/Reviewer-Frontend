@@ -7,21 +7,7 @@ import error404 from "../../assets/images/404.png";
 
 import api from "../../services/Api/Api";
 
-import { AxiosResponse } from 'axios'
-
-import { useForm } from 'react-hook-form'
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import  z, { string }  from 'zod'
-
 import { useQuery } from "react-query";
-
-// const schema = z.object({
-//     question: z.string(),
-//     active: z.boolean().default(true),
-// });
-
-// type QuestionProps = z.infer<typeof schema>;
 
 interface QuestionProps{
   questionPt?: string,
