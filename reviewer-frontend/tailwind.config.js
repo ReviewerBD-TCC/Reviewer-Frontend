@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       backgroundImage:{
-        'login-background': "url('/src/assets/images/Login-Background.jpg')"
+        'login-background': "url('/src/assets/images/Login-Background.jpg')",
+        'dropdown-background': "url('/src/assets/icons/wide-angled-arrow.svg')",
       },
       colors: {
         boschWhite: '#FFFFFF',
@@ -22,6 +23,12 @@ export default {
         boschGreen: '#00884A',
         boschYellow: '#FFCF00',
         boschLightGray: '#E0E2E5'
+      },
+      backgroundColor:{
+        '14': '14px',
+      },
+      backgroundPosition:{
+        'drop-position': 'center right 1rem'
       }
     },
   
