@@ -7,34 +7,28 @@ export const Homepage = () => {
     const [cardList]: any = useState([
         {
             key:1,
-            title: <h2 className='text-white font-bold'>Vizualizar <br></br>Feedbacks</h2>,
+            title: <h2 className='text-white font-bold text-lg'>Vizualizar <br></br>Feedbacks</h2>,
             backgroundColor: 'bg-boschRed',
             nav: '/'
         },
         {
             key:2,
-            title: <h2 className='text-white font-bold'>Banco de <br></br>perguntas</h2>,
+            title: <h2 className='text-white font-bold text-lg'>Banco de <br></br>perguntas</h2>,
             backgroundColor: 'bg-boschPurple',
-            nav: '/home'
+            nav: '/questions'
         },
         {
             key:3,
-            title: <h2 className='text-white font-bold'>Criar <br></br>Feedbacks</h2>,
+            title: <h2 className='text-white font-bold text-lg'>Criar <br></br>Feedbacks</h2>,
             backgroundColor: `bg-boschBlue`,
             nav: '/'
         },
         {
             key:4,
-            title: <h2 className='text-white font-bold'>Cadastrar <br></br>usuários</h2>,
+            title: <h2 className='text-white font-bold  text-lg'>Enviar <br></br>Formulário</h2>,
             backgroundColor: 'bg-boschTurquoise',
-            nav: '/'
+            nav: '/register'
         },
-        {
-            key:5,
-            title: <h2 className='text-white font-bold'>Administrar <br></br>usuários</h2>,
-            backgroundColor: 'bg-boschGreen',
-            nav: '/'
-        }
     ])
 
   return (
@@ -45,7 +39,7 @@ export const Homepage = () => {
                     <div className='w-[95%] h-16 flex'>
                         <h1 className='font-bold text-3xl'>Administrator panel</h1>
                     </div>
-                    <div className='w-[95%] h-2/4 flex justify-between items-center flex-row gap-x-12'>
+                    <div className='w-[95%] h-2/4 flex justify-between items-center flex-row'>
                         {cardList.map((i:any) => (
                             <Card key={i.key} text={i.title} backgroundColor={i.backgroundColor} nav={i.nav}/>
                         ))}

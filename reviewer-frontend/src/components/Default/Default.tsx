@@ -5,7 +5,7 @@ interface DefaultProps {
   onFunction: (color: string) => void;
 }
 
-const Default: React.FC<DefaultProps> = ({ bgColor, onFunction }) => {
+export const Default: React.FC<DefaultProps> = ({ bgColor, onFunction }) => {
   return (
     <div className={`bg-[${bgColor}] w-full h-90vh flex justify-center items-center`}>
       <div className="bg-bosch-white h-screen w-[90%]">
@@ -25,5 +25,3 @@ const Default: React.FC<DefaultProps> = ({ bgColor, onFunction }) => {
     </div>
   );
 };
-
-export default Default;

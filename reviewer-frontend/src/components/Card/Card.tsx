@@ -11,7 +11,7 @@ interface cardProps{
 
 export const Card: React.FC<cardProps> = ({text, backgroundColor, nav}) => {
   return (
-    <Link to={nav} className={`${backgroundColor} flex justify-center items-center w-[17%] h-[45%] `}>
+    <Link to={nav} className={`${backgroundColor} flex justify-center items-center w-[22%] h-[45%] `}>
       <div className='w-full flex justify-center items-center flex-row '>
         <div className='w-[80%] flex justify-between'>
           {text}
@@ -19,6 +19,5 @@ export const Card: React.FC<cardProps> = ({text, backgroundColor, nav}) => {
         </div>
       </div>
     </Link>
-      
    )
 }

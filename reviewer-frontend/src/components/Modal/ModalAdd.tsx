@@ -1,4 +1,4 @@
-import { SparkButton, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
 import api from "../../services/Api/Api";
@@ -12,7 +12,7 @@ const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
     activeValue: z.boolean().default(true)
-  });
+});
 
 interface ModalProps{
     id: number,
@@ -28,7 +28,6 @@ interface ModalProps{
 const Modal:React.FC<ModalProps> = (props) => {
 
     const id = props.id
-
     const token = localStorage.getItem('token')
 
     // const dropdownOptions =
@@ -84,6 +83,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                                 <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
+                                <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
                                 <SparkButton text="Adicionar" onClick={handleSubmit(updateQuestion)}/>
                             </div> 
                         </div>

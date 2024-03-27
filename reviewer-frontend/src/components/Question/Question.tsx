@@ -9,21 +9,21 @@ interface QuestionProps{
     id: number;
 }
 
-const Question: React.FC<QuestionProps> = (props) => {
+export const Question: React.FC<QuestionProps> = (props) => {
 
     const { isOpen, toggle } = useModal();
 
     return (
-        <div className='p-2 flex justify-between items-center'>
-            <button onClick={toggle}>
-                <h1>{props.titlePt}</h1>
-            </button>
+        <div className='p-2 flex justify-between items-center' onClick={toggle}>
+            <div className='w-[90%] max-w-[90%]'>
+                {/* <p className='max-w-full overflow-x-scroll'>{props.titlePt}</p> */}
+                <input type="text" value={props.titlePt} className='bg-transparent w-full outline-none' />
+                {/* <input>{props.titlePt}</input> */}
+            </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} activeValue={props.isActive} isOpen={isOpen} toggle={toggle}/>
-            <div>
+            <div className='max-w-[10%]'>
                 <SparkToggle guid="spark-toggle-right-label" selected={props.isActive} disabled={false} whenChange={()=>{}}/>
             </div>
     </div>
   )
 }
-
-export default Question

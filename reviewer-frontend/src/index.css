@@ -21,7 +21,16 @@
     
 }
 
-
 *{
     font-family: 'BoschSans';
+}
+
+
+
+#menu-dropdown {
+
+}
+
+#menu-dropdown::-webkit-scrollbar {
+    background-color: transparent;
 }

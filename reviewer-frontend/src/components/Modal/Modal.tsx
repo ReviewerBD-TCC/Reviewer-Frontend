@@ -1,4 +1,4 @@
-import { SparkButton, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
 import api from "../../services/Api/Api";
@@ -80,10 +80,11 @@ const Modal:React.FC<ModalProps> = (props) => {
                                 <SparkToggle whenChange={()=>{}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={props.activeValue}/>
                             </div>
                             <div className="flex flex-col gap-4">
-                                <SparkTextfield {...register('titlePtValue')} label="Português" value={props.titlePtValue} placeholder="Digite a pergunta em português"/>
+                                <SparkTextfield {...register('titlePtValue')} label="Português" defaultValue={props.titlePtValue} placeholder="Digite a pergunta em português"/>
                                 <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
+                                <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
                                 <SparkButton text="Salvar" onClick={handleSubmit(updateQuestion)}/>
                             </div> 
                         </div>

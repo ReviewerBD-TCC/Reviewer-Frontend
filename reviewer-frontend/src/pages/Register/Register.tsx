@@ -4,16 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClienteResolver } from "./ClienteResolver";
 import Api from "../../services/Api/Api";
 import { ChangeEvent, useState } from "react";
+import { UserData } from "../../interfaces/CreateUser";
 
-interface UserData {
-  name: string;
-  email: string;
-  password: string;
-  user: string;
-  gkz: string;
-  manager: string;
-  userType: 'admin' | 'user';
-}
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
@@ -25,13 +17,12 @@ function Register() {
   function handleToggle(e: ChangeEvent<HTMLInputElement>){
     const newToggleValue = e.target.checked;
 
-    // console.log('tipo:', newToggleValue == true ? "admin" : "user");
     if(newToggleValue == true){
-      setValue("type", "admin")
+      setValue("type", "ROLE_ADMIN")
     }
-    else{
-      setValue("type", "user")
-    }
+    // else{
+    //   setValue("type", "ROLE_USER")
+    // }
     setToggle(newToggleValue);
   }
 
@@ -54,9 +45,10 @@ function Register() {
   };
 
   return (
-    <>
+    <div className="w-full h-screen">
       <Header />
-      <div className={`bg-[#D0D0D0] w-full h-full overflow-hidden flex justify-center items-center`}>
+      <div className={`bg-[#D0D0D0] w-full h-auto overflow-hidden flex justify-center items-center`}>
+        
         <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
           <div className="w-[1234px] h-[729px] flex flex-col justify-center items-center gap-8">
             <div className="w-[50%] flex flex-col justify-center items-start">
@@ -125,7 +117,7 @@ function Register() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 export default Register
