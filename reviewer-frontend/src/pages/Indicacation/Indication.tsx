@@ -5,7 +5,11 @@ import api from "../../services/Api/Api";
 import { useQuery } from "react-query";
 import { SelectedIndication } from "../../components/SelectedIndication/SelectedIndication";
 
-function Indication() {
+interface IndicationProps{
+  id: number
+}
+
+function Indication(props: IndicationProps) {
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<string[]>([]);
 
@@ -33,8 +37,6 @@ function Indication() {
       if (selectedUsers.length < 5) {
         setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, String(value)]);
         addChip(String(value));
-      } else {
-        <SparkNotification><p>Máximo atingido.</p></SparkNotification>
       }
     } else {
       removeChip(String(value));
@@ -44,15 +46,22 @@ function Indication() {
 
   const handleFormSubmit = async () => {
     try {
-      const response = await api.post('form_indication', { users: selectedUsers }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      console.log('Usuários enviados com sucesso:', response.data);
-      setSelectedUsers([]);
+      const response = await api.post(
+        'form_indication', 
+        { 
+          userIndication: props.id,
+          indicateds: selectedUsers 
+        }, 
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      console.log(response.data)
     } catch (error) {
-      console.error('Erro ao enviar usuários:', error);
+      console.error(error);
     }
   };
+  
 
   const { error } = useQuery("question", async () => {
     const response = await api.get('users',  {
@@ -91,7 +100,7 @@ function Indication() {
               {error && <SparkNotification type="bar" variant="error"><p>Não foi possível encontrar nenhum colaborador.</p></SparkNotification>}
             </div>
             <div className="flex justify-end mt-20 ">
-              <SparkButton text="Enviar" type="submit" customWidth="8rem" onClick={()=>handleFormSubmit}/>
+              <SparkButton text="Enviar" type="submit" customWidth="8rem" onClick={handleFormSubmit}/>
             </div>
             <p>Usuários selecionados:        
                 {selectedUsers.length}
