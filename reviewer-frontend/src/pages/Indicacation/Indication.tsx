@@ -3,6 +3,7 @@ import { SparkButton, SparkDropdown, SparkNotification, SparkChip} from "@bosch-
 import { useState } from "react";
 import api from "../../services/Api/Api";
 import { useQuery } from "react-query";
+import { Selected } from "../../components/Select/Selected";
 
 interface IndicationProps {
   id: number;
@@ -80,10 +81,10 @@ function Indication(props: IndicationProps) {
               <h1 className="font-bold text-4xl">Olá Santos, Keven.</h1>
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
             </div>
-            <SparkDropdown 
-              whenChange={()=>{}} 
-              label="Selecione o usuário"
+            <Selected 
+              labelText="Selecione o usuário"
               options={users}
+              zIndex={50}
             />
             <div className="flex gap-4 overflow-auto">
               {chips.map((item, index) => (
