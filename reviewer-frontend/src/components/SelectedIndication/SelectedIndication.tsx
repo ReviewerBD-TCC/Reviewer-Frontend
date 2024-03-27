@@ -1,20 +1,22 @@
-import React, { SelectHTMLAttributes, useState } from 'react'
+import React, { SelectHTMLAttributes, useState } from 'react';
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
   options?: Array<string | number> | undefined;
-  zIndex:number
-  onClick?: () => void;
+  zIndex: number;
+  onChange?: (value: string | number | null) => void; 
 }
 
-export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, ...rest) => {
+export const SelectedIndication: React.FC<SelectedProps> = ({ labelText, options, zIndex, onChange }, ...rest) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState<string | number | null>(null);
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(null); 
- 
-  const handleOptionClick = (value) => {
+  const handleOptionClick = (value: string | number | null) => {
     setSelectedValue(value);
     setIsOpen(false);
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   return (

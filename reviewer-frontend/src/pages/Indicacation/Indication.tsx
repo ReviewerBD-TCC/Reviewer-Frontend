@@ -3,13 +3,9 @@ import { SparkButton, SparkDropdown, SparkNotification, SparkChip} from "@bosch-
 import { useState } from "react";
 import api from "../../services/Api/Api";
 import { useQuery } from "react-query";
-import { Selected } from "../../components/Select/Selected";
+import { SelectedIndication } from "../../components/SelectedIndication/SelectedIndication";
 
-interface IndicationProps {
-  id: number;
-}
-
-function Indication(props: IndicationProps) {
+function Indication() {
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<string[]>([]);
 
@@ -29,21 +25,21 @@ function Indication(props: IndicationProps) {
   const removeChip = (item: string) => {
     setChips((prevChips) => prevChips.filter((chip) => chip !== item));
     setShowChip(false);
+    setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== item));
   };
 
-  // const handleSearch = (selectedValue: string) => {
-  //   if (selectedValue !== '') {
-  //     addChip(selectedValue);
-  //     setShowNotify(false);
-  //   } else {
-  //     setShowNotify(true);
-  //   }
-  // };
-
-  const handleDropdownChange = (selectedUser: string, selectedValue: string) => {
-    setSelectedUsers([...selectedUsers, selectedUser]);
-    addChip(selectedValue);
-    console.log(selectedUsers)
+  const handleUserSelect = (value: string | number | null) => {
+    if (value !== null && !selectedUsers.includes(String(value))) {
+      if (selectedUsers.length < 5) {
+        setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, String(value)]);
+        addChip(String(value));
+      } else {
+        <SparkNotification><p>Máximo atingido.</p></SparkNotification>
+      }
+    } else {
+      removeChip(String(value));
+      setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== String(value)));
+    }
   };
 
   const handleFormSubmit = async () => {
@@ -64,12 +60,11 @@ function Indication(props: IndicationProps) {
         'Authorization': `Bearer ${token}`
       }
     });
-    const formattedOptions = response.data.map(user => ({
-      label: user.name 
-    }));
+    const formattedOptions = response.data.map(user => user.name);
     setUsers(formattedOptions)
     return response.data;
   },)
+
   
   return (
     <>
@@ -81,10 +76,11 @@ function Indication(props: IndicationProps) {
               <h1 className="font-bold text-4xl">Olá Santos, Keven.</h1>
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
             </div>
-            <Selected 
+            <SelectedIndication 
               labelText="Selecione o usuário"
               options={users}
               zIndex={50}
+              onChange={handleUserSelect}
             />
             <div className="flex gap-4 overflow-auto">
               {chips.map((item, index) => (
@@ -95,12 +91,15 @@ function Indication(props: IndicationProps) {
               {error && <SparkNotification type="bar" variant="error"><p>Não foi possível encontrar nenhum colaborador.</p></SparkNotification>}
             </div>
             <div className="flex justify-end mt-20 ">
-              <p>{selectedUsers}</p>
-              <SparkButton text="Enviar" type="submit" customWidth="8rem" onSubmit={()=>handleFormSubmit}/>
+              <SparkButton text="Enviar" type="submit" customWidth="8rem" onClick={()=>handleFormSubmit}/>
             </div>
+            <p>Usuários selecionados:        
+                {selectedUsers.length}
+            </p>
+
           </div>
         </div>
-      </div>//
+      </div>
     </>
   );
 }
