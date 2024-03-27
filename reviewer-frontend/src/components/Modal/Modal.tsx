@@ -1,7 +1,7 @@
 import { SparkButton, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
-import api from "../../services/Api/Api";
+import api from "../../api/Api";
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z  from 'zod' 
