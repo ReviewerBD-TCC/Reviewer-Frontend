@@ -2,7 +2,7 @@ import Header from "../../components/Header/Header"
 import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-ui-react"
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClienteResolver } from "./ClienteResolver";
-import Api from "../../services/Api/Api";
+import Api from "../../api/Api";
 import { ChangeEvent, useState } from "react";
 
 interface UserData {

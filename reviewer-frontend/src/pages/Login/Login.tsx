@@ -1,4 +1,4 @@
-import api from '../../services/Api/Api'
+import api from '../../api/Api'
 
 import { AxiosResponse } from 'axios'
 

@@ -2,7 +2,7 @@ import { SparkToggle } from '@bosch-web-dds/spark-ui-react';
 import Modal from '../Modal/Modal';
 import useModal from '../../hooks/useModal';
 import { AxiosResponse } from 'axios'
-import api from '../../services/Api/Api';
+import api from '../../api/Api';
 
 
 interface QuestionProps{

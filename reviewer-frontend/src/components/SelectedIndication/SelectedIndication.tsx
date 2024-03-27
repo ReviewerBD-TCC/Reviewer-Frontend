@@ -1,8 +1,13 @@
 import React, { SelectHTMLAttributes, useState } from 'react';
 
+interface User{
+  name: string,
+  id: number
+}
+
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
-  options?: Array<string | number> | undefined;
+  options?: Array<string | number| User> | undefined;
   zIndex: number;
   onChange?: (value: string | number | null) => void; 
 }
@@ -28,7 +33,7 @@ export const SelectedIndication: React.FC<SelectedProps> = ({ labelText, options
         <div className="mt-3 pt-1 pr-4 pl-4 pb-1 w-max-[90%] h-auto bg-[#e0e2e5] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
           {
             options?.map((opcao, index) => (
-              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => {handleOptionClick(opcao); console.log(opcao)}}>{opcao}</div>
+              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => {handleOptionClick(opcao); console.log(index)}}>{opcao}</div>
             ))
           } 
         </div>

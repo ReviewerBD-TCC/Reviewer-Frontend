@@ -5,7 +5,7 @@ import useModal from "../../hooks/useModal";
 import Modal from "../../components/Modal/ModalAdd";
 import error404 from "../../assets/images/404.png";
 
-import api from "../../services/Api/Api";
+import api from "../../api/Api";
 
 import { useQuery } from "react-query";
 

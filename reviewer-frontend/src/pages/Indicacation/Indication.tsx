@@ -1,7 +1,7 @@
 import Header from "../../components/Header/Header"
 import { SparkButton, SparkDropdown, SparkNotification, SparkChip} from "@bosch-web-dds/spark-ui-react";
 import { useState } from "react";
-import api from "../../services/Api/Api";
+import api from "../../api/Api";
 import { useQuery } from "react-query";
 import { SelectedIndication } from "../../components/SelectedIndication/SelectedIndication";
 
@@ -9,11 +9,17 @@ interface IndicationProps{
   id: number
 }
 
+type User = {
+  name: string,
+  id: number
+}
+
 function Indication(props: IndicationProps) {
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<string[]>([]);
 
-  const [users, setUsers] = useState([]);
+  const [userName, setUserName] = useState<string[]>([])
+  const [users, setUsers] = useState<number[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]); 
 
   const token = localStorage.getItem('token');
@@ -36,21 +42,25 @@ function Indication(props: IndicationProps) {
     if (value !== null && !selectedUsers.includes(String(value))) {
       if (selectedUsers.length < 5) {
         setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, String(value)]);
+               
         addChip(String(value));
+        console.log(users)
       }
     } else {
       removeChip(String(value));
       setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== String(value)));
     }
   };
-
+  
   const handleFormSubmit = async () => {
+    setUsers(selectedUsers.map((user, index)=> index));
+
     try {
       const response = await api.post(
-        'form_indication', 
+        'indication_form', 
         { 
-          userIndication: props.id,
-          indicateds: selectedUsers 
+          userIndication: 1,
+          indicateds: users 
         }, 
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -69,8 +79,11 @@ function Indication(props: IndicationProps) {
         'Authorization': `Bearer ${token}`
       }
     });
-    const formattedOptions = response.data.map(user => user.name);
-    setUsers(formattedOptions)
+    // const formattedOptions = response.data.map(user=> (user.id))
+
+    const name = response.data.map(user=>(user.name))
+    // setUsers(formattedOptions)
+    setUserName(name);
     return response.data;
   },)
 
@@ -87,7 +100,7 @@ function Indication(props: IndicationProps) {
             </div>
             <SelectedIndication 
               labelText="Selecione o usuário"
-              options={users}
+              options={userName}
               zIndex={50}
               onChange={handleUserSelect}
             />
