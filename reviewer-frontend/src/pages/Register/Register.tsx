@@ -2,18 +2,10 @@ import Header from "../../components/Header/Header"
 import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-ui-react"
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClienteResolver } from "./ClienteResolver";
-import Api from "../../api/Api";
+import api from "../../api/Api";
 import { ChangeEvent, useState } from "react";
+import { UserData } from "../../interfaces/CreateUser";
 
-interface UserData {
-  name: string;
-  email: string;
-  password: string;
-  user: string;
-  gkz: string;
-  manager: string;
-  userType: 'admin' | 'user';
-}
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
@@ -25,20 +17,15 @@ function Register() {
   function handleToggle(e: ChangeEvent<HTMLInputElement>){
     const newToggleValue = e.target.checked;
 
-    // console.log('tipo:', newToggleValue == true ? "admin" : "user");
     if(newToggleValue == true){
-      setValue("type", "admin")
-    }
-    else{
-      setValue("type", "user")
+      setValue("type", "ROLE_ADMIN")
     }
     setToggle(newToggleValue);
   }
 
-  const createClient = (data: UserData) => Api.post('auth/register', data);
+  const createClient = (data: UserData) => api.post('auth/register', data);
 
   const onSubmit: SubmitHandler<UserData> = async (values) => {
-    // console.log("")
     try {
       const { status, data } = await createClient(values);
       if (status === 201) {
@@ -54,9 +41,10 @@ function Register() {
   };
 
   return (
-    <>
+    <div className="w-full h-screen">
       <Header />
-      <div className={`bg-[#D0D0D0] w-full h-full overflow-hidden flex justify-center items-center`}>
+      <div className={`bg-[#D0D0D0] w-full h-auto overflow-hidden flex justify-center items-center`}>
+        
         <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
           <div className="w-[1234px] h-[729px] flex flex-col justify-center items-center gap-8">
             <div className="w-[50%] flex flex-col justify-center items-start">
@@ -125,7 +113,7 @@ function Register() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 export default Register
