@@ -1,22 +1,19 @@
 import React, { SelectHTMLAttributes, useState } from 'react';
+import { User } from '../../interfaces/CreateUser'; 
 
-interface User{
-  name: string,
-  id: number
-}
 
-export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
+export interface SelectedProps extends SelectHTMLAttributes<HTMLDivElement | HTMLSelectElement> {
   labelText: string;
-  options?: Array<string | number| User> | undefined;
+  options?: Array<User>;
   zIndex: number;
-  onChange?: (value: string | number | null) => void; 
+  onChange?: (value: User) => void; 
 }
 
 export const SelectedIndication: React.FC<SelectedProps> = ({ labelText, options, zIndex, onChange }, ...rest) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<string | number | null>(null);
+  const [selectedValue, setSelectedValue] = useState<User>();
 
-  const handleOptionClick = (value: string | number | null) => {
+  const handleOptionClick = (value: User) => {
     setSelectedValue(value);
     setIsOpen(false);
     if (onChange) {
@@ -31,15 +28,21 @@ export const SelectedIndication: React.FC<SelectedProps> = ({ labelText, options
       </label>
       {isOpen && (
         <div className="mt-3 pt-1 pr-4 pl-4 pb-1 w-max-[90%] h-auto bg-[#e0e2e5] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
-          {
-            options?.map((opcao, index) => (
-              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => {handleOptionClick(opcao); console.log(index)}}>{opcao}</div>
-            ))
-          } 
+          {options?.map((option, index) => (
+            <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => handleOptionClick(option)}>
+              {option.name}
+            </div>
+          ))}
         </div>
       )}
-      {selectedValue && !isOpen ? <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto ">{selectedValue}</p> : <p></p>}
-      {!selectedValue && !isOpen && (<p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray ">Selecione uma opção</p>)}
+      {selectedValue && !isOpen ? (
+        <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto ">{selectedValue.name}</p>
+      ) : (
+        <p></p>
+      )}
+      {!selectedValue && !isOpen && (
+        <p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray ">Selecione uma opção</p>
+      )}
     </div>
-  )
-}
+  );
+};

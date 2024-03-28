@@ -1,125 +1,124 @@
-import Header from "../../components/Header/Header"
-import { SparkButton, SparkDropdown, SparkNotification, SparkChip} from "@bosch-web-dds/spark-ui-react";
-import { useState } from "react";
-import api from "../../api/Api";
-import { useQuery } from "react-query";
+import Header from "../../components/Header/Header";
+import { SparkButton, SparkNotification, SparkChip } from "@bosch-web-dds/spark-ui-react";
+import { useEffect, useState } from "react";
 import { SelectedIndication } from "../../components/SelectedIndication/SelectedIndication";
+import { IndicationService } from "../../services/indicationService";
+import { CreateIndication } from "../../interfaces/CreateIndication";
+import { User } from "../../interfaces/CreateUser";
+import { IndicationResolver } from "../../validations/InterfaceSchema";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-interface IndicationProps{
-  id: number
-}
-
-type User = {
-  name: string,
-  id: number
-}
-
-function Indication(props: IndicationProps) {
+function Indication() {
   const [showChip, setShowChip] = useState(true);
-  const [chips, setChips] = useState<string[]>([]);
+  const [chips, setChips] = useState<User[]>([]);
 
-  const [userName, setUserName] = useState<string[]>([])
-  const [users, setUsers] = useState<number[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]); 
-
+  const [userListSelect, setUserListSelect] = useState<number[]>([])
+  const [user, setUsers] = useState<any[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { status, data } = await IndicationService.getUsers(token);
+        if (status === 200) {
 
-  const addChip = (value: string) => {
+          const usernames = data.map(user => user);
+
+          setUsers(usernames)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+      }
+    }
+    fetchData();
+  }, [token]);
+
+  const addChip = (value: User) => {
     if (chips.length < 5) {
       setChips((prevChips) => [...prevChips, value]);
       setShowChip(true);
     }
   };
 
-  const removeChip = (item: string) => {
+  const removeChip = (item: User) => {
     setChips((prevChips) => prevChips.filter((chip) => chip !== item));
     setShowChip(false);
-    setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== item));
+    setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== item.name));
   };
 
-  const handleUserSelect = (value: string | number | null) => {
-    if (value !== null && !selectedUsers.includes(String(value))) {
+  const handleUserSelect = (value: User) => {
+    if (value !== null && !selectedUsers.includes(value.name)) {
       if (selectedUsers.length < 5) {
-        setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, String(value)]);
-               
-        addChip(String(value));
-        console.log(users)
+
+        setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, value.name]);
+        console.log(value.id)
+
+        
+
+        addChip(value);
+
       }
     } else {
-      removeChip(String(value));
-      setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== String(value)));
+      removeChip(value);
+      setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== value.name));
     }
   };
-  
-  const handleFormSubmit = async () => {
-    setUsers(selectedUsers.map((user, index)=> index));
 
+
+  const { register, handleSubmit } = useForm({
+    resolver: IndicationResolver,
+  });
+
+  const onSubmit: SubmitHandler<CreateIndication> = async (values) => {
     try {
-      const response = await api.post(
-        'indication_form', 
-        { 
-          userIndication: 1,
-          indicateds: users 
-        }, 
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-      console.log(response.data)
+      const { status, data } = await IndicationService.createIndication(token, values);
+      if (status === 201) {
+
+        console.log('Indicação enviada com sucesso:', data);
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao enviar a indicação:', error);
     }
   };
-  
 
-  const { error } = useQuery("question", async () => {
-    const response = await api.get('users',  {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    // const formattedOptions = response.data.map(user=> (user.id))
-
-    const name = response.data.map(user=>(user.name))
-    // setUsers(formattedOptions)
-    setUserName(name);
-    return response.data;
-  },)
-
-  
   return (
     <>
       <Header />
       <div className="bg-[#D0D0D0] w-full h-screen flex justify-center items-center">
         <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center">
-          <div className="w-[80%] h-auto flex flex-col justify-center gap-10">
+          <form className="w-[80%] h-auto flex flex-col justify-center gap-10">
             <div className="flex flex-col gap-2 mb-10">
               <h1 className="font-bold text-4xl">Olá Santos, Keven.</h1>
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
             </div>
-            <SelectedIndication 
+            <SelectedIndication
               labelText="Selecione o usuário"
-              options={userName}
+              options={user.map(userFix => ({ name: userFix.name, id: userFix.id }))}
               zIndex={50}
               onChange={handleUserSelect}
             />
             <div className="flex gap-4 overflow-auto">
-              {chips.map((item, index) => (
-                <SparkChip key={index} content={item} onClick={() => removeChip(item)} selected close={showChip} />
-              ))}
+              {chips.map((item, id) => {
+                 // Console.log fora do componente
+                return (
+                  <SparkChip key={id} content={item.name} onClick={() => removeChip(item)} selected close={showChip} />
+                );
+              })}
             </div>
-            <div className="w-[97%]">
+
+            {/* <div className="w-[97%]">
               {error && <SparkNotification type="bar" variant="error"><p>Não foi possível encontrar nenhum colaborador.</p></SparkNotification>}
-            </div>
+            </div> */}
+
             <div className="flex justify-end mt-20 ">
-              <SparkButton text="Enviar" type="submit" customWidth="8rem" onClick={handleFormSubmit}/>
+              <SparkButton text="Enviar" type="submit" customWidth="8rem" onClick={handleSubmit(onSubmit)} />
             </div>
-            <p>Usuários selecionados:        
-                {selectedUsers.length}
+            <p>Usuários selecionados:
+              {selectedUsers.length}
             </p>
 
-          </div>
+          </form>
         </div>
       </div>
     </>
