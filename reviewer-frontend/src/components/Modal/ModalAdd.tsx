@@ -2,10 +2,8 @@ import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
 import api from "../../services/Api/Api";
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z  from 'zod' 
-
 import { useForm } from 'react-hook-form'
 
 const schema = z.object({
@@ -25,7 +23,7 @@ interface ModalProps{
     toggle: () => void
 }
 
-const Modal:React.FC<ModalProps> = (props) => {
+const Modal:React.FC<ModalProps> = (props: ModalProps) => {
 
     const id = props.id
     const token = localStorage.getItem('token')

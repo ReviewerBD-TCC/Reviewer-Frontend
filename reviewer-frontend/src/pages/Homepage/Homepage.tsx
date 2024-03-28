@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import Header from '../../components/Header/Header'
-import { Card } from '../../components/Card/Card'
+import { Card, Header } from '../../components/index'
 
 export const Homepage = () => {
 
@@ -21,13 +20,13 @@ export const Homepage = () => {
             key:3,
             title: <h2 className='text-white font-bold text-lg'>Criar <br></br>Feedbacks</h2>,
             backgroundColor: `bg-boschBlue`,
-            nav: '/'
+            nav: '/createform'
         },
         {
             key:4,
             title: <h2 className='text-white font-bold  text-lg'>Enviar <br></br>Formulário</h2>,
             backgroundColor: 'bg-boschTurquoise',
-            nav: '/register'
+            nav: '/'
         },
     ])
 

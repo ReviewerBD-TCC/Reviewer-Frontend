@@ -1,4 +1,4 @@
-import Header from "../../components/Header/Header"
+import {Header} from "../../components/Header/Header"
 import { SparkButton, SparkSearchBar, SparkNotification, SparkChip } from "@bosch-web-dds/spark-ui-react";
 import { useState } from "react";
 

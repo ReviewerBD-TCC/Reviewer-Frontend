@@ -1,5 +1,4 @@
 import React, { SelectHTMLAttributes, useState } from 'react'
-import DownArrow from '../../assets/icons/down.svg'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLDivElement | HTMLSelectElement> {
   labelText: string;

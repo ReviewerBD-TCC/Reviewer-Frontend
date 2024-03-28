@@ -1,14 +1,32 @@
-import Header from "../../components/Header/Header"
 import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-ui-react"
+import { ToastContainer, Bounce, toast } from "react-toastify";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ClienteResolver } from "./ClienteResolver";
-import Api from "../../services/Api/Api";
-import { ChangeEvent, useState } from "react";
 import { UserData } from "../../interfaces/CreateUser";
+import { ClienteResolver } from "./ClienteResolver";
+import { useNavigate } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
+import {Header} from "../../components/index"
+import Api from "../../services/Api/Api";
 
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
+  const navigate = useNavigate()
+
+  const showToastMessage = () =>{
+    toast.success('Cadastro realizado com sucesso!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      }
+    );
+  }
 
   const { register, handleSubmit, setValue } = useForm({
     resolver: ClienteResolver,
@@ -29,11 +47,14 @@ function Register() {
   const createClient = (data: UserData) => Api.post('auth/register', data);
 
   const onSubmit: SubmitHandler<UserData> = async (values) => {
-    // console.log("")
     try {
       const { status, data } = await createClient(values);
       if (status === 201) {
         console.log('data: ', data)
+        showToastMessage()
+        setTimeout(()=>{
+          navigate('/')
+        }, 1500)
       }
     } catch (error) {
       console.error('Erro ao enviar o cliente:', error);
@@ -113,6 +134,7 @@ function Register() {
               ></SparkToggle>
               
                 <SparkButton text="Cadastrar" customWidth="15rem" type="submit" onClick={handleSubmit(onSubmit)} />
+                <ToastContainer/>
             </form>
           </div>
         </div>
@@ -120,4 +142,5 @@ function Register() {
     </div>
   )
 }
+
 export default Register

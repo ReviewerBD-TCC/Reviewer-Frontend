@@ -1,8 +1,8 @@
-import Header from "../../components/Header/Header"
+import {Header} from "../../components/Header/Header"
 import { SparkButton, SparkNotification} from "@bosch-web-dds/spark-ui-react"
-import Input from "../../components/Input/Input"
+import {Input} from "../../components/Input/Input"
 import useModal from "../../hooks/useModal";
-import Modal from "../../components/Modal/ModalAdd";
+import ModalAdd from "../../components/Modal/ModalAdd";
 
 import api from "../../services/Api/Api";
 
@@ -93,7 +93,7 @@ function QuestionDb(props: QuestionProps) {
                 </div>
                 <div className="2xl:w-[100%] flex flex-col gap-8 justify-end items-end lg:w-[90%]">
                     <SparkButton text="Adicionar pergunta" customWidth="12rem" onClick={toggle}/>
-                    <Modal title="Criação de pergunta" id={props.id} activeValue={props.active} titlePtValue={props.questionPt} titleEnValue={props.questionEn} isOpen={isOpen} toggle={toggle}/>
+                    <ModalAdd title="Criação de pergunta" id={props.id} activeValue={props.active} titlePtValue={props.questionPt} titleEnValue={props.questionEn} isOpen={isOpen} toggle={toggle}/>
                 </div>
             </div>
           </div>

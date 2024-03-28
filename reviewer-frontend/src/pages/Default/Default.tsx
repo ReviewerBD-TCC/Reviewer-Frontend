@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Def from "../../components/Default/Default";
-import Header from "../../components/Header/Header";
-
+import {Header} from "../../components/Header/Header";
+import { Default } from "components";
 
 const Default: React.FC = () => {
   const [bgColor, setBgColor] = useState("#D0D0D0");
@@ -13,7 +12,7 @@ const Default: React.FC = () => {
   return (
     <>
       <Header />
-      <Def bgColor={bgColor} onFunction={changeColor}/>
+      <Default bgColor={bgColor} onFunction={changeColor}/>
     </>
   );
 };

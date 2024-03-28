@@ -1,5 +1,5 @@
 import React from 'react'
-import Question from '../Question/Question'
+import {Question} from '../Question/Question'
 
 interface InputProps {
   id: number,

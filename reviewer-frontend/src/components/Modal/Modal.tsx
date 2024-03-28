@@ -45,8 +45,6 @@ const Modal:React.FC<ModalProps> = (props) => {
         resolver: zodResolver(schema),
       });
     
-    
-
     async function updateQuestion(props :ModalProps) {
         try{
             const response: AxiosResponse = await api.put(
