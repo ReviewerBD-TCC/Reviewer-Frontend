@@ -32,12 +32,30 @@ function Register() {
     resolver: ClienteResolver,
   });
 
+  const navigate = useNavigate();
+
+
   function handleToggle(e: ChangeEvent<HTMLInputElement>){
     const newToggleValue = e.target.checked;
     setToggle(newToggleValue);
   }
 
-  const createClient = (data: UserData) => Api.post('auth/register', data);
+  const createClient = (data: UserData) => api.post('auth/register', data);
+
+  const showToastMessage = () =>{
+    toast.success('Usuário cadastrado com sucesso!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+  }
+
 
   const onSubmit: SubmitHandler<UserData> = async (values) => {
 
@@ -56,9 +74,6 @@ function Register() {
     }
   };
 
-  const handleSearch = (fieldName: string, value: string | number | boolean) => {
-    // console.log(`Campo: ${fieldName}, Valor: ${value}`);    
-  };
 
   return (
     <div className="w-full h-screen flex flex-col">

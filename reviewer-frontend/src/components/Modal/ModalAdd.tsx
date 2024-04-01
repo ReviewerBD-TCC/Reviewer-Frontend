@@ -1,10 +1,14 @@
-import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
-import api from "../../services/Api/Api";
+import api from "../../api/Api";
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z  from 'zod' 
 import { useForm } from 'react-hook-form'
+
+import { ToastContainer, Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = z.object({
     titlePtValue: z.string(),
@@ -16,7 +20,6 @@ interface ModalProps{
     id: number,
     titlePtValue: string,
     titleEnValue: string,
-    activeValue: boolean,
     title: string,
     children?: ReactNode;
     isOpen: boolean;
@@ -27,9 +30,6 @@ const Modal:React.FC<ModalProps> = (props: ModalProps) => {
 
     const id = props.id
     const token = localStorage.getItem('token')
-
-    // const dropdownOptions =
-    //  '[{"label":"Dissertativa","value":"2"}]'
 
     const {
         handleSubmit,
@@ -43,6 +43,19 @@ const Modal:React.FC<ModalProps> = (props: ModalProps) => {
       });
     
     
+    const showToastMessage = () =>{
+        toast.success('Pergunta cadastrada com sucesso!', {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
 
     async function updateQuestion(props :ModalProps) {
         try{
@@ -51,14 +64,16 @@ const Modal:React.FC<ModalProps> = (props: ModalProps) => {
                 {
                     questionPt: props.titlePtValue,
                     questionEn: props.titleEnValue,
-                    active: props.activeValue,
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
                     }
                 }
             );
-            console.log(response.data.question);
+            showToastMessage()
+            setTimeout(()=>{
+                window.location.reload()
+            }, 1500)
         }catch(error){
             console.log(error)
         }
@@ -73,9 +88,6 @@ const Modal:React.FC<ModalProps> = (props: ModalProps) => {
                         {props.children}
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
-                            <div className="flex justify-end items-end">
-                                <SparkToggle whenChange={()=>{}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={props.activeValue}/>
-                            </div>
                             <div className="flex flex-col gap-4">
                                 <SparkTextfield {...register('titlePtValue')} label="Português" value={props.titlePtValue} placeholder="Digite a pergunta em português"/>
                                 <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
@@ -87,6 +99,7 @@ const Modal:React.FC<ModalProps> = (props: ModalProps) => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
             )}
         </>

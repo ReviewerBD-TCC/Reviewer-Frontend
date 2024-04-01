@@ -1,7 +1,7 @@
 import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
 import React, { ReactNode } from "react"
-import api from "../../services/Api/Api";
+import api from "../../api/Api";
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z  from 'zod' 
@@ -60,6 +60,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                 }
             );
             console.log(response.data.question);
+            window.location.reload()
         }catch(error){
             console.log(error)
         }
