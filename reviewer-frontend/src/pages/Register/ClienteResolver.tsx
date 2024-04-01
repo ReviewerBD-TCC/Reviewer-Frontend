@@ -1,14 +1,14 @@
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-const ClienteValidationSchema = yup.object({
-  name: yup.string().required(),    
-  email: yup.string().required(),     
-  password: yup.string().required(),  
-  gkz: yup.string().required(), 
-  manager: yup.string().required(),   
-  user: yup.string().required(),  
-  type: yup.string().required(),
-});
+const ClienteValidationSchema = z.object({
+  name: z.string(),
+  email: z.string().email({message: "Insira um email valido"}),
+  password: z.string().min(6, 'password is too short'),
+  gkz: z.string(), 
+  manager: z.string(),
+  user: z.string(),  
+  type: z.string(),
+})
 
-export const ClienteResolver = yupResolver(ClienteValidationSchema);
+export const ClienteResolver = zodResolver(ClienteValidationSchema)

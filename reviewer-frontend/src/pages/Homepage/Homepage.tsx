@@ -33,12 +33,12 @@ export const Homepage = () => {
   return (
     <div className={`bg-[#D0D0D0] w-full h-screen flex justify-center items-center flex-col`}>
         <Header/>
-            <div className="bg-boschWhite h-[100vh] w-[90%] flex items-center justify-center flex-col">
-                <div className='bg-[#fff] w-[90%] h-full flex flex-col justify-center items-center'>
-                    <div className='w-[95%] h-16 flex'>
-                        <h1 className='font-bold text-3xl'>Administrator panel</h1>
+            <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center flex-col">
+                <div className='bg-[#fff] w-[85%] h-full flex flex-col justify-center items-center'>
+                    <div className='w-full h-16 flex'>
+                        <h1 className='font-bold text-3xl'>Painel administrador</h1>
                     </div>
-                    <div className='w-[95%] h-2/4 flex justify-between items-center flex-row'>
+                    <div className='w-full h-2/4 flex justify-between items-center flex-row'>
                         {cardList.map((i:any) => (
                             <Card key={i.key} text={i.title} backgroundColor={i.backgroundColor} nav={i.nav}/>
                         ))}

@@ -28,25 +28,19 @@ function Register() {
     );
   }
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, formState: {isValid, errors} } = useForm({
     resolver: ClienteResolver,
   });
 
   function handleToggle(e: ChangeEvent<HTMLInputElement>){
     const newToggleValue = e.target.checked;
-
-    if(newToggleValue == true){
-      setValue("type", "ROLE_ADMIN")
-    }
-    // else{
-    //   setValue("type", "ROLE_USER")
-    // }
     setToggle(newToggleValue);
   }
 
   const createClient = (data: UserData) => Api.post('auth/register', data);
 
   const onSubmit: SubmitHandler<UserData> = async (values) => {
+
     try {
       const { status, data } = await createClient(values);
       if (status === 201) {
@@ -57,6 +51,7 @@ function Register() {
         }, 1500)
       }
     } catch (error) {
+      console.log(values.type)
       console.error('Erro ao enviar o cliente:', error);
     }
   };
@@ -66,12 +61,12 @@ function Register() {
   };
 
   return (
-    <div className="w-full h-screen">
-      <Header />
-      <div className={`bg-[#D0D0D0] w-full h-auto overflow-hidden flex justify-center items-center`}>
-        
-        <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
-          <div className="w-[1234px] h-[729px] flex flex-col justify-center items-center gap-8">
+    <div className="w-full h-screen flex flex-col">
+      <Header/>
+      <div className={`bg-[#D0D0D0] flex-grow w-full h-auto flex justify-center`}>
+        <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center p-10">
+          
+          <div className="w-[1234px] h-auto flex flex-col justify-center items-center gap-8">
             <div className="w-[50%] flex flex-col justify-center items-start">
               <h1 className="font-bold text-4xl text-start w-full ">Cadastro</h1>
               <p className="text-start w-full text-base">Adicione um colaborador ao seu time</p>
@@ -122,18 +117,15 @@ function Register() {
               <SparkToggle 
                 guid="1" 
                 rightLabel="usuario administrador" 
-                disabled={false} 
+                disabled={false}
                 {...register("type", {
-                  setValueAs: (value) => {
-                    handleSearch("type", value);
-                    return value; 
-                  },
+                  value: toggle === true ? "ROLE_ADMIN" : "ROLE_USER"
                 })}
             
                 whenChange={handleToggle}
               ></SparkToggle>
               
-                <SparkButton text="Cadastrar" customWidth="15rem" type="submit" onClick={handleSubmit(onSubmit)} />
+                <SparkButton disabled={!isValid} text="Cadastrar" customWidth="15rem" type="submit" onClick={handleSubmit(onSubmit)} />
                 <ToastContainer/>
             </form>
           </div>
