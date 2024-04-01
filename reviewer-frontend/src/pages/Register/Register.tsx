@@ -62,9 +62,6 @@ function Register() {
     }
   };
 
-  const handleSearch = (fieldName: string, value: string | number | boolean) => {
-    // console.log(`Campo: ${fieldName}, Valor: ${value}`);    
-  };
 
   return (
     <div className="w-full h-screen">
