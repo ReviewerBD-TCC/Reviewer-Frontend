@@ -62,6 +62,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                 }
             );
             console.log(response.data.question);
+            window.location.reload()
         }catch(error){
             console.log(error)
         }

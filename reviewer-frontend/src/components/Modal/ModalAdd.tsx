@@ -8,6 +8,9 @@ import  z  from 'zod'
 
 import { useForm } from 'react-hook-form'
 
+import { ToastContainer, Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
@@ -30,9 +33,6 @@ const Modal:React.FC<ModalProps> = (props) => {
 
     const token = localStorage.getItem('token')
 
-    // const dropdownOptions =
-    //  '[{"label":"Dissertativa","value":"2"}]'
-
     const {
         handleSubmit,
         register,
@@ -45,6 +45,19 @@ const Modal:React.FC<ModalProps> = (props) => {
       });
     
     
+    const showToastMessage = () =>{
+        toast.success('Pergunta cadastrada com sucesso!', {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
 
     async function updateQuestion(props :ModalProps) {
         try{
@@ -59,7 +72,10 @@ const Modal:React.FC<ModalProps> = (props) => {
                     }
                 }
             );
-            console.log(response.data.question);
+            showToastMessage()
+            setTimeout(()=>{
+                window.location.reload()
+            }, 1500)
         }catch(error){
             console.log(error)
         }
@@ -84,6 +100,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
             )}
         </>
