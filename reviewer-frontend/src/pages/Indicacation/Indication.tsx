@@ -53,9 +53,6 @@ function Indication() {
 
         setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, value.name]);
         console.log(value.id)
-
-        
-
         addChip(value);
 
       }
@@ -89,7 +86,7 @@ function Indication() {
         <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center">
           <form className="w-[80%] h-auto flex flex-col justify-center gap-10">
             <div className="flex flex-col gap-2 mb-10">
-              <h1 className="font-bold text-4xl">Olá Santos, Keven.</h1>
+              <h1 className="font-bold text-4xl">Olá Keven Santos.</h1>
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
             </div>
             <SelectedIndication
@@ -117,7 +114,6 @@ function Indication() {
             <p>Usuários selecionados:
               {selectedUsers.length}
             </p>
-
           </form>
         </div>
       </div>
