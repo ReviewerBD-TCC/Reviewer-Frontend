@@ -15,7 +15,7 @@ export const Homepage = () => {
             key:2,
             title: <h2 className='text-white font-bold'>Banco de <br></br>perguntas</h2>,
             backgroundColor: 'bg-boschPurple',
-            nav: '/home'
+            nav: '/questions'
         },
         {
             key:3,
