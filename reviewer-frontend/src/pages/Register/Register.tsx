@@ -6,6 +6,10 @@ import api from "../../api/Api";
 import { ChangeEvent, useState } from "react";
 import { UserData } from "../../interfaces/CreateUser";
 
+import { ToastContainer, Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
@@ -13,6 +17,9 @@ function Register() {
   const { register, handleSubmit, setValue } = useForm({
     resolver: ClienteResolver,
   });
+
+  const navigate = useNavigate();
+
 
   function handleToggle(e: ChangeEvent<HTMLInputElement>){
     const newToggleValue = e.target.checked;
@@ -25,11 +32,30 @@ function Register() {
 
   const createClient = (data: UserData) => api.post('auth/register', data);
 
+  const showToastMessage = () =>{
+    toast.success('Usuário cadastrado com sucesso!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+  }
+
+
   const onSubmit: SubmitHandler<UserData> = async (values) => {
     try {
       const { status, data } = await createClient(values);
       if (status === 201) {
         console.log('data: ', data)
+        showToastMessage()
+        setTimeout(()=>{
+        navigate('/home')
+      }, 1500)
       }
     } catch (error) {
       console.error('Erro ao enviar o cliente:', error);
@@ -113,6 +139,7 @@ function Register() {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   )
 }
