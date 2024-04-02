@@ -1,10 +1,8 @@
 import { SparkButton, SparkNotification, SparkActivityIndicator} from "@bosch-web-dds/spark-ui-react"
 import useModal from "../../hooks/useModal";
 import { ModalAdd, Input, Header } from "../../components/index";
-import error404 from "../../assets/images/404.png";
-
+// import error404 from "../../assets/images/404.png";
 import api from "../../api/Api";
-
 import { useQuery } from "react-query";
 
 interface QuestionProps{
@@ -26,7 +24,6 @@ function QuestionDb(props: QuestionProps) {
     });
     return response.data;
   },)
-
 
   return (
     <div className="h-screen">
@@ -50,13 +47,13 @@ function QuestionDb(props: QuestionProps) {
                       <div></div>
                       <div className="flex justify-center">
                         {isLoading&&<SparkActivityIndicator/>}
-                        {error&&  <img src={error404} alt="GIF 404" />}
+                        {/* {error&&  <img src={error404} alt="GIF 404" />} */}
                       </div>
                     </div>
                 </div>
                 <div className="2xl:w-[100%] flex flex-col gap-8 justify-end items-end lg:w-[90%]">
                     <SparkButton text="Adicionar pergunta" customWidth="12rem" onClick={toggle}/>
-                    <ModalAdd title="Criação de pergunta" id={props.id} activeValue={props.active} titlePtValue={props.questionPt} titleEnValue={props.questionEn} isOpen={isOpen} toggle={toggle}/>
+                    {/* <ModalAdd title="Criação de pergunta" id={props.id} activeValue={props.active} titlePtValue={props.questionPt} titleEnValue={props.questionEn} isOpen={isOpen} toggle={toggle}/> */}
                 </div>
             </div>
           </div>

@@ -18,5 +18,5 @@ const handleLogin = (data: UserLogin) => api.post('/auth/login', data);
 //   }
 
 export const UserService = {
-    handleLogin
-  }
+  handleLogin
+}

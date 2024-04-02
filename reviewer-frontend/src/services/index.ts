@@ -1,5 +1,6 @@
-import { IndicationService } from "./indicationService";
+// import { IndicationService } from "./indicationService";
 
-export {
-    IndicationService
-}
+// export {
+//     IndicationService,
+
+// }
