@@ -1,4 +1,4 @@
-import { IndicationService } from "./indicationService";
+import { IndicationService } from "./IndicationService"
 
 export {
     IndicationService
