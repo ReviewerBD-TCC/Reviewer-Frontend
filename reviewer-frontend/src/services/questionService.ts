@@ -1,12 +1,20 @@
-import api from "../api/Api"
+import api from "../api/Api";
 import { useQuery } from "react-query";
 
-
-const { data: responseList = [], isLoading, error } = useQuery("question", async () => {
-    const response = await api.get('question', {
+const useQuestions = async (token: string | null) => {
+  try {
+    const response = await api.get('/question', {
       headers: {
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       }
+      ,
     });
     return response.data;
-  },)
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const QuestionService = {
+  useQuestions
+};
