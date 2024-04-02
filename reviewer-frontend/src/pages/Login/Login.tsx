@@ -1,18 +1,12 @@
-import api from '../../api/Api'
-
-import { AxiosResponse } from 'axios'
 import Supergraphic from '../../assets/images/Supergraphic.png'
 import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod'
-
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
-
-import * as React from 'react'
 import { UserService } from '../../services/UserService'
 import { UserLogin } from '../../interfaces/LoginUser'
 
