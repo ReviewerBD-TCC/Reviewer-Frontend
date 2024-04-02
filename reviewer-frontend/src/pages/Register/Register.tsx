@@ -6,8 +6,7 @@ import { ClienteResolver } from "./ClienteResolver";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { Header } from "../../components/index"
-import Api from "../../services/Api/Api";
-
+import api from "api/Api";
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
