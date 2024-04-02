@@ -1,19 +1,19 @@
 import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-ui-react"
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { UserData } from "../../interfaces/CreateUser";
+// import { UserData } from "../../interfaces/CreateUser";
 import { ClienteResolver } from "./ClienteResolver";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { Header } from "../../components/index"
-import Api from "../../services/Api/Api";
-
+import { onSubmit } from "services/CreateUserService"; 
+// import api from "../../api/Api";
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
-  const { register, handleSubmit, setValue, formState: {isValid, errors} } = useForm({
+  const { register, handleSubmit, setValue, formState: {isValid} } = useForm({
     resolver: ClienteResolver,
   });
 
@@ -22,40 +22,41 @@ function Register() {
     setToggle(newToggleValue);
   }
 
-  const createClient = (data: UserData) => Api.post('auth/register', data);
+  // const createClient = (data: UserData) => api.post('auth/register', data);
 
-  const showToastMessage = () =>{
-    toast.success('Usuário cadastrado com sucesso!', {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-      });
-  }
+  // const showToastMessage = () =>{
+  //   toast.success('Usuário cadastrado com sucesso!', {
+  //     position: "top-right",
+  //     autoClose: 1500,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: "light",
+  //     transition: Bounce,
+  //     });
+  // }
 
+  // const onSubmit: SubmitHandler<UserData> = async (values) => {
 
-  const onSubmit: SubmitHandler<UserData> = async (values) => {
+  //   try {
+  //     const { status, data } = await createClient(values);
+  //     if (status === 201) {
+  //       console.log('data: ', data)
+  //       showToastMessage()
+  //       setTimeout(()=>{
+  //         navigate('/')
+  //       }, 1500)
+  //     }
+  //   } catch (error) {
+  //     console.error('Erro ao enviar o cliente:', error);
+  //   }
+  // };
 
-    try {
-      const { status, data } = await createClient(values);
-      if (status === 201) {
-        console.log('data: ', data)
-        showToastMessage()
-        setTimeout(()=>{
-          navigate('/')
-        }, 1500)
-      }
-    } catch (error) {
-      console.log(values.type)
-      console.error('Erro ao enviar o cliente:', error);
-    }
+  const handleSearch = (fieldName: string, value: string | number | boolean) => {
+    // console.log(`Campo: ${fieldName}, Valor: ${value}`);    
   };
-
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -76,7 +77,8 @@ function Register() {
                 },
               })}  whenChange={(event) => setValue("user", event.target.value)} placeholder="Nome de usuário" />
 
-              <SparkTextfield type="text" label="Nome" {...register("name", {
+              <SparkTextfield type="text" label="Nome" 
+              {...register("name", {
                 setValueAs: (value) => {
                   handleSearch("name", value);
                   return value; 
