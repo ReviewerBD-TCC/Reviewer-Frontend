@@ -31,7 +31,7 @@ export const Homepage = () => {
     ])
 
   return (
-    <div className={`bg-[#D0D0D0] w-full h-screen flex justify-center items-center flex-col`}>
+    <div className={`bg-[#fff] w-full h-screen flex justify-center items-center flex-col`}>
         <Header/>
             <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center flex-col">
                 <div className='bg-[#fff] w-[85%] h-full flex flex-col justify-center items-center'>
