@@ -15,7 +15,7 @@ function QuestionDb(props: QuestionProps) {
   const { isOpen, toggle } = useModal();
   const token = localStorage.getItem('token');
 
-  
+   
 
   const { data: responseList = [], isLoading, error } = useQuery("questions", () => QuestionService.useQuestions(token));
 

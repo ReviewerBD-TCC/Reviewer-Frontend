@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import * as React from 'react'
 import { UserService } from '../../services/UserService'
 import { UserLogin } from '../../interfaces/LoginUser'
+import { useAuth } from '../../context/AuthContext';
 
 const schema = z.object({
   email: z.string().email(),
@@ -24,6 +25,8 @@ const schema = z.object({
 type FormProps = z.infer<typeof schema>;
 
 function Login() {
+
+  const { setAccessToken, accessToken, setDetailsUser } = useAuth();
 
   const navigate = useNavigate();
 
