@@ -1,8 +1,8 @@
-import Header from "../../components/Header/Header";
+import { Header } from "components";
 import { SparkButton, SparkNotification, SparkChip } from "@bosch-web-dds/spark-ui-react";
 import { useEffect, useState } from "react";
 import { SelectedIndication } from "../../components/SelectedIndication/SelectedIndication";
-import { IndicationService } from "../../services/indicationService";
+import { IndicationService } from "../../services/index";
 import { CreateIndication } from "../../interfaces/CreateIndication";
 import { User } from "../../interfaces/CreateUser";
 import { IndicationResolver } from "../../validations/InterfaceSchema";

@@ -26,7 +26,7 @@ interface ModalProps{
     toggle: () => void
 }
 
-const Modal:React.FC<ModalProps> = (props: ModalProps) => {
+const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
 
     const id = props.id
     const token = localStorage.getItem('token')
@@ -107,4 +107,4 @@ const Modal:React.FC<ModalProps> = (props: ModalProps) => {
   }
   
 
-export default Modal
+export default ModalAdd

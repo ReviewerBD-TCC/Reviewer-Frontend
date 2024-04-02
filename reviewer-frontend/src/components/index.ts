@@ -5,6 +5,7 @@ import {Default} from "./Default/Default"
 import Modal from "./Modal/Modal"
 import { Select } from "./Select/Select"
 import {Question} from "./Question/Question"
+import ModalAdd from "./Modal/ModalAdd"
 
 export {
     Header,
@@ -14,4 +15,5 @@ export {
     Question,
     Select,
     Card,
+    ModalAdd
 }

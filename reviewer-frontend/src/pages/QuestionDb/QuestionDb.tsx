@@ -1,8 +1,6 @@
-import Header from "../../components/Header/Header"
 import { SparkButton, SparkNotification, SparkActivityIndicator} from "@bosch-web-dds/spark-ui-react"
-import Input from "../../components/Input/Input"
 import useModal from "../../hooks/useModal";
-import Modal from "../../components/Modal/ModalAdd";
+import { ModalAdd, Input, Header } from "../../components/index";
 import error404 from "../../assets/images/404.png";
 
 import api from "../../api/Api";
