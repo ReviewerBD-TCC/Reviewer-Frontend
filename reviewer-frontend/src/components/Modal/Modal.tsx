@@ -8,6 +8,8 @@ import  z  from 'zod'
 
 import { useForm } from 'react-hook-form'
 
+import { useAuth } from "context/AuthProvider";
+
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
@@ -29,7 +31,9 @@ const Modal:React.FC<ModalProps> = (props) => {
 
     const id = props.id
 
-    const token = localStorage.getItem('token')
+    const { accessToken } = useAuth();
+    const token = accessToken
+
 
     // const dropdownOptions =
     //  '[{"label":"Dissertativa","value":"2"}]'
