@@ -21,7 +21,7 @@ function Register() {
     setToggle(newToggleValue);
   }
 
-  const createClient = (data: UserData) => Api.post('auth/register', data);
+  const createClient = (data: UserData) => api.post('auth/register', data);
 
   const showToastMessage = () =>{
     toast.success('Usuário cadastrado com sucesso!', {
