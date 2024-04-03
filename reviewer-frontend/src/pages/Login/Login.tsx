@@ -12,10 +12,12 @@ import { ToastContainer, Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 
-import * as React from 'react'
+import React, { useEffect, useState } from 'react';
 import { UserService } from '../../services/UserService'
 import { UserLogin } from '../../interfaces/LoginUser'
-import { useAuth } from '../../context/AuthContext';
+
+import { UserData } from 'interfaces/CreateUser'
+import { useAuth } from 'context/AuthProvider'
 
 const schema = z.object({
   email: z.string().email(),
@@ -26,7 +28,7 @@ type FormProps = z.infer<typeof schema>;
 
 function Login() {
 
-  const { setAccessToken, accessToken, setDetailsUser } = useAuth();
+  const { setAccessToken, accessToken } = useAuth();
 
   const navigate = useNavigate();
 
@@ -60,11 +62,11 @@ function Login() {
     try {
       const { status, data } = await UserService.handleLogin(values);
 
-      if (status === 200) {
-        const token = data.token;
-        localStorage.setItem('token', token)
+      if (status === 200 && data['token']) {
+        setAccessToken(data['token']);
         showToastMessage()
         setTimeout(() => {
+          console.log(accessToken)
           navigate('/home')
         }, 1500)
       }
@@ -72,6 +74,8 @@ function Login() {
       console.error(error);
     }
   };
+
+  
 
   return (
 
