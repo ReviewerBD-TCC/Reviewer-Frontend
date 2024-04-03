@@ -24,7 +24,7 @@ function Register() {
 
   const createClient = (data: UserData) => api.post('auth/register', data);
 
-  const showToastMessage = () =>{
+  const showToastMessage = () => {
     toast.success('Usuário cadastrado com sucesso!', {
       position: "top-right",
       autoClose: 1500,
@@ -35,7 +35,19 @@ function Register() {
       progress: undefined,
       theme: "light",
       transition: Bounce,
-      });
+      }
+    );
+    toast.error('Não foi possível cadastrar o usuário', {
+      position: 'top-right',
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   }
 
   const onSubmit: SubmitHandler<UserData> = async (values) => {
@@ -61,7 +73,7 @@ function Register() {
   return (
     <div className="w-full h-screen flex flex-col">
       <Header/>
-      <div className={`bg-[#D0D0D0] flex-grow w-full h-auto flex justify-center`}>
+      <div className={`bg-[#fff] flex-grow w-full h-auto flex justify-center`}>
         <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center p-10">
           
           <div className="w-[1234px] h-auto flex flex-col justify-center items-center gap-8">

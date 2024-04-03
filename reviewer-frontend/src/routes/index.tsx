@@ -4,8 +4,6 @@ import Indication from "../pages/Indicacation/Indication";
 import QuestionDb from "../pages/QuestionDb/QuestionDb";
 import CreateForms from "../pages/CreateForms/CreateForms";
 import Login from "../pages/Login/Login";
-
-
 import { Homepage } from "../pages/Homepage/Homepage";
 
 export const router = createBrowserRouter([

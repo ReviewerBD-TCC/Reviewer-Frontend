@@ -4,14 +4,17 @@ import { Selected } from "../../components/Select/Selected"
 import { RenderFormContent } from "components"
 
 function CreateForms() {
-    const yearOpcoes = [2024, 2025, 2026]
+
+    const date: Number = new Date().getFullYear()
+    let yearOpcoes = [date]
+    // const yearOpcoes = [2024, 2025, 2026]
     const questionsOptions  = ['O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos. O que essa pessoa já faz, mas poderia estar fazendo mais?','O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.']
 
     return (
         <div className="h-auto min-h-screen w-full flex flex-col">
             <Header/>
             <div className={`bg-[#D0D0D0] w-full h-auto flex justify-center`}>
-                <div className="bg-boschWhite w-[90%] h-screen flex items-center justify-center p-10">
+                <div className="bg-boschWhite w-[90%] h-screen flex items-center justify-center">
                     <div className="w-[85%] h-auto flex flex-col gap-9">
                         <h1 className="text-3xl font-bold">Criação de formulário</h1>
                         <div className="flex justify-end">
@@ -42,6 +45,7 @@ function CreateForms() {
                         <div className="w-full flex justify-between items-center">
                             <SparkButton text="Adicionar pergunta" icon="add"/>
                             <SparkButton text="Finalizar" />
+                           
                         </div>
                     </div>
                 </div>
