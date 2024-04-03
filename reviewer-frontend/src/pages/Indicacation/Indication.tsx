@@ -88,6 +88,7 @@ function Indication() {
             <div className="flex flex-col gap-2 mb-10">
               <h1 className="font-bold text-4xl">Olá Keven Santos.</h1>
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
+              <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
             </div>
             <SelectedIndication
               labelText="Selecione o usuário"
