@@ -5,7 +5,7 @@ const handleLogin = (data: UserLogin) => api.post('/auth/login', data);
 
 const userDetails = async (token: string | null) => {
     try {
-      const response = await api.get('/users/me/', {
+      const response = await api.get('/users/me', {
         headers: {
           Authorization: `Bearer ${token}`
         }
