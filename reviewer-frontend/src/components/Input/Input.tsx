@@ -5,7 +5,7 @@ interface InputProps {
   id: number,
   titlePt:string,
   titleEn:string,
-  isActive:string,
+  isActive:boolean,
 }
 
 export const Input: React.FC<InputProps> = (props) => {
