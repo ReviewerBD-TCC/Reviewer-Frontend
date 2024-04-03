@@ -9,15 +9,20 @@ import api from "../../api/Api";
 
 import { useQuery } from "react-query";
 import { QuestionProps } from "interfaces/Question";
-import { QuestionService } from "services/QuestionService";
+import { QuestionService } from "services/questionService";
+import { useAuth } from "context/AuthProvider";
 
-function QuestionDb(props: QuestionProps) {
+function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
-  const token = localStorage.getItem('token');
+  const { accessToken } = useAuth();
 
    
 
-  const { data: responseList = [], isLoading, error } = useQuery("questions", () => QuestionService.useQuestions(token));
+  const { data: responseList = [], isLoading, error } = useQuery("questions", () => {
+    console.log(accessToken);
+    return QuestionService.useQuestions(accessToken);  
+  });
+
 
   return (
     <div className="h-screen">
@@ -29,7 +34,7 @@ function QuestionDb(props: QuestionProps) {
                     <h1 className="font-bold text-4xl text-start w-full ">Banco de perguntas</h1>
                     <div className="w-[100%]">
                       <SparkNotification type="bar" variant="neutral" icon="info-i">
-                          <p>Estas são perguntas automáticas, é possível ativa-las ou desativa-las.</p>
+                          <p>É possível ativar ou desativar essas perguntas.</p>
                       </SparkNotification>
                     </div>
                     <div className="w-[100%] flex flex-col gap-4 ">
