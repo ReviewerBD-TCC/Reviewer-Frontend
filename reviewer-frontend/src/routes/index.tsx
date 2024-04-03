@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import {  RouterProvider, createBrowserRouter } from "react-router-dom";
 import Register from "../pages/Register/Register";
 import Indication from "../pages/Indicacation/Indication";
 import QuestionDb from "../pages/QuestionDb/QuestionDb";
@@ -8,7 +8,8 @@ import Login from "../pages/Login/Login";
 
 import { Homepage } from "../pages/Homepage/Homepage";
 
-export const router = createBrowserRouter([
+
+export const route = createBrowserRouter([
     {
       path: "/",
       element: <Login/>
@@ -34,3 +35,9 @@ export const router = createBrowserRouter([
       element: <CreateForms/>
     }
   ]);
+
+  export default function AppRoutes() {
+    return (
+          <RouterProvider router={route}/>
+    );
+  }
