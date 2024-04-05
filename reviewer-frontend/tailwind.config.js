@@ -29,6 +29,9 @@ export default {
       },
       backgroundPosition:{
         'drop-position': 'center right 1rem'
+      },
+      screens: {
+        'notebook': '1280px'
       }
     },
   

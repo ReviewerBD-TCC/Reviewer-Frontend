@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const ClienteValidationSchema = z.object({
   name: z.string(),
   email: z.string().email({message: "Insira um email valido"}),
-  password: z.string().min(6, 'password is too short'),
+  password: z.string().min(8),
   gkz: z.string(), 
   manager: z.string(),
   user: z.string(),  

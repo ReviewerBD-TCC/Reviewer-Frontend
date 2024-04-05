@@ -6,13 +6,14 @@ import { ClienteResolver } from "./ClienteResolver";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { Header } from "../../components/index"
+// import { onSubmit } from "services/CreateUserService"; 
 import api from "../../api/Api";
 
 function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
   const navigate = useNavigate()
 
-  const { register, handleSubmit, setValue, formState: {isValid, errors} } = useForm({
+  const { register, handleSubmit, setValue, formState: {isValid} } = useForm({
     resolver: ClienteResolver,
   });
 
@@ -23,7 +24,7 @@ function Register() {
 
   const createClient = (data: UserData) => api.post('auth/register', data);
 
-  const showToastMessage = () =>{
+  const showToastMessage = () => {
     toast.success('Usuário cadastrado com sucesso!', {
       position: "top-right",
       autoClose: 1500,
@@ -34,9 +35,20 @@ function Register() {
       progress: undefined,
       theme: "light",
       transition: Bounce,
-      });
+      }
+    );
+    toast.error('Não foi possível cadastrar o usuário', {
+      position: 'top-right',
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   }
-
 
   const onSubmit: SubmitHandler<UserData> = async (values) => {
 
@@ -50,16 +62,18 @@ function Register() {
         }, 1500)
       }
     } catch (error) {
-      console.log(values.type)
       console.error('Erro ao enviar o cliente:', error);
     }
   };
 
+  const handleSearch = (fieldName: string, value: string | number | boolean) => {
+    // console.log(`Campo: ${fieldName}, Valor: ${value}`);    
+  };
 
   return (
     <div className="w-full h-screen flex flex-col">
       <Header/>
-      <div className={`bg-[#D0D0D0] flex-grow w-full h-auto flex justify-center`}>
+      <div className={`bg-[#fff] flex-grow w-full h-auto flex justify-center`}>
         <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center p-10">
           
           <div className="w-[1234px] h-auto flex flex-col justify-center items-center gap-8">
@@ -75,7 +89,8 @@ function Register() {
                 },
               })}  whenChange={(event) => setValue("user", event.target.value)} placeholder="Nome de usuário" />
 
-              <SparkTextfield type="text" label="Nome" {...register("name", {
+              <SparkTextfield type="text" label="Nome" 
+              {...register("name", {
                 setValueAs: (value) => {
                   handleSearch("name", value);
                   return value; 

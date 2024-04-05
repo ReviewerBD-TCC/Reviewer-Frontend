@@ -6,7 +6,6 @@ import Modal from "../../components/Modal/ModalAdd";
 import error404 from "../../assets/images/404.png";
 
 import api from "../../api/Api";
-
 import { useQuery } from "react-query";
 import { QuestionProps } from "interfaces/Question";
 import { QuestionService } from "services/questionService";
@@ -46,7 +45,7 @@ function QuestionDb(props?: QuestionProps) {
                       <div></div>
                       <div className="flex justify-center">
                         {isLoading&&<SparkActivityIndicator/>}
-                        {error&&  <img src={error404} alt="GIF 404" />}
+                        {/* {error&&  <img src={error404} alt="GIF 404" />} */}
                       </div>
                     </div>
                 </div>

@@ -4,8 +4,10 @@ import {Input} from "./Input/Input"
 import {Default} from "./Default/Default"
 import Modal from "./Modal/Modal"
 import { Select } from "./Select/Select"
+import { Selected } from "./Select/Selected"
 import {Question} from "./Question/Question"
 import ModalAdd from "./Modal/ModalAdd"
+import { RenderFormContent } from "./RenderFormContent/RenderFormContent"
 
 export {
     Header,
@@ -15,5 +17,7 @@ export {
     Question,
     Select,
     Card,
-    ModalAdd
+    ModalAdd,
+    Selected,
+    RenderFormContent,
 }
