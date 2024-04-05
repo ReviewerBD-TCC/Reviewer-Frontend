@@ -24,7 +24,7 @@ function Register() {
 
   const createClient = (data: UserData) => api.post('auth/register', data);
 
-  const showToastMessage = () => {
+  const showToastSuccessMessage = () => {
     toast.success('Usuário cadastrado com sucesso!', {
       position: "top-right",
       autoClose: 1500,
@@ -37,6 +37,9 @@ function Register() {
       transition: Bounce,
       }
     );
+  }
+
+  const showToastFailMessage = () => {
     toast.error('Não foi possível cadastrar o usuário', {
       position: 'top-right',
       autoClose: 2500,
@@ -56,12 +59,13 @@ function Register() {
       const { status, data } = await createClient(values);
       if (status === 201) {
         console.log('data: ', data)
-        showToastMessage()
+        showToastSuccessMessage()
         setTimeout(()=>{
           navigate('/')
         }, 1500)
       }
     } catch (error) {
+      showToastFailMessage()
       console.error('Erro ao enviar o cliente:', error);
     }
   };
