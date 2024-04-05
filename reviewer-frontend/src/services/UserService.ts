@@ -3,20 +3,21 @@ import { UserLogin } from "../interfaces/LoginUser";
 
 const handleLogin = (data: UserLogin) => api.post('/auth/login', data);
 
-// const infoClient = async (token) => {
-//     try {
-//       const response = await Api.get('api/v2/users/me/', {
-//         headers: {
-//           Authorization: `Bearer ${token}`
-//         }
-//       });
+const userDetails = async (token: string | null) => {
+    try {
+      const response = await api.get('/users/me', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+        ,
+      });
   
-//       return response;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 export const UserService = {
-  handleLogin
-}
+    handleLogin, userDetails
+};

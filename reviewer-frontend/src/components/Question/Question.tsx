@@ -8,7 +8,7 @@ import api from '../../api/Api';
 interface QuestionProps{
     titlePt: string;
     titleEn: string;
-    isActive: string;
+    isActive: boolean;
     id: number;
 }
 
@@ -44,7 +44,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
         <div className='p-2 flex justify-between items-center' onClick={toggle}>
             <div className='w-[90%] max-w-[90%]'>
                 {/* <p className='max-w-full overflow-x-scroll'>{props.titlePt}</p> */}
-                <input type="text" value={props.titlePt} className='bg-transparent w-full outline-none' />
+                <input type="text" defaultValue={props.titlePt} className='bg-transparent w-full outline-none' />
                 {/* <input>{props.titlePt}</input> */}
             </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} activeValue={props.isActive} isOpen={isOpen} toggle={toggle}/>

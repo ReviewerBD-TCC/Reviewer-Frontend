@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form'
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useAuth } from "context/AuthProvider";
+
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
@@ -29,7 +31,9 @@ interface ModalProps{
 const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
 
     const id = props.id
-    const token = localStorage.getItem('token')
+    const { accessToken } = useAuth();
+    const token = accessToken
+
 
     const {
         handleSubmit,
