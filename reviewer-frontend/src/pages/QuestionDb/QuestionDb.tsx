@@ -45,7 +45,7 @@ function QuestionDb(props?: QuestionProps) {
                       <div></div>
                       <div className="flex justify-center">
                         {isLoading&&<SparkActivityIndicator/>}
-                        {/* {error&&  <img src={error404} alt="GIF 404" />} */}
+                        {error&&  <img src={error404} alt="GIF 404" />}
                       </div>
                     </div>
                 </div>
