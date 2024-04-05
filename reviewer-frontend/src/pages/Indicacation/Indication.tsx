@@ -7,21 +7,24 @@ import { CreateIndication } from "../../interfaces/CreateIndication";
 import { User } from "../../interfaces/CreateUser";
 import { IndicationResolver } from "../../validations/InterfaceSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuth } from "context/AuthProvider"; 
 
 function Indication() {
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<User[]>([]);
 
   const [userListSelect, setUserListSelect] = useState<number[]>([])
-  const [user, setUsers] = useState<any[]>([]);
+  const [userList, setUsers] = useState<any[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const token = localStorage.getItem('token');
+  const { accessToken, user } = useAuth();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const { status, data } = await IndicationService.getUsers(token);
+        const { status, data } = await IndicationService.getUsers(accessToken);
         if (status === 200) {
+
+          console.log(user)
 
           const usernames = data.map(user => user);
 
@@ -32,19 +35,22 @@ function Indication() {
       }
     }
     fetchData();
-  }, [token]);
+  }, [accessToken]);
 
   const addChip = (value: User) => {
     if (chips.length < 5) {
+      console.log(value);
       setChips((prevChips) => [...prevChips, value]);
+      setUserListSelect((prevUserList) => [...prevUserList, value.id!]);
       setShowChip(true);
+      console.log(userListSelect);
     }
   };
 
   const removeChip = (item: User) => {
     setChips((prevChips) => prevChips.filter((chip) => chip !== item));
     setShowChip(false);
-    setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== item.name));
+    setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== item.name));
   };
 
   const handleUserSelect = (value: User) => {
@@ -58,7 +64,7 @@ function Indication() {
       }
     } else {
       removeChip(value);
-      setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== value.name));
+      setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== value.name));
     }
   };
 
@@ -68,8 +74,18 @@ function Indication() {
   });
 
   const onSubmit: SubmitHandler<CreateIndication> = async (values) => {
+    console.log(values)
+    console.log('bom dia')
     try {
-      const { status, data } = await IndicationService.createIndication(token, values);
+
+      const indicateds = userListSelect.map(userId => ({ userIndicated: userId }));
+
+      const requestData: CreateIndication = {
+        userIndication: user.id,
+        indicateds: indicateds
+      };
+
+      const { status, data } = await IndicationService.createIndication(accessToken, requestData);
       if (status === 201) {
 
         console.log('Indicação enviada com sucesso:', data);
@@ -92,7 +108,7 @@ function Indication() {
             </div>
             <SelectedIndication
               labelText="Selecione o usuário"
-              options={user.map(userFix => ({ name: userFix.name, id: userFix.id }))}
+              options={userList.map(userFix => ({ name: userFix.name, id: userFix.id }))}
               zIndex={50}
               onChange={handleUserSelect}
             />
@@ -110,7 +126,7 @@ function Indication() {
             </div> */}
 
             <div className="flex justify-end mt-20 ">
-              <SparkButton text="Enviar" type="submit" customWidth="8rem" onClick={handleSubmit(onSubmit)} />
+              <SparkButton text="Enviar" type="submit" customWidth="8rem" onChange={handleSubmit(onSubmit)} />
             </div>
             <p>Usuários selecionados:
               {selectedUsers.length}
