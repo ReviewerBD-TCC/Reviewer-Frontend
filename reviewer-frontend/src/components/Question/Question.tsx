@@ -4,6 +4,7 @@ import useModal from '../../hooks/useModal';
 import { AxiosResponse } from 'axios'
 import api from '../../api/Api';
 import { QuestionService } from 'services/questionService';
+import { useAuth } from 'context/AuthProvider';
 
 
 interface QuestionProps{
@@ -18,7 +19,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
     const { isOpen, toggle } = useModal();
     
     const id = props.id
-    const token = localStorage.getItem('token');
+    const token = useAuth()
 
 
     return (
@@ -30,7 +31,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
             </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} activeValue={props.isActive} isOpen={isOpen} toggle={toggle}/>
             <div className='max-w-[10%]'>
-                <SparkToggle guid="spark-toggle-right-label" selected={props.isActive} disabled={false} whenChange={()=>{}} onClick={()=>QuestionService.updateQuestionStatus(token, id)}/>
+                <SparkToggle guid="spark-toggle-right-label" selected={props.isActive} disabled={false} whenChange={()=>{}} onClick={()=>QuestionService.updateQuestion(token.accessToken, id)}/>
             </div>
     </div>
   )

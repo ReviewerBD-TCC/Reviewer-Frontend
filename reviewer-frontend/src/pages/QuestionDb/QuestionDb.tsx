@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import { QuestionProps } from "interfaces/Question";
 import { QuestionService } from "services/questionService";
 import { useAuth } from "context/AuthProvider";
+import { UserService } from "services/UserService";
 
 function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();

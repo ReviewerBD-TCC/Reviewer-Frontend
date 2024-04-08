@@ -1,3 +1,4 @@
+import { QuestionProps } from "interfaces/Question";
 import api, { headers } from "../api/Api";
 import { useQuery } from "react-query";
 
@@ -15,39 +16,30 @@ const useQuestions = async (token: string | null) => {
   }
 }
 
-const updateQuestionStatus = async (token: string | null, id: number | null) => {
-  try {
-    const currentQuestion = await api.get(`/question/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    const currentActiveValue = currentQuestion.data.active;
+async function updateQuestion(token: string | null, id: number) {
 
-    let newActiveValue;
-    if (currentActiveValue === true) {
-      newActiveValue = false;
-    } else {
-      newActiveValue = true;
-    }
-
-    const response = await api.patch(`/question/${id}`, {
-      active: newActiveValue
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    return response.data;
-  } catch (error) {
-    throw error;
+  try{
+      const response = await api.patch(
+          `question/${id}`,
+          {
+              active: true,
+          },{
+              headers: {
+                  'Authorization' : `Bearer ${token}`
+              }
+          }
+      );
+      console.log(response.data.question);
+      window.location.reload()
+  }catch(error){
+      console.log(error)
   }
 }
 
 
 
 
+
 export const QuestionService = {
-  useQuestions, updateQuestionStatus
+  useQuestions, updateQuestion
 };
