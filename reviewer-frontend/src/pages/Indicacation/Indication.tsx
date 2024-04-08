@@ -7,25 +7,26 @@ import { CreateIndication } from "../../interfaces/CreateIndication";
 import { User } from "../../interfaces/CreateUser";
 import { IndicationResolver } from "../../validations/InterfaceSchema";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { UserService } from "services/UserService";
+import { useAuth } from "context/AuthProvider";
 
 function Indication() {
   const [showChip, setShowChip] = useState(true);
   const [chips, setChips] = useState<User[]>([]);
-
-  const [userListSelect, setUserListSelect] = useState<number[]>([])
+  const [userListSelect, setUserListSelect] = useState<number[]>([]);
   const [user, setUsers] = useState<any[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const token = localStorage.getItem('token');
+  const token = useAuth();
+
+  const userData = UserService.userDetails(token.accessToken);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const { status, data } = await IndicationService.getUsers(token);
+        const { status, data } = await IndicationService.getUsers(token.accessToken);
         if (status === 200) {
-
           const usernames = data.map(user => user);
-
-          setUsers(usernames)
+          setUsers(usernames);
         }
       } catch (error) {
         console.error('Erro ao buscar usuários:', error);
@@ -36,13 +37,13 @@ function Indication() {
 
   const addChip = (value: User) => {
     if (chips.length < 5) {
-      setChips((prevChips) => [...prevChips, value]);
+      setChips(prevChips => [...prevChips, value]);
       setShowChip(true);
     }
   };
 
   const removeChip = (item: User) => {
-    setChips((prevChips) => prevChips.filter((chip) => chip !== item));
+    setChips(prevChips => prevChips.filter(chip => chip !== item));
     setShowChip(false);
     setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== item.name));
   };
@@ -50,18 +51,16 @@ function Indication() {
   const handleUserSelect = (value: User) => {
     if (value !== null && !selectedUsers.includes(value.name)) {
       if (selectedUsers.length < 5) {
-
         setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, value.name]);
-        console.log(value.id)
         addChip(value);
-
       }
+    } else if (selectedUsers.includes(value.name)) {
+      return;
     } else {
       removeChip(value);
-      setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(user => user !== value.name));
     }
   };
-
+  
 
   const { register, handleSubmit } = useForm({
     resolver: IndicationResolver,
@@ -71,7 +70,6 @@ function Indication() {
     try {
       const { status, data } = await IndicationService.createIndication(token, values);
       if (status === 201) {
-
         console.log('Indicação enviada com sucesso:', data);
       }
     } catch (error) {
@@ -86,7 +84,7 @@ function Indication() {
         <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center">
           <form className="w-[80%] h-auto flex flex-col justify-center gap-10">
             <div className="flex flex-col gap-2 mb-10">
-              <h1 className="font-bold text-4xl">Olá Keven Santos.</h1>
+              <h1 className="font-bold text-4xl">Olá {}.</h1>
               <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
               <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
             </div>
