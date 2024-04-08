@@ -1,9 +1,19 @@
-import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
+import { SparkActivityIndicator, SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
 import {Header} from "../../components/Header/Header"
 import { Selected } from "../../components/Select/Selected"
-// import { RenderFormContent } from "components"
+import { useQuery } from "react-query";
+import { QuestionService } from "services/questionService";
+import { useAuth } from "context/AuthProvider";
 
 function CreateForms() {
+    const { accessToken } = useAuth();
+    
+    const {data: responseList = [], isLoading, error} = useQuery("question", () => {
+        console.log(responseList)
+        console.log(accessToken)
+        return QuestionService.useQuestions(accessToken)
+    })
+
     const yearOptions = [2024, 2025, 2026]
     const questionsOptions  = ['O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos. O que essa pessoa já faz, mas poderia estar fazendo mais?','O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.']
 
@@ -31,19 +41,14 @@ function CreateForms() {
                         
                         <div className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center">
                             <div className="w-[90%]">
-                                <Selected zIndex={25} labelText="Pergunta" options={questionsOptions} />
+                                <Selected zIndex={0} labelText="Pergunta" options={responseList.map(item => item.questionPt)} />
                             </div>
+                        </div>
+                        <div className="w-full flex justify-center items-center">
+                            {isLoading&&<SparkActivityIndicator/>}
                         </div>
 
                     </div>
-                    {/* <div className="w-full h-[125px] flex justify-center items-center ">
-                        <div className="bg-[#F1F1F1] w-full h-full flex justify-center items-center">
-                            <div className="w-[90%]">
-                                <Selected zIndex={25} labelText="Pergunta" options={questionsOptions} />
-                                <SparkDropdown  label="Pergunta" options={questionsOptions} whenChange={()=>{}} />
-                            </div>
-                        </div>
-                    </div> */}
                     
                     <div className="w-full flex justify-between items-center">
                         <SparkButton text="Adicionar pergunta" icon="add"/>
