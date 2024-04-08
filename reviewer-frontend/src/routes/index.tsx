@@ -5,6 +5,7 @@ import QuestionDb from "../pages/QuestionDb/QuestionDb";
 import CreateForms from "../pages/CreateForms/CreateForms";
 import Login from "../pages/Login/Login";
 import { Homepage } from "../pages/Homepage/Homepage";
+import EmailIndicationUser from "pages/EmailIndicationUser/EmailIndicationUser";
 
 
 export const route = createBrowserRouter([
@@ -31,6 +32,10 @@ export const route = createBrowserRouter([
     {
       path: "/createform",
       element: <CreateForms/>
+    },
+    {
+      path: "/send-indication",
+      element: <EmailIndicationUser/>
     }
   ]);
 
