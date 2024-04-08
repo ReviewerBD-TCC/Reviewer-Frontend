@@ -31,7 +31,7 @@ export default {
         'drop-position': 'center right 1rem'
       },
       screens: {
-        'notebook': '1280px'
+        'laptop': '1024px'
       }
     },
   
