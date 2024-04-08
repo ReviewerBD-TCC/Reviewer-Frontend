@@ -2,9 +2,8 @@ import React, { SelectHTMLAttributes, useRef, useState } from 'react'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
-  options?: Array<string | number> | undefined;
+  options?: Array<string>;
   zIndex: number;
-  onClick?: () => void;
 }
 
 export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, ...rest) => {
@@ -19,24 +18,8 @@ export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, 
     setIsOpen(false);
   };
 
-  //função para que quando o usuario clicar fora do dropdown ou abrir outro dropdown o menu dele feche
-  // useEffect(() => {
-  //   const handler = (e: MouseEvent) => {
-  //     if(dropdownRef.current && dropdownRef.current.contains(e.target as Node)){
-  //       setIsOpen(true)
-  //     }
-  //   } 
-
-  //   document.addEventListener("click", handler)
-
-  //   return() => {
-  //     document.removeEventListener("click", handler)
-  //   }
-  // }, []);
-
-
   return (
-    <div className={`w-full w-max-full pb-1 flex flex-col h-12 bg-[#E0E2E5] border-b-[1px] border-black relative z-${zIndex}`} {...rest} onClick={() => setIsOpen(!isOpen)} ref={dropdownRef}>
+    <div className={`w-full w-max-full pb-1 flex flex-col h-12 bg-[#E0E2E5] relative z-${zIndex}`} {...rest} onClick={() => setIsOpen(!isOpen)} ref={dropdownRef}>
         <label className="mt-1 mr-4 ml-4 mb-auto text-xs w-auto" >
           {labelText}
         </label>
