@@ -6,6 +6,8 @@ import { mailSender } from 'services/EmailServices'
 import { EmailResolver } from 'validations/EmailSchema'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from 'context/AuthProvider'
+import ModalEmailConfirmation from 'components/Modal/ModalEmailConfirmation'
+import useModal from '../../hooks/useModal'
 
 export default function EmailIndicationUser() {
     const token:any = useAuth().accessToken
@@ -14,9 +16,11 @@ export default function EmailIndicationUser() {
 
     const responseTime = ["15 dias", "20 dias", "30 dias"]
     
-      const {getValues, handleSubmit, register } = useForm<Email>({
-        resolver: EmailResolver
-      });
+    const {getValues, handleSubmit, register } = useForm<Email>({
+      resolver: EmailResolver
+    });
+
+    const {isOpen, toggle} = useModal()
     
     const sendEmail: SubmitHandler<Email> = async (values) => {
        
@@ -47,13 +51,15 @@ export default function EmailIndicationUser() {
                   </div>
                   
                 </div>
-                <SparkTextfield placeholder='Para' {...register("to")} />
+                {/* <SparkTextfield placeholder='Para' {...register("to")} /> */}
                 <SparkTextfield placeholder='Cc' {...register("cc")} />
                 <SparkTextfield placeholder='Digite o assunto do e-mail' {...register("subject")}/>
                 <SparkTextarea placeholder='Corpo do e-mail' {...register("body")}/>
                 
                 <div className='flex justify-end'>
-                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar' onClick={()=>handleSubmit(sendEmail(getValues()))}/>
+                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar' onClick={toggle}/>
+                    <ModalEmailConfirmation isOpen={isOpen} toggle={toggle}/>
+                    {/* <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar' onClick={()=>handleSubmit(sendEmail(getValues()))}/> */}
                 </div>
             </form>
         </div>
