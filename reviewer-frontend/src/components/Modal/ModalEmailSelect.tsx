@@ -16,7 +16,7 @@ interface ModalProps{
     toggle: () => void
 }
 
-const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
+const ModalEmailSelect:React.FC<ModalProps> = (props) => {
 
     const { accessToken } = useAuth();
     const token = accessToken
@@ -45,4 +45,4 @@ const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
   }
   
 
-export default ModalEmailConfirmation
+export default ModalEmailSelect
