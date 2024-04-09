@@ -14,6 +14,7 @@ import { UserLogin } from '../../interfaces/LoginUser'
 
 import { UserData } from 'interfaces/CreateUser'
 import { useAuth } from 'context/AuthProvider'
+import api from '../../api/Api';
 
 const schema = z.object({
   email: z.string().email(),
@@ -60,6 +61,7 @@ function Login() {
 
       if (status === 200 && data['token']) {
         setAccessToken(data['token']);
+        api.defaults.headers.Authorization = `Bearer ${data["token"]}`
         showToastMessage()
         setTimeout(() => {
           console.log(accessToken)
