@@ -1,16 +1,7 @@
-// {
-//     "userIndication": 0,
-//     "indicateds": [
-//       {
-//         "userIndicated": 0
-//       }
-//     ]
-//   }
+import { UserIndicatedInterface } from "./UserIndicated";
 
 
 export interface CreateIndication{
-    userIndication: number;
-    indicateds: {
-        userIndicated: number;
-    }[]
+    userIndication?: number;
+    indicateds: UserIndicatedInterface[];
 }
