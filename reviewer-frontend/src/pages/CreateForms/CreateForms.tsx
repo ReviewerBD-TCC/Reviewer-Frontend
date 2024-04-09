@@ -4,11 +4,13 @@ import { Selected } from "../../components/Select/Selected"
 import { RenderFormContent } from "components";
 import { useState } from "react";
 import { useAuth } from "context/AuthProvider";
+import api from "../../api/Api";
 import { useForm } from "react-hook-form";
+import { CreateFormResolver } from "validations/CreateFormResolver";
 import { CreateForm } from "interfaces/CreateForm";
-import api from "api/Api";
+import { AxiosResponse } from "axios";
 
-function CreateForms() {
+export const CreateForms = () => {
     const { accessToken } = useAuth();    
     const [components, setComponents]: any = useState([]);
     const yearOptions = [2024, 2025, 2026]
@@ -17,7 +19,28 @@ function CreateForms() {
         setComponents([...components, <RenderFormContent key={components.length} />]);
     }
     
+    const { handleSubmit, register } = useForm<CreateForm>({
+        defaultValues:{questions: [], title: '', year: 2024},
+        mode: "onSubmit",
+        reValidateMode: 'onSubmit',
+        resolver: CreateFormResolver
+    })
 
+    const createForm = async () =>{
+        try{
+            const response: AxiosResponse = await api.post(
+                `form`,
+                {
+                    title: '',
+                    year: '',
+                    questions: []
+                }
+            )
+
+        }catch(error){
+            console.error(error)
+        }
+    }
 
     return (
         <div className="h-auto min-h-screen w-full flex flex-col items-center">
@@ -29,7 +52,7 @@ function CreateForms() {
                     </div>
                     <div className="w-full flex flex-row justify-between">
                         <div className="w-[74%]">
-                            <SparkTextfield label="Título do feedback" placeholder="Feedback" />
+                            <SparkTextfield label="Título do feedback" placeholder="Feedback" onChange={() => console.log()} />
                         </div>
                         <div className="w-[22%]">
                             <Selected zIndex={50} labelText="Ano" options={yearOptions} />
@@ -43,7 +66,6 @@ function CreateForms() {
                         }
                     </form>
                         
-                        
                     <div className="w-full flex justify-between items-center">
                         <SparkButton text="Adicionar pergunta" icon="add" onClick={addComponent}/>
                         <SparkButton text="Finalizar" /> 
@@ -54,4 +76,3 @@ function CreateForms() {
     )
 }
 
-export default CreateForms
