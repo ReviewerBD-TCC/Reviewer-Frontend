@@ -2,7 +2,7 @@ import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-u
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { UserData } from "../../interfaces/CreateUser";
-import { ClienteResolver } from "./ClienteResolver";
+import { ClienteResolver } from "../../validations/ClienteResolver";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { Header } from "../../components/index"
