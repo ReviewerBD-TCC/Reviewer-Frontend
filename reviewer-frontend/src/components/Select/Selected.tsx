@@ -2,7 +2,7 @@ import React, { SelectHTMLAttributes, useRef, useState } from 'react'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
-  options?: Array<string>;
+  options?: Array<string | number>;
   zIndex: number;
 }
 
@@ -25,7 +25,7 @@ export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, 
         </label>
       
       {isOpen && (
-        <div id='menu-dropdown'  className="mt-7 pt-1 pl-4 pb-1 w-max-[90%] w-full min-h-[115px] h-auto text-start bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] overflow-y-auto">
+        <div id='menu-dropdown'  className="mt-7 pt-1 pl-4 pb-1 w-max-[90%] w-full min-h-[115px] h-auto text-start bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] overflow-y-auto scroll-smooth">
           {
             options?.map((opcao, index) => (
               <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => {handleOptionClick(opcao); console.log(opcao)}}>{opcao}</div>
