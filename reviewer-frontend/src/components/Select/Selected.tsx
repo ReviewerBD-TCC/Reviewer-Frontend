@@ -7,7 +7,6 @@ export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | 
 }
 
 export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, ...rest) => {
-
   const [isOpen, setIsOpen] = useState(false)
   const [selectedValue, setSelectedValue] = useState(null);
   const dropdownRef = useRef<HTMLButtonElement | undefined>()
@@ -23,7 +22,6 @@ export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, 
         <label className="mt-1 mr-4 ml-4 mb-auto text-xs w-auto" >
           {labelText}
         </label>
-      
       {isOpen && (
         <div id='menu-dropdown'  className="mt-7 pt-1 pl-4 pb-1 w-max-[90%] w-full min-h-[115px] h-auto text-start bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] overflow-y-auto scroll-smooth">
           {
