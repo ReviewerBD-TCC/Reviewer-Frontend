@@ -1,19 +1,35 @@
 import { SparkButton, SparkTextarea, SparkTextfield } from '@bosch-web-dds/spark-ui-react'
 import { Header, Input, Selected } from 'components'
+import { Email } from 'interfaces/Emaill'
 import React from 'react'
 import { mailSender } from 'services/EmailServices'
+import { EmailResolver } from 'validations/EmailSchema'
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuth } from 'context/AuthProvider'
 
 export default function EmailIndicationUser() {
+    const token:any = useAuth().accessToken
 
     const yearsOptions = [2024, 2025, 2026]
 
     const responseTime = ["15 dias", "20 dias", "30 dias"]
-
-    // async function sendEmail() {
-    //     try{
-            
-    //     }
-    // }
+    
+      const {getValues, handleSubmit, register } = useForm<Email>({
+        resolver: EmailResolver
+      });
+    
+    const sendEmail: SubmitHandler<Email> = async (values) => {
+       
+        mailSender(values, token);
+        
+    }
+    const data:Email = {
+      to:getValues("to"),
+      bcc:[getValues("bcc")],
+      body:getValues("body"),
+      subject:getValues("subject"),
+      cc:[getValues("cc")]
+     }
 
   return (
     <div className='h-auto min-h-screen w-full flex flex-col items-center'>
@@ -31,13 +47,13 @@ export default function EmailIndicationUser() {
                   </div>
                   
                 </div>
-               
-                <SparkTextfield placeholder='Digite o endereço de e-mail para ser enviado como cópia' />
-                <SparkTextfield placeholder='Digite o assunto do e-mail' />
-                <SparkTextarea placeholder='Corpo do e-mail' />
+                <SparkTextfield placeholder='Para' {...register("to")} />
+                <SparkTextfield placeholder='Cc' {...register("cc")} />
+                <SparkTextfield placeholder='Digite o assunto do e-mail' {...register("subject")}/>
+                <SparkTextarea placeholder='Corpo do e-mail' {...register("body")}/>
                 
                 <div className='flex justify-end'>
-                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar'/>
+                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar' onClick={()=>handleSubmit(sendEmail(getValues()))}/>
                 </div>
             </form>
         </div>

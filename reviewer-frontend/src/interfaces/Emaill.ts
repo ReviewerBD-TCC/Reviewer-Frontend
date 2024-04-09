@@ -1,7 +1,7 @@
-export interface Email{
+export interface Email {
     body: string;
-    bcc: Array<String>;
-    cc: string;
-    to: string
-    attchment: null
+    bcc: (string | undefined)[];
+    cc: (string | undefined)[];
+    to: string;
+    subject: string;
 }
