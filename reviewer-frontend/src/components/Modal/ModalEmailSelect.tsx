@@ -28,12 +28,11 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
                     <div className="flex bg-boschWhite w-[45%] 2xl:h-[40%] md:h-[40%]" onClick={(e)=>e.stopPropagation()}>
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <div className="flex flex-col gap-2">
-                                <h1 className="text-3xl font-bold">Disparo de indicação pronto</h1>
+                                <h1 className="text-3xl font-bold">Indicação pronta</h1>
                                 <p>Agora, escolha para quem enviá-lo.</p>
                             </div>
                             <div className="flex items-end justify-end gap-4">
-                                <SparkButton text="Enviar para todos" pallete="primary" />
-                                <SparkButton text="Selecionar colaboradores" pallete="secondary"/>
+                                <SparkButton text="Enviar" pallete="primary" />
                             </div> 
                         </div>
                     </div>
