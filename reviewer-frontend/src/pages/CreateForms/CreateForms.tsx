@@ -1,21 +1,23 @@
-import { SparkActivityIndicator, SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
+import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
 import {Header} from "../../components/Header/Header"
 import { Selected } from "../../components/Select/Selected"
-import { useQuery } from "react-query";
-import { QuestionService } from "services/questionService";
+import { RenderFormContent } from "components";
+import { useState } from "react";
 import { useAuth } from "context/AuthProvider";
+import { useForm } from "react-hook-form";
+import { CreateForm } from "interfaces/CreateForm";
+import api from "api/Api";
 
 function CreateForms() {
-    const { accessToken } = useAuth();
-    
-    const {data: responseList = [], isLoading, error} = useQuery("question", () => {
-        console.log(responseList)
-        console.log(accessToken)
-        return QuestionService.useQuestions(accessToken)
-    })
-
+    const { accessToken } = useAuth();    
+    const [components, setComponents]: any = useState([]);
     const yearOptions = [2024, 2025, 2026]
-    const questionsOptions  = ['O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos. O que essa pessoa já faz, mas poderia estar fazendo mais?','O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.', 'O que essa pessoa já faz, mas poderia estar fazendo mais? Se possível, por gentileza, forneça exemplos.']
+
+    const addComponent = () => {
+        setComponents([...components, <RenderFormContent key={components.length} />]);
+    }
+    
+
 
     return (
         <div className="h-auto min-h-screen w-full flex flex-col items-center">
@@ -25,35 +27,26 @@ function CreateForms() {
                     <div className="w-full h-12 flex items-center">
                         <h1 className="text-3xl font-bold">Criação de formulário</h1>
                     </div>
-                    <div className="flex justify-end">
-                        {/* <SparkButton type="button" text="Personalizar"/> */}
-                    </div>
-
                     <div className="w-full flex flex-row justify-between">
-                        <div className="w-[70%]">
+                        <div className="w-[74%]">
                             <SparkTextfield label="Título do feedback" placeholder="Feedback" />
                         </div>
-                        <div className="w-[20%]">
+                        <div className="w-[22%]">
                             <Selected zIndex={50} labelText="Ano" options={yearOptions} />
                         </div>
                     </div>
-                    <div className="w-full h-auto flex flex-col gap-3 justify-center items-center">
+                    <form action="" className="w-full h-auto flex flex-col gap-6">
+                        {
+                            components.map((component: any, index: number) => (
+                                <div key={index}>{component}</div>
+                            ))
+                        }
+                    </form>
                         
-                        <div className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center">
-                            <div className="w-[90%]">
-                                <Selected zIndex={0} labelText="Pergunta" options={responseList.map(item => item.questionPt)} />
-                            </div>
-                        </div>
-                        <div className="w-full flex justify-center items-center">
-                            {isLoading&&<SparkActivityIndicator/>}
-                        </div>
-
-                    </div>
-                    
+                        
                     <div className="w-full flex justify-between items-center">
-                        <SparkButton text="Adicionar pergunta" icon="add"/>
-                        <SparkButton text="Finalizar" />
-                        
+                        <SparkButton text="Adicionar pergunta" icon="add" onClick={addComponent}/>
+                        <SparkButton text="Finalizar" /> 
                     </div>
                 </div>
             </div>
