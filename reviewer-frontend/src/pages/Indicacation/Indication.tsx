@@ -1,8 +1,6 @@
-import { SparkTextfield, SparkButton, SparkToggle, SparkChip } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkChip } from "@bosch-web-dds/spark-ui-react";
 import { ToastContainer, Bounce, toast } from "react-toastify";
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { User, UserData } from "../../interfaces/CreateUser";
-import { useNavigate } from "react-router-dom";
+import { User } from "../../interfaces/CreateUser";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Header } from "../../components/index";
 import { CreateIndication } from "interfaces/CreateIndication";
