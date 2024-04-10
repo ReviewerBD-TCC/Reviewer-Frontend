@@ -1,5 +1,6 @@
 import { SparkButton, SparkChip } from "@bosch-web-dds/spark-ui-react";
 import { ToastContainer, Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { User } from "../../interfaces/CreateUser";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Header } from "../../components/index";
@@ -8,16 +9,19 @@ import { SelectedIndication } from "components/SelectedIndication/SelectedIndica
 import { useAuth } from "context/AuthProvider";
 import { IndicationService } from "services/IndicationService";
 import { UserIndicatedInterface } from "interfaces/UserIndicated";
+import { useNavigate } from "react-router-dom";
 
 function Indication() {
 
     const [showChip, setShowChip] = useState(true);
     const [chips, setChips] = useState<User[]>([]);
 
-    const [userListSelect, setUserListSelect] = useState<number[]>([2, 3])
+    const [userListSelect, setUserListSelect] = useState<number[]>([])
     const [userList, setUsers] = useState<any[]>([]);
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const { accessToken, user } = useAuth();
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchData() {
@@ -34,6 +38,8 @@ function Indication() {
         }
         fetchData();
     }, [accessToken]);
+
+    console.log(selectedUsers)
 
     const addChip = (value: User) => {
         if (chips.length < 5) {
@@ -64,6 +70,19 @@ function Indication() {
         }
     };
 
+    const showToastMessage = () =>{
+        toast.success('Indicação realizada com sucesso!', {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
 
     const onSubmit: MouseEventHandler<HTMLSparkButtonElement> = async (event) => {
         event.preventDefault();
@@ -81,7 +100,10 @@ function Indication() {
             const { status, data } = await IndicationService.createIndication(accessToken, requestData);
             console.log(requestData)
             if (status === 201) {
-                console.log('Indicação enviada com sucesso:', data);
+                showToastMessage()
+                setTimeout(()=>{
+                navigate('/home')
+                }, 1500)
             }
 
         } catch (error) {
