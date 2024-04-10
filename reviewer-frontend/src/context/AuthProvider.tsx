@@ -5,7 +5,7 @@ import { UserData } from '../interfaces/CreateUser';
 interface AuthContextType {
   setDetailsUser: (values: UserData) => void;
   user: UserData | null;
-  accessToken: string | null;
+  accessToken: string;
   setAccessToken: (token: string | null) => void;
 }
 
