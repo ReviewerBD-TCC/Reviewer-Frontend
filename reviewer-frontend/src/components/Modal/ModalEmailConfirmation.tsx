@@ -6,24 +6,61 @@ import api from "../../api/Api";
 import { zodResolver } from '@hookform/resolvers/zod';
 import  z  from 'zod' 
 
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useAuth } from "context/AuthProvider";
 import useModal from "../../hooks/useModal";
 
 import ModalEmailSelect from "./ModalEmailSelect";
+import { Email } from "interfaces/Emaill";
+import { EmailResolver } from "validations/EmailResolver";
+import { mailSender } from "services/EmailServices";
+
+import { ToastContainer, Bounce, toast } from "react-toastify";
+
+import { useNavigate } from "react-router-dom";
 
 interface ModalProps{
+    data: Email
     isOpen: boolean;
     toggle: () => void
 }
 
 const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
 
+    const navigate = useNavigate()
+
+    const { handleSubmit } = useForm<Email>({
+        resolver: EmailResolver
+      });
     const { accessToken } = useAuth();
     const token = accessToken;
 
     const {isOpen, toggle} = useModal()
+
+    const sendEmail: SubmitHandler<Email> = async (values) => {
+        mailSender(values, accessToken);
+        showToastMessage()
+    setTimeout(() => {
+      console.log(accessToken)
+      window.location.reload()
+    }, 1500)
+        
+    }
+   
+    const showToastMessage = () => {
+        toast.success('Colaboradores indicados com sucesso!', {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
 
     return (
         <>{props.isOpen && (
@@ -36,13 +73,14 @@ const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
                                 <p>Selecione os colaboradores a receberem o formulário.</p>
                             </div>
                             <div className="flex items-end justify-end gap-4">
-                                <SparkButton text="Enviar para todos" pallete="primary" />
-                                <SparkButton text="Selecionar colaboradores" pallete="secondary" onClick={toggle}/>
+                                <SparkButton text="Enviar para todos" pallete="primary" onClick={()=>handleSubmit(sendEmail(props.data))} />
+                                <SparkButton text="Selecionar colaboradores" pallete="secondary" onClick={toggle} />
                                 <ModalEmailSelect isOpen={isOpen} toggle={toggle}/>
                             </div> 
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
             )}
         </>
