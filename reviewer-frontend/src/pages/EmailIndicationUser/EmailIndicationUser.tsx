@@ -1,16 +1,15 @@
 import { SparkButton, SparkTextarea, SparkTextfield } from '@bosch-web-dds/spark-ui-react'
 import { Header, Input, Selected } from 'components'
 import { Email } from 'interfaces/Emaill'
-import React from 'react'
 import { mailSender } from 'services/EmailServices'
-import { EmailResolver } from 'validations/EmailSchema'
+import { EmailResolver } from 'validations/EmailResolver'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from 'context/AuthProvider'
 import ModalEmailConfirmation from 'components/Modal/ModalEmailConfirmation'
 import useModal from '../../hooks/useModal'
 
 export default function EmailIndicationUser() {
-    const token:any = useAuth().accessToken
+    const { accessToken } = useAuth();
 
     const yearsOptions = [2024, 2025, 2026]
 
@@ -24,7 +23,7 @@ export default function EmailIndicationUser() {
     
     const sendEmail: SubmitHandler<Email> = async (values) => {
        
-        mailSender(values, token);
+        mailSender(values, accessToken);
         
     }
     const data:Email = {
