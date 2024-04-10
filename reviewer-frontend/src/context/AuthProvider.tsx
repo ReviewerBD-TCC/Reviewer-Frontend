@@ -27,11 +27,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setAccessTokenState(token);
   };
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     updateUser();
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (accessToken) {
+      updateUser();
+    }
+  }, [accessToken]);
 
   const updateUser = async () => {
     if (accessToken) {

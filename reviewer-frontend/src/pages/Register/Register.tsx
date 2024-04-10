@@ -13,7 +13,7 @@ function Register() {
   const [toggle, setToggle] = useState<NonNullable<boolean | undefined>>(false)
   const navigate = useNavigate()
 
-  const { register, handleSubmit, setValue, formState: {isValid} } = useForm({
+  const { register, handleSubmit, setValue, formState: {isValid} } = useForm<UserData>({
     resolver: ClienteResolver,
   });
 
