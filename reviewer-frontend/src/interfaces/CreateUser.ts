@@ -6,7 +6,7 @@ export interface UserData {
     user: string;
     gkz: string;
     manager: string;
-    type: 'ROLE_USER';
+    type: string;
   }
 
  export interface User{
