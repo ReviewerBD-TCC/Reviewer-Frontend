@@ -10,6 +10,9 @@ import { useForm } from 'react-hook-form'
 
 import { useAuth } from "context/AuthProvider";
 
+import { ToastContainer, Bounce, toast } from "react-toastify";
+
+
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
@@ -38,6 +41,20 @@ const Modal:React.FC<ModalProps> = (props) => {
     // const dropdownOptions =
     //  '[{"label":"Dissertativa","value":"2"}]'
 
+    const showToastMessage = () => {
+        toast.success('Pergunta foi editada com sucesso!', {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+
     const {
         handleSubmit,
         register,
@@ -64,7 +81,11 @@ const Modal:React.FC<ModalProps> = (props) => {
                 }
             );
             console.log(response.data.question);
+            showToastMessage()
+            setTimeout(() => {
+            console.log(accessToken)
             window.location.reload()
+            }, 1000)
         }catch(error){
             console.log(error)
         }
@@ -93,6 +114,7 @@ const Modal:React.FC<ModalProps> = (props) => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
             )}
         </>
