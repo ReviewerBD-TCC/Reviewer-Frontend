@@ -41,11 +41,10 @@ const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
     const sendEmail: SubmitHandler<Email> = async (values) => {
         mailSender(values, accessToken);
         showToastMessage()
-    setTimeout(() => {
-      console.log(accessToken)
-      window.location.reload()
-    }, 1500)
-        
+        setTimeout(() => {
+        console.log(accessToken)
+        window.location.reload()
+        }, 1500)
     }
    
     const showToastMessage = () => {
