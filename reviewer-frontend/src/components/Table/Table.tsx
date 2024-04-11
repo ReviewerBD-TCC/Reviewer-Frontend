@@ -1,4 +1,5 @@
 import React from "react"
+import { SparkCheckboxGroup } from "@bosch-web-dds/spark-ui-react"
 
 export interface TableUser{
 
@@ -17,56 +18,7 @@ export const TableUser:React.FC = () =>{
                         <td className="w-[90%]">Juliana Brito</td>
                         <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
                     </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                    <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
-                        <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
-                        <td className="w-[90%]">Juliana Brito</td>
-                        <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
-                    </tr>
-
-                     <tr className="w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschBlue hover:text-white">
                         <td className="w-[3%] h-full flex justify-center items-center"><input type="checkbox" name="" id="" /></td>
                         <td className="w-[90%]">Juliana Brito</td>
                         <td className="w-[5%]"><div className="w-8 h-8 bg-teal-200 rounded-full"></div></td>
