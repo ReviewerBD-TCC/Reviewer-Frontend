@@ -14,8 +14,8 @@ import { UserService } from "services/UserService";
 
 function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
-  const { accessToken } = useAuth();
-
+  const { accessToken, active } = useAuth();
+  console.log(active)
    
 
   const { data: responseList = [], isLoading, error } = useQuery("questions", () => {
@@ -44,8 +44,8 @@ function QuestionDb(props?: QuestionProps) {
                     <div className="w-[100%] flex flex-col gap-4 ">
                       {
                         responseList.map((t: any, index: number) => (
-                          <Input key={t.id} titlePt={t.questionPt} titleEn={t.questionEn} isActive={t.active} id={t.id} />
-                        ))
+                          
+                          <Input key={t.id} titlePt={t.questionPt} active={t.active} titleEn={t.questionEn} id={t.id} />                        ))
                       }
                       <div className="flex justify-center">
                         {isLoading&&<SparkActivityIndicator/>}
