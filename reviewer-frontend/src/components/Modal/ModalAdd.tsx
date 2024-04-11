@@ -93,8 +93,8 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
                             <div className="flex flex-col gap-4">
-                                <SparkTextfield {...register('titlePtValue')} label="Português" value={props.titlePtValue} placeholder="Digite a pergunta em português"/>
-                                <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
+                                <SparkTextfield {...register('titlePtValue')} label="Português" placeholder="Digite a pergunta em português"/>
+                                <SparkTextfield {...register('titleEnValue')}label="Inglês" placeholder="Digite a pergunta em inglês"/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
