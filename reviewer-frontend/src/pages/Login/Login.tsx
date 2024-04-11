@@ -42,6 +42,19 @@ function Login() {
       transition: Bounce,
     });
   }
+  const showToastMessageError = () => {
+    toast.error('Verifique suas credenciais e tente novamente!', {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    });
+  }
 
   const {
     handleSubmit,
@@ -70,6 +83,7 @@ function Login() {
       }
     } catch (error) {
       console.error(error);
+      showToastMessageError()
     }
   };
 

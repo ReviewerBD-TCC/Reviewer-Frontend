@@ -15,13 +15,14 @@ import { useAuth } from "context/AuthProvider";
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
-    activeValue: z.boolean().default(true)
+    active: z.boolean().default(true)
 });
 
 interface ModalProps{
     id: number,
     titlePtValue: string,
     titleEnValue: string,
+    active: boolean,
     title: string,
     children?: ReactNode;
     isOpen: boolean;
@@ -40,7 +41,7 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
         register,
         formState: { defaultValues },
       } = useForm<ModalProps>({
-        defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue },
+        defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue, active: props.active },
         mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: zodResolver(schema),
@@ -61,13 +62,14 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
         });
     }
 
-    async function updateQuestion(props :ModalProps) {
+    async function addQuestion(props :ModalProps) {
         try{
             const response: AxiosResponse = await api.post(
                 `question`,
                 {
                     questionPt: props.titlePtValue,
                     questionEn: props.titleEnValue,
+                    active: props.active
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
@@ -93,12 +95,12 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
                             <div className="flex flex-col gap-4">
-                                <SparkTextfield {...register('titlePtValue')} label="Português" value={props.titlePtValue} placeholder="Digite a pergunta em português"/>
-                                <SparkTextfield {...register('titleEnValue')}label="Inglês" value={props.titleEnValue} placeholder="Digite a pergunta em inglês"/>
+                                <SparkTextfield {...register('titlePtValue')} label="Português" placeholder="Digite a pergunta em português"/>
+                                <SparkTextfield {...register('titleEnValue')}label="Inglês" placeholder="Digite a pergunta em inglês"/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
-                                <SparkButton text="Adicionar" onClick={handleSubmit(updateQuestion)}/>
+                                <SparkButton text="Adicionar" onClick={handleSubmit(addQuestion)}/>
                             </div> 
                         </div>
                     </div>

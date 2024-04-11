@@ -7,9 +7,14 @@ interface AuthContextType {
   user: UserData | null;
   accessToken: string;
   setAccessToken: (token: string | null) => void;
+  active: boolean,
+  setActiveValue: (active: boolean) => void;
+  
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+const AuthContext = createContext<AuthContextType  | undefined>(undefined)
+// const QuestionContext = createContext< | undefined>(undefined)
 
 interface AuthProviderProps {
   children: ReactNode; 
@@ -18,6 +23,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
+  const [active, setActive] = useState<boolean>();
 
   useEffect(() => {
     localStorage.setItem('accessToken', accessToken || '');
@@ -47,9 +53,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function setDetailsUser(values: UserData) {
     setUser(values);
   }
+  function setActiveValue(active: boolean){
+    setActive(active)
+  }
 
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken, setDetailsUser, user}}>
+    <AuthContext.Provider value={{active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user}}>
       {children}
     </AuthContext.Provider>
   );
@@ -63,4 +72,8 @@ export function useAuth(){
   }
 
   return context;
+}
+export function useQuestion(){
+  const context = useContext(AuthContext);
+  return context
 }

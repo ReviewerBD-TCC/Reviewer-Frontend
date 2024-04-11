@@ -7,6 +7,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from 'context/AuthProvider'
 import ModalEmailConfirmation from 'components/Modal/ModalEmailConfirmation'
 import useModal from '../../hooks/useModal'
+import { UserService } from 'services/UserService'
+import { useEffect, useState } from 'react'
 
 export default function EmailIndicationUser() {
     const { accessToken } = useAuth();
@@ -20,19 +22,40 @@ export default function EmailIndicationUser() {
     });
 
     const {isOpen, toggle} = useModal()
+
+    const [userList, setUserList] = useState<string[]>([])
     
     const sendEmail: SubmitHandler<Email> = async (values) => {
-       
         mailSender(values, accessToken);
-        
     }
-    const data:Email = {
+
+  
+
+
+    useEffect(()=>{
+      const users = UserService.getUsers(accessToken).then(
+        user=> {
+          const email:any = user.map((item:any)=>item.email)
+          setUserList(email)
+        })
+     
+     },[])
+
+    // const data:Email = {
+    //   to:getValues("to"),
+    //   bcc:[getValues("bcc")],
+    //   body:getValues("body"),
+    //   subject:getValues("subject"),
+    //  }
+
+    const allData:Email = {
       to:getValues("to"),
-      bcc:[getValues("bcc")],
+      bcc: userList,
       body:getValues("body"),
       subject:getValues("subject"),
-      cc:[getValues("cc")]
      }
+
+     
 
   return (
     <div className='h-auto min-h-screen w-full flex flex-col items-center'>
@@ -50,15 +73,13 @@ export default function EmailIndicationUser() {
                   </div>
                   
                 </div>
-                {/* <SparkTextfield placeholder='Para' {...register("to")} /> */}
-                <SparkTextfield placeholder='Cc' {...register("cc")} />
-                <SparkTextfield placeholder='Digite o assunto do e-mail' {...register("subject")}/>
-                <SparkTextarea placeholder='Corpo do e-mail' {...register("body")}/>
+                <SparkTextfield  placeholder='Assunto do e-mail' {...register("subject")}/>
+                <SparkTextarea  placeholder='Corpo do e-mail' {...register("body")} />
+                
                 
                 <div className='flex justify-end'>
-                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar' onClick={toggle}/>
-                    <ModalEmailConfirmation isOpen={isOpen} toggle={toggle}/>
-                    {/* <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Enviar' onClick={()=>handleSubmit(sendEmail(getValues()))}/> */}
+                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Continuar' onClick={toggle}/>
+                    <ModalEmailConfirmation isOpen={isOpen} data={allData}  toggle={toggle}/>
                 </div>
             </form>
         </div>

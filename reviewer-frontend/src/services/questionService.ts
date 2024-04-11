@@ -16,21 +16,21 @@ const useQuestions = async (token: string | null) => {
   }
 }
 
-async function updateQuestion(token: string | null, id: number) {
+async function updateQuestion(token: string | null, id: number, active: boolean) {
 
   try{
       const response = await api.patch(
           `question/${id}`,
           {
-              active: true,
+              active: active,
           },{
               headers: {
                   'Authorization' : `Bearer ${token}`
               }
           }
       );
-      console.log(response.data.question);
-      window.location.reload()
+      console.log(active);
+      // window.location.reload()
   }catch(error){
       console.log(error)
   }
