@@ -138,7 +138,7 @@ function Indication() {
                             })}
                         </div>
 
-                        <SparkButton text="Cadastrar" customWidth="15rem" type="button" onClick={onSubmit} />
+                        <SparkButton text="Indicar" customWidth="15rem" type="button" onClick={onSubmit} />
                         <ToastContainer />
                     </form>
                 </div>
