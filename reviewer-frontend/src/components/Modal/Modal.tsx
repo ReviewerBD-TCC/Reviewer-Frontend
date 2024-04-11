@@ -1,6 +1,6 @@
 import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
-import React, { ReactNode } from "react"
+import React, { ReactNode, useContext, useState } from "react"
 import api from "../../api/Api";
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,7 +8,7 @@ import  z  from 'zod'
 
 import { useForm } from 'react-hook-form'
 
-import { useAuth } from "context/AuthProvider";
+import { useAuth, useQuestion } from "context/AuthProvider";
 
 import { ToastContainer, Bounce, toast } from "react-toastify";
 
@@ -16,14 +16,14 @@ import { ToastContainer, Bounce, toast } from "react-toastify";
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
-    activeValue: z.boolean().default(true)
+    active: z.boolean().default(true)
   });
 
 interface ModalProps{
     id: number,
     titlePtValue: string,
     titleEnValue: string,
-    activeValue: boolean,
+    active: boolean,
     title: string,
     children?: ReactNode;
     isOpen: boolean;
@@ -34,8 +34,13 @@ const Modal:React.FC<ModalProps> = (props) => {
 
     const id = props.id
 
-    const { accessToken } = useAuth();
+    const { accessToken,  setActiveValue } = useAuth();
+    const [active, setActive] = useState<boolean>(props.active);
+
+
+    
     const token = accessToken
+   
 
 
     // const dropdownOptions =
@@ -60,20 +65,21 @@ const Modal:React.FC<ModalProps> = (props) => {
         register,
         formState: { defaultValues },
       } = useForm<ModalProps>({
-        defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue },
+        defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue, active: active },
         mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: zodResolver(schema),
       });
     
     async function updateQuestion(props :ModalProps) {
+        console.log("setouuu", active)
         try{
             const response: AxiosResponse = await api.put(
                 `question/${id}`,
                 {
                     questionPt: props.titlePtValue,
                     questionEn: props.titleEnValue,
-                    active: props.activeValue,
+                    active: active,
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
@@ -90,7 +96,7 @@ const Modal:React.FC<ModalProps> = (props) => {
             console.log(error)
         }
     }
-
+    console.log(active)
 
     return (
         <>{props.isOpen && (
@@ -100,8 +106,8 @@ const Modal:React.FC<ModalProps> = (props) => {
                         {props.children}
                         <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
-                            <div className="flex justify-end items-end">
-                                <SparkToggle whenChange={()=>{}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={props.activeValue}/>
+                            <div className="flex justify-end items-end"> 
+                                <SparkToggle onClick={()=>{}} whenChange={()=>{setActive(!active)}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={active}/>
                             </div>
                             <div className="flex flex-col gap-4">
                                 <SparkTextfield {...register('titlePtValue')} label="Português" defaultValue={props.titlePtValue} placeholder="Digite a pergunta em português"/>
