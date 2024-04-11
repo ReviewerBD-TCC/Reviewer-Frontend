@@ -14,7 +14,7 @@ function Indication() {
     const [showChip, setShowChip] = useState(true);
     const [chips, setChips] = useState<User[]>([]);
 
-    const [userListSelect, setUserListSelect] = useState<number[]>([2, 3])
+    const [userListSelect, setUserListSelect] = useState<number[]>([])
     const [userList, setUsers] = useState<any[]>([]);
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const { accessToken, user } = useAuth();
