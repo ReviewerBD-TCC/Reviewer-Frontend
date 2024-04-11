@@ -10,7 +10,7 @@ import { useAuth } from 'context/AuthProvider';
 interface QuestionProps{
     titlePt: string;
     titleEn: string;
-    isActive: boolean;
+    active: boolean;
     id: number;
 }
 
@@ -18,14 +18,14 @@ export const Question: React.FC<QuestionProps> = (props) => {
     const { isOpen, toggle } = useModal();
     
     const id = props.id
-    const token = localStorage.getItem('token');
+    const token = useAuth()
 
     async function updateToggle(props :QuestionProps) {
         try{
             const response: AxiosResponse = await api.put(
                 `question/${id}`,
                 {
-                    active: props.isActive,
+                    active: props.active,
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
@@ -46,10 +46,10 @@ export const Question: React.FC<QuestionProps> = (props) => {
                 {/* <input type="text" defaultValue={props.titlePt} className='bg-transparent w-full outline-none' /> */}
                 {/* <input>{props.titlePt}</input> */}
             </div>
-            <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} activeValue={props.isActive} isOpen={isOpen} toggle={toggle}/>
-            <div className='max-w-[10%]'>
-                <SparkToggle guid="spark-toggle-right-label" selected={props.isActive} disabled={false} whenChange={()=>{}} onClick={()=>QuestionService.updateQuestion(token.accessToken, id)}/>
-            </div>
+            <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} active={props.active} isOpen={isOpen} toggle={toggle}/>
+            {/* <div className='max-w-[10%]'>
+                <SparkToggle guid="spark-toggle-right-label" selected={props.active} disabled={false} whenChange={()=>{}} onClick={()=>QuestionService.updateQuestion(token.accessToken, id, props.active)}/>
+            </div> */}
     </div>
   )
 }
