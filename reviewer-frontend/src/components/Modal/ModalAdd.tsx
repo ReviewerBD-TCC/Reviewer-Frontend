@@ -15,13 +15,14 @@ import { useAuth } from "context/AuthProvider";
 const schema = z.object({
     titlePtValue: z.string(),
     titleEnValue: z.string(),
-    activeValue: z.boolean().default(true)
+    active: z.boolean().default(true)
 });
 
 interface ModalProps{
     id: number,
     titlePtValue: string,
     titleEnValue: string,
+    active: boolean,
     title: string,
     children?: ReactNode;
     isOpen: boolean;
@@ -40,7 +41,7 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
         register,
         formState: { defaultValues },
       } = useForm<ModalProps>({
-        defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue },
+        defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue, active: props.active },
         mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: zodResolver(schema),
@@ -68,6 +69,7 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
                 {
                     questionPt: props.titlePtValue,
                     questionEn: props.titleEnValue,
+                    active: props.active
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
