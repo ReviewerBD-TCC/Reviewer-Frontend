@@ -25,10 +25,8 @@
     font-family: 'BoschSans';
 }
 
-
-
-#menu-dropdown {
-
+#tableUser::-webkit-scrollbar{
+    background-color: transparent;
 }
 
 #menu-dropdown::-webkit-scrollbar {
