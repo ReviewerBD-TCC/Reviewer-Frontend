@@ -61,7 +61,7 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
         });
     }
 
-    async function updateQuestion(props :ModalProps) {
+    async function addQuestion(props :ModalProps) {
         try{
             const response: AxiosResponse = await api.post(
                 `question`,
@@ -98,7 +98,7 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
                             </div>
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
-                                <SparkButton text="Adicionar" onClick={handleSubmit(updateQuestion)}/>
+                                <SparkButton text="Adicionar" onClick={handleSubmit(addQuestion)}/>
                             </div> 
                         </div>
                     </div>
