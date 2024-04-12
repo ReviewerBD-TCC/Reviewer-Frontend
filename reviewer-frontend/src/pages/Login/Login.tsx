@@ -17,8 +17,8 @@ import { useAuth } from 'context/AuthProvider'
 import api from '../../api/Api';
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string()
+  email: z.string().email('Formato de e-mail inválido'),
+  password: z.string().min(8, 'A senha precisa de no mínimo 6 caracteres')
 });
 
 type FormProps = z.infer<typeof schema>;
@@ -59,7 +59,7 @@ function Login() {
   const {
     handleSubmit,
     register,
-    formState: { isValid },
+    formState: { errors, isValid },
   } = useForm<FormProps>({
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
@@ -108,6 +108,8 @@ function Login() {
             placeholder="example@bosch.com"
             whenChange={() => { }} />
 
+          {errors.email && <span>{errors.email.message}</span>}
+
           <SparkTextfield
             {...register('password')}
             guid="2"
@@ -117,6 +119,9 @@ function Login() {
             whenChange={() => { }}
 
           />
+
+          {errors.password && <span>{errors.password.message}</span>}
+
           <SparkLink type="primary" href="" target="" label="Esqueceu sua senha?" icon-position="" size="6xl" />
         </div>
 
