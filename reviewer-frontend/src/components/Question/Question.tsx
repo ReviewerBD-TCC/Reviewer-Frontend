@@ -5,7 +5,8 @@ import { AxiosResponse } from 'axios'
 import api from '../../api/Api';
 import { QuestionService } from 'services/questionService';
 import { useAuth } from 'context/AuthProvider';
-import editIcon from '../../assets/images/settings-editor.png';
+import editIcon from '../../assets/images/edit-3.png';
+import { useState } from 'react';
 
 
 interface QuestionProps{
@@ -17,43 +18,45 @@ interface QuestionProps{
 
 export const Question: React.FC<QuestionProps> = (props) => {
     const { isOpen, toggle } = useModal();
+    const [active, setActive] = useState<boolean>(props.active)
     
     const id = props.id
     const token = useAuth()
 
-    async function updateToggle(props :QuestionProps) {
+    async function updateToggle(token: string, id:number, active:boolean) {
+        console.log(active);
         try{
             const response: AxiosResponse = await api.put(
                 `question/${id}`,
                 {
-                    active: props.active,
+                    active: active,
                 },{
                     headers: {
                         'Authorization' : `Bearer ${token}`
                     }
                 }
             );
-            console.log(response.data.question);
+          
         }catch(error){
-            console.log(error)
+            console.log(active)
         }
     }
 
     return (
-        <div className='p-2 flex justify-between items-center'>
+        <div className='h-full flex  justify-between items-center p-1'>
             <div className='w-[100%] max-w-[100%] flex'>
                 {/* <p className='max-w-full overflow-x-scroll'>{props.titlePt}</p> */}
-                <p className='truncate w-[100%]'>{props.titlePt}</p>
+                <p onClick={toggle} className='m-2 truncate w-[100%]'>{props.titlePt}</p>
                 {/* <input type="text" defaultValue={props.titlePt} className='bg-transparent w-full outline-none' /> */}
                 {/* <input>{props.titlePt}</input> */}
-                <div className='flex w-[100%] justify-end' >
-                    <img src={editIcon} onClick={toggle} className='cursor-pointer' />
-                </div>
+                {/* <div className='flex w-auto items-center' >
+                    <img src={editIcon} onClick={toggle} className='cursor-pointer size-7' />
+                </div> */}
             </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} active={props.active} isOpen={isOpen} toggle={toggle}/>
-            {/* <div className='max-w-[10%]'>
-                <SparkToggle guid="spark-toggle-right-label" selected={props.active} disabled={false} whenChange={()=>{}} onClick={()=>QuestionService.updateQuestion(token.accessToken, id, props.active)}/>
-            </div> */}
+            <div className='max-w-[10%]'>
+                <SparkToggle guid="spark-toggle-right-label" selected={active} disabled={false} whenChange={()=>{setActive(!active)}} onClick={()=>updateToggle(token.accessToken, id, active)}/>
+            </div>
     </div>
   )
 }
