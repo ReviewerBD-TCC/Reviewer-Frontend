@@ -8,12 +8,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Header } from "../../components/index"
 // import { onSubmit } from "services/CreateUserService"; 
 import api from "../../api/Api";
+import z from 'zod'
 
 function Register() {
   const navigate = useNavigate()
   const [isAdmin, setIsAdmin] = useState<boolean>(false); 
 
-  const { register, handleSubmit, setValue, formState: { isValid } } = useForm<UserData>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<UserData>({
     resolver: ClienteResolver,
   });
 
@@ -106,13 +107,15 @@ function Register() {
                     return value;
                   },
                 })} whenChange={(event) => setValue("name", event.target.value)} placeholder="Nome completo do colaborador" />
-
+              
               <SparkTextfield type="text" label="E-mail"  {...register("email", {
                 setValueAs: (value) => {
                   handleSearch("email", value);
                   return value;
                 },
               })} whenChange={(event) => setValue("email", event.target.value)} placeholder="E-mail do colaborador" />
+
+              {errors.email && <span className="text-red-600">{errors.email.message}</span>}
 
               <SparkTextfield type="text" label="Departamento" {...register("gkz", {
                 setValueAs: (value) => {
@@ -135,6 +138,8 @@ function Register() {
                 },
               })} whenChange={(event) => setValue("password", event.target.value)} placeholder="Senha do colaborador" />
 
+              {errors.password && <span className="text-red-600">{errors.password.message}</span>}
+
               <SparkToggle
                 guid="1"
                 rightLabel="usuario administrador"
@@ -145,7 +150,7 @@ function Register() {
               />
 
 
-              <SparkButton disabled={!isValid} text="Cadastrar" customWidth="15rem" type="submit" onClick={handleSubmit(onSubmit)} />
+              <SparkButton  text="Cadastrar" customWidth="15rem" type="submit" onClick={handleSubmit(onSubmit)} />
               <ToastContainer />
             </form>
           </div>
