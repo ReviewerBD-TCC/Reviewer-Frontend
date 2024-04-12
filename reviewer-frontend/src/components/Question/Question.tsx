@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios'
 import api from '../../api/Api';
 import { QuestionService } from 'services/questionService';
 import { useAuth } from 'context/AuthProvider';
+import editIcon from '../../assets/images/settings-editor.png';
 
 
 interface QuestionProps{
@@ -39,12 +40,15 @@ export const Question: React.FC<QuestionProps> = (props) => {
     }
 
     return (
-        <div className='p-2 flex justify-between items-center' onClick={toggle}>
-            <div className='w-[90%] max-w-[90%]'>
+        <div className='p-2 flex justify-between items-center'>
+            <div className='w-[100%] max-w-[100%] flex'>
                 {/* <p className='max-w-full overflow-x-scroll'>{props.titlePt}</p> */}
-                <p className='truncate'>{props.titlePt}</p>
+                <p className='truncate w-[100%]'>{props.titlePt}</p>
                 {/* <input type="text" defaultValue={props.titlePt} className='bg-transparent w-full outline-none' /> */}
                 {/* <input>{props.titlePt}</input> */}
+                <div className='flex w-[100%] justify-end' >
+                    <img src={editIcon} onClick={toggle} className='cursor-pointer' />
+                </div>
             </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} active={props.active} isOpen={isOpen} toggle={toggle}/>
             {/* <div className='max-w-[10%]'>
