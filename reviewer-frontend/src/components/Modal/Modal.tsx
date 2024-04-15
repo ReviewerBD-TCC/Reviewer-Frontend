@@ -96,7 +96,7 @@ const Modal:React.FC<ModalProps> = (props) => {
             console.log(error)
         }
     }
-    console.log(active)
+    // console.log(active)
 
     return (
         <>{props.isOpen && (
