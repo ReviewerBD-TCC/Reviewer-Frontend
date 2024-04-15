@@ -17,7 +17,7 @@ interface QuestionProps{
 }
 
 export const Question: React.FC<QuestionProps> = (props) => {
-    const { isOpen, toggle } = useModal();
+    const { isOpen, toggle, } = useModal();
     const [active, setActive] = useState<boolean>(props.active)
     
     const id = props.id
@@ -26,7 +26,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
     async function updateToggle(token: string, id:number, active:boolean) {
         console.log(active);
         try{
-            const response: AxiosResponse = await api.put(
+            const response: AxiosResponse = await api.patch(
                 `question/${id}`,
                 {
                     active: active,
@@ -38,7 +38,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
             );
           
         }catch(error){
-            console.log(active)
+            // console.log(active)
         }
     }
 
@@ -55,7 +55,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
             </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} active={props.active} isOpen={isOpen} toggle={toggle}/>
             <div className='max-w-[10%]'>
-                <SparkToggle guid="spark-toggle-right-label" selected={active} disabled={false} whenChange={()=>{setActive(!active)}} onClick={()=>updateToggle(token.accessToken, id, active)}/>
+                <SparkToggle guid="spark-toggle-right-label" selected={active} disabled={false} whenChange={()=>{setActive(active == true?false:true)}} onClick={()=>updateToggle(token.accessToken, id, active == true?false:true)}/>
             </div>
     </div>
   )

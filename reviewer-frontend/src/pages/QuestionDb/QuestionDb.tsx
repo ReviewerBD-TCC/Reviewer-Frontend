@@ -15,8 +15,9 @@ import { UserService } from "services/UserService";
 
 function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
-  const { accessToken, active } = useAuth();
-  console.log(active)
+
+  const { accessToken } = useAuth();
+  
    
 
   const { data: responseList = [], isLoading, error } = useQuery("questions", () => {
