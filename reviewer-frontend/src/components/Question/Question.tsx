@@ -36,7 +36,7 @@ export const Question: React.FC<QuestionProps> = (props) => {
                     }
                 }
             );
-          
+            window.location.reload()
         }catch(error){
             // console.log(active)
         }
@@ -44,9 +44,9 @@ export const Question: React.FC<QuestionProps> = (props) => {
 
     return (
         <div className='h-full flex  justify-between items-center p-1'>
-            <div className='w-[100%] max-w-[100%] flex'>
+            <div className='w-[95%] max-w-[100%] flex'>
                 {/* <p className='max-w-full overflow-x-scroll'>{props.titlePt}</p> */}
-                <p onClick={toggle} className='m-2 truncate w-[100%]'>{props.titlePt}</p>
+                <p onClick={toggle} className='m-2 truncate w-[90%]'>{props.titlePt}</p>
                 {/* <input type="text" defaultValue={props.titlePt} className='bg-transparent w-full outline-none' /> */}
                 {/* <input>{props.titlePt}</input> */}
                 {/* <div className='flex w-auto items-center' >
@@ -54,8 +54,8 @@ export const Question: React.FC<QuestionProps> = (props) => {
                 </div> */}
             </div>
             <Modal title='Editor de pergunta' titlePtValue={props.titlePt} titleEnValue={props.titleEn} id={props.id} active={props.active} isOpen={isOpen} toggle={toggle}/>
-            <div className='max-w-[10%]'>
-                <SparkToggle guid="spark-toggle-right-label" selected={active} disabled={false} whenChange={()=>{setActive(active == true?false:true)}} onClick={()=>updateToggle(token.accessToken, id, active == true?false:true)}/>
+            <div className='w-auto'>
+                <SparkToggle guid="spark-toggle-right-label" selected={active} disabled={false} whenChange={()=>{setActive(!active)}} onClick={()=>updateToggle(token.accessToken, id, active == true?false:true)}/>
             </div>
     </div>
   )
