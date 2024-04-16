@@ -138,6 +138,8 @@ function Register() {
                 },
               })} whenChange={(event) => setValue("manager", event.target.value)} placeholder="Gestor do colaborador" />
 
+              {errors.manager && <span className="text-red-600">{errors.manager.message}</span>}
+
               <SparkTextfield type="password" label="Senha" {...register("password", {
                 setValueAs: (value) => {
                   handleSearch("password", value);
