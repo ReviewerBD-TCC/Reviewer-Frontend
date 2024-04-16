@@ -59,6 +59,19 @@ const Modal:React.FC<ModalProps> = (props) => {
           transition: Bounce,
         });
       }
+    const showToastMessageError400 = () => {
+        toast.warning('Por favor preencha os campos corretamente!', {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
 
     const {
         handleSubmit,
@@ -93,7 +106,9 @@ const Modal:React.FC<ModalProps> = (props) => {
             window.location.reload()
             }, 1000)
         }catch(error){
-            console.log(error)
+            if(error.response.status === 400){
+                showToastMessageError400()
+            }
         }
     }
     // console.log(active)
