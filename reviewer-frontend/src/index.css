@@ -26,8 +26,13 @@
 }
 
 #tableUser::-webkit-scrollbar{
-    background-color: transparent;
+    width: 8px;
+    background-color: rgb(245, 245, 245);
 }
+
+#tableUser::-webkit-scrollbar-thumb {
+    background: #cecece;
+  }
 
 #menu-dropdown::-webkit-scrollbar {
     background-color: transparent;
