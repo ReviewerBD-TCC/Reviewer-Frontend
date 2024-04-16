@@ -72,8 +72,9 @@ function Register() {
         }, 1500)
       }
     } catch (error) {
-      showToastFailMessage()
-      console.error('Erro ao enviar o cliente:', error);
+      if(error.response.status == 404){
+        showToastFailMessage()
+      }
     }
   };
 
@@ -100,6 +101,8 @@ function Register() {
                 },
               })} whenChange={(event) => setValue("user", event.target.value)} placeholder="Nome de usuário" />
 
+              {errors.user && <span className="text-red-600">{errors.user.message}</span>}
+
               <SparkTextfield type="text" label="Nome"
                 {...register("name", {
                   setValueAs: (value) => {
@@ -107,6 +110,8 @@ function Register() {
                     return value;
                   },
                 })} whenChange={(event) => setValue("name", event.target.value)} placeholder="Nome completo do colaborador" />
+
+              {errors.name && <span className="text-red-600">{errors.name.message}</span>}
               
               <SparkTextfield type="text" label="E-mail"  {...register("email", {
                 setValueAs: (value) => {
@@ -123,6 +128,8 @@ function Register() {
                   return value;
                 },
               })} whenChange={(event) => setValue("gkz", event.target.value)} placeholder="Departamento do colaborador" />
+
+              {errors.gkz && <span className="text-red-600">{errors.gkz.message}</span>}
 
               <SparkTextfield type="text" label="Gestor" {...register("manager", {
                 setValueAs: (value) => {
