@@ -82,8 +82,10 @@ function Login() {
         }, 1500)
       }
     } catch (error) {
+      if(error.response.status === 401){
+        showToastMessageError()
+      }
       console.error(error);
-      showToastMessageError()
     }
   };
 
