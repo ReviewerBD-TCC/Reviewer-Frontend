@@ -39,7 +39,7 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
     const {
         handleSubmit,
         register,
-        formState: { defaultValues },
+        formState: { defaultValues, errors },
       } = useForm<ModalProps>({
         defaultValues: { titlePtValue: props.titlePtValue, titleEnValue: props.titleEnValue, active: props.active },
         mode: 'onChange',
@@ -50,6 +50,19 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
     
     const showToastMessage = () =>{
         toast.success('Pergunta cadastrada com sucesso!', {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+    }
+    const showToastMessageError400 = () =>{
+        toast.warning('Preencha os campos corretamente!', {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -81,32 +94,39 @@ const ModalAdd:React.FC<ModalProps> = (props: ModalProps) => {
                 window.location.reload()
             }, 1500)
         }catch(error){
-            console.log(error)
+            if(error.request.status == 400){
+                showToastMessageError400()
+            }
+            
+            
         }
     }
 
 
     return (
         <>{props.isOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={props.toggle}>
-                <div className="flex justify-center items-center bg-black bg-opacity-40 w-full h-full ">
-                    <div className="flex bg-boschWhite w-[60%] 2xl:h-[60%] md:h-[75%]" onClick={(e)=>e.stopPropagation()}>
-                        {props.children}
-                        <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
-                            <h1 className="text-3xl font-bold">{props.title}</h1>
-                            <div className="flex flex-col gap-4">
-                                <SparkTextfield {...register('titlePtValue')} label="Português" placeholder="Digite a pergunta em português"/>
-                                <SparkTextfield {...register('titleEnValue')}label="Inglês" placeholder="Digite a pergunta em inglês"/>
+            <form>
+                <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={props.toggle}>
+                    <div className="flex justify-center items-center bg-black bg-opacity-40 w-full h-full ">
+                        <div className="flex bg-boschWhite w-[60%] 2xl:h-[60%] md:h-[75%]" onClick={(e)=>e.stopPropagation()}>
+                            {props.children}
+                            <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
+                                <h1 className="text-3xl font-bold">{props.title}</h1>
+                                <div className="flex flex-col gap-4">
+                                    <SparkTextfield {...register('titlePtValue')} label="Português" placeholder="Digite a pergunta em português"/>
+                                    <SparkTextfield {...register('titleEnValue')}label="Inglês" placeholder="Digite a pergunta em inglês"/>
+                                    {}
+                                </div>
+                                <div className="flex items-end justify-end gap-4">
+                                    <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
+                                    <SparkButton text="Adicionar" onClick={handleSubmit(addQuestion)}/>
+                                </div> 
                             </div>
-                            <div className="flex items-end justify-end gap-4">
-                                <SparkButton text="Cancelar" pallete="secondary" onClick={(props.toggle)} ></SparkButton>
-                                <SparkButton text="Adicionar" onClick={handleSubmit(addQuestion)}/>
-                            </div> 
                         </div>
                     </div>
+                    <ToastContainer/>
                 </div>
-                <ToastContainer/>
-            </div>
+            </form>
             )}
         </>
     );
