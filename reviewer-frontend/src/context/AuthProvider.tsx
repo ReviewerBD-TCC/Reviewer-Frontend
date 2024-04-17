@@ -4,11 +4,16 @@ import { UserData } from '../interfaces/CreateUser';
 
 interface AuthContextType {
   setDetailsUser: (values: UserData) => void;
-  user: UserData | null;
+  user: UserData;
+
   accessToken: string;
-  setAccessToken: (token: string | null) => void;
+  setAccessToken: (token: string ) => void;
+
   active: boolean,
   setActiveValue: (active: boolean) => void;
+
+  listQuestion: number[];
+  setListQuestion: React.Dispatch<React.SetStateAction<number[]>>;
   
 }
 
@@ -24,6 +29,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
   const [active, setActive] = useState<boolean>();
+  const [listQuestion, setListQuestion] = useState<number[]>([]);
 
   useEffect(() => {
     localStorage.setItem('accessToken', accessToken || '');
@@ -58,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user}}>
+    <AuthContext.Provider value={{active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, listQuestion, setListQuestion}}>
       {children}
     </AuthContext.Provider>
   );
