@@ -40,7 +40,7 @@ function QuestionDb(props?: QuestionProps) {
                    
                     <div className="w-[100%]">
                       <SparkNotification type="bar" variant="neutral" icon="info-i">
-                          <p>É possível ativar ou desativar essas perguntas.</p>
+                          <p>É possível editar estas perguntas.</p>
                       </SparkNotification>
                     </div>
                     <div className="w-[100%] flex flex-col gap-4 ">
