@@ -1,5 +1,5 @@
-export interface CreateForm{
+export interface CreateFormInterface{
     title: string;
     year: number;
-    questions: Array<number>;
+    questionsId: Array<number>;
 }

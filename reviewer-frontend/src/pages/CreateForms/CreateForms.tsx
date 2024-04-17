@@ -1,5 +1,5 @@
 import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
-import {Header} from "../../components/Header/Header"
+import { Header } from "../../components/Header/Header"
 import { Selected } from "../../components/Select/Selected"
 import { RenderFormContent } from "components";
 import { useState } from "react";
@@ -7,44 +7,46 @@ import { useAuth } from "context/AuthProvider";
 import api from "../../api/Api";
 import { useForm } from "react-hook-form";
 import { CreateFormResolver } from "validations/CreateFormResolver";
-import { CreateForm } from "interfaces/CreateForm";
+import { CreateForm, CreateFormInterface } from "interfaces/CreateForm";
 import { AxiosResponse } from "axios";
+import { FormService } from "services/FormService";
 
-export const CreateForms = () => {
-    const { accessToken } = useAuth();    
+export function CreateForms() {
+    const { accessToken } = useAuth();
     const [components, setComponents]: any = useState([]);
     const yearOptions = [2024, 2025, 2026]
+    const { listQuestion } = useAuth();
 
     const addComponent = () => {
         setComponents([...components, <RenderFormContent key={components.length} />]);
     }
-    
-    const { handleSubmit, register } = useForm<CreateForm>({
-        defaultValues:{questions: [], title: '', year: 2024},
-        mode: "onSubmit",
-        reValidateMode: 'onSubmit',
-        resolver: CreateFormResolver
-    })
 
-    const createForm = async () =>{
-        try{
-            const response: AxiosResponse = await api.post(
-                `form`,
-                {
-                    title: '',
-                    year: '',
-                    questions: []
-                }
-            )
+    const createForm = async () => {
+        try {
 
-        }catch(error){
+
+            const requestData: CreateFormInterface = {
+                title: "FORMULARIO",
+                year: 2025,
+                questionsId: listQuestion
+            };
+
+            console.log(requestData)
+
+            const { status, data } = await FormService.createForm(requestData);
+
+            if (status === 200) {
+                console.log(data)
+            }
+
+        } catch (error) {
             console.error(error)
         }
     }
 
     return (
         <div className="h-auto min-h-screen w-full flex flex-col items-center">
-            <Header/>
+            <Header />
             <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
                 <div className="w-[85%] h-auto flex flex-col gap-9 pb-7 pt-7">
                     <div className="w-full h-12 flex items-center">
@@ -65,10 +67,10 @@ export const CreateForms = () => {
                             ))
                         }
                     </form>
-                        
+
                     <div className="w-full flex justify-between items-center">
-                        <SparkButton text="Adicionar pergunta" icon="add" onClick={addComponent}/>
-                        <SparkButton text="Finalizar" /> 
+                        <SparkButton text="Adicionar pergunta" icon="add" onClick={addComponent} />
+                        <SparkButton text="Finalizar" onClick={createForm} />
                     </div>
                 </div>
             </div>
