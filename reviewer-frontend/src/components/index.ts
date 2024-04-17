@@ -7,6 +7,7 @@ import { Selected } from "./Select/Selected"
 import {Question} from "./Question/Question"
 import ModalAdd from "./Modal/ModalAdd"
 import { RenderFormContent } from "./RenderFormContent/RenderFormContent"
+import { TableUser } from "./Table/Table"
 
 export {
     Header,
@@ -18,4 +19,5 @@ export {
     ModalAdd,
     Selected,
     RenderFormContent,
+    TableUser
 }

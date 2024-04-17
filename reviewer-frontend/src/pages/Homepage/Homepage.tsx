@@ -26,7 +26,7 @@ export const Homepage = () => {
             key:4,
             title: <h2 className='text-white font-bold  text-lg'>Enviar <br></br>Formulário</h2>,
             backgroundColor: 'bg-boschTurquoise',
-            nav: '/'
+            nav: '/send-indication'
         },
     ])
 

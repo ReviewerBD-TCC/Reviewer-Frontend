@@ -25,11 +25,14 @@
     font-family: 'BoschSans';
 }
 
-
-
-#menu-dropdown {
-
+#tableUser::-webkit-scrollbar{
+    width: 8px;
+    background-color: rgb(245, 245, 245);
 }
+
+#tableUser::-webkit-scrollbar-thumb {
+    background: #cecece;
+  }
 
 #menu-dropdown::-webkit-scrollbar {
     background-color: transparent;
