@@ -151,7 +151,7 @@ function Register() {
 
               <SparkToggle
                 guid="1"
-                rightLabel="usuario administrador"
+                rightLabel="Usuário administrador"
                 {...register("type")}
                 whenChange={(e: ChangeEvent<HTMLInputElement>) => {
                   handleToggle(e);
