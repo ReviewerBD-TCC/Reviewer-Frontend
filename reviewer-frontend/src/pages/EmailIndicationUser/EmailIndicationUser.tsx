@@ -17,7 +17,7 @@ export default function EmailIndicationUser() {
 
     const responseTime = ["15 dias", "20 dias", "30 dias"]
     
-    const {getValues, handleSubmit, register } = useForm<Email>({
+    const {getValues, handleSubmit, register, formState: {errors}} = useForm<Email>({
       resolver: EmailResolver
     });
 
@@ -74,12 +74,15 @@ export default function EmailIndicationUser() {
                   
                 </div>
                 <SparkTextfield  placeholder='Assunto do e-mail' {...register("subject")}/>
+                {errors.subject && <span className="text-red-600">{errors.subject.message}</span>}
+
                 <SparkTextarea  placeholder='Corpo do e-mail' {...register("body")} />
-                
-                
+                {errors.body && <span className="text-red-600">{errors.body.message}</span>}
+
                 <div className='flex justify-end'>
-                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Continuar' onClick={toggle}/>
+                    <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Continuar' onClick={handleSubmit(toggle)}/>
                     <ModalEmailConfirmation isOpen={isOpen} data={allData}  toggle={toggle}/>
+
                 </div>
             </form>
         </div>
