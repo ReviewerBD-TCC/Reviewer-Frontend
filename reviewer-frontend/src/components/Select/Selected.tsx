@@ -21,14 +21,10 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
 
     if (typeof value === 'object') {
 
-      const index = listQuestion.findIndex((questionId: number) => questionId === value.id);
-
       if (!listQuestion.includes(value.id)) {
-        console.log(index)
         setSelectedValue(value.questionPt);
         setListQuestion((prevList: number[]) => [...prevList, value.id]);
       } else {
-        console.log(index)
         showToastMessageError()
       }
 

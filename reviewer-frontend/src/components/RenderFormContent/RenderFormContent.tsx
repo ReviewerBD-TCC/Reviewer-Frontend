@@ -19,7 +19,7 @@ export const RenderFormContent = () => {
     return (
         <div className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center">
             <div className="w-[95%]">
-                <Selected disabled={true} zIndex={25} labelText="Pergunta" question={responseList.map((item: QuestionProps) => item)} />
+                <Selected zIndex={25} labelText="Pergunta" question={responseList.map((item: QuestionProps) => item)} />
             </div>
         </div>
     )

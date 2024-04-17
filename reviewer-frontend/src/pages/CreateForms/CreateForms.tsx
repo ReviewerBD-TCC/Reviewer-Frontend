@@ -4,11 +4,7 @@ import { Selected } from "../../components/Select/Selected"
 import { RenderFormContent } from "components";
 import { useState } from "react";
 import { useAuth } from "context/AuthProvider";
-import api from "../../api/Api";
-import { useForm } from "react-hook-form";
-import { CreateFormResolver } from "validations/CreateFormResolver";
-import { CreateForm, CreateFormInterface } from "interfaces/CreateForm";
-import { AxiosResponse } from "axios";
+import { CreateFormInterface } from "interfaces/CreateForm";
 import { FormService } from "services/FormService";
 
 export function CreateForms() {
@@ -31,13 +27,13 @@ export function CreateForms() {
                 questionsId: listQuestion
             };
 
-            console.log(requestData)
+            const data = await FormService.createForm(requestData, accessToken);
 
-            const { status, data } = await FormService.createForm(requestData);
+            console.log(data)
 
-            if (status === 200) {
-                console.log(data)
-            }
+            // if (status === 201) {
+            //     console.log(data)
+            // }
 
         } catch (error) {
             console.error(error)
@@ -77,4 +73,3 @@ export function CreateForms() {
         </div>
     )
 }
-
