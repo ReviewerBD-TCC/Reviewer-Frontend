@@ -6,9 +6,9 @@ export const Homepage = () => {
     const [cardList]: any = useState([
         {
             key:1,
-            title: <h2 className='text-white font-bold text-lg'>Vizualizar <br></br>Feedbacks</h2>,
+            title: <h2 className='text-white font-bold text-lg'>Visualizar <br></br>Formulário</h2>,
             backgroundColor: 'bg-boschRed',
-            nav: '/'
+            nav: '/form'
         },
         {
             key:2,
@@ -18,7 +18,7 @@ export const Homepage = () => {
         },
         {
             key:3,
-            title: <h2 className='text-white font-bold text-lg'>Criar <br></br>Feedbacks</h2>,
+            title: <h2 className='text-white font-bold text-lg'>Criar <br></br>Fornulário</h2>,
             backgroundColor: `bg-boschBlue`,
             nav: '/createform'
         },
