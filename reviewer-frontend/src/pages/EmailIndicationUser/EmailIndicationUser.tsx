@@ -74,10 +74,10 @@ export default function EmailIndicationUser() {
                   
                 </div>
                 <SparkTextfield  placeholder='Assunto do e-mail' {...register("subject")}/>
-                {errors.subject && <span className="text-red-600">{errors.subject.message}</span>}
+                {errors.subject && <span className="text-red-600">Preencha o assunto do e-mail.</span>}
 
                 <SparkTextarea  placeholder='Corpo do e-mail' {...register("body")} />
-                {errors.body && <span className="text-red-600">{errors.body.message}</span>}
+                {errors.body && <span className="text-red-600">Preencha o corpo do e-mail.</span>}
 
                 <div className='flex justify-end'>
                     <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Continuar' onClick={handleSubmit(toggle)}/>
