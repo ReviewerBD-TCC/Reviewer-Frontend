@@ -30,9 +30,6 @@ const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
 
     const navigate = useNavigate()
 
-    const { handleSubmit } = useForm<Email>({
-        resolver: EmailResolver
-      });
     const { accessToken } = useAuth();
     const token = accessToken;
 
@@ -72,7 +69,7 @@ const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
                                 <p>Selecione os colaboradores a receberem o formulário.</p>
                             </div>
                             <div className="flex items-end justify-end gap-4">
-                                <SparkButton text="Enviar para todos" pallete="primary" onClick={()=>handleSubmit(sendEmail(props.data))} />
+                                <SparkButton text="Enviar para todos" pallete="primary" onClick={()=>(sendEmail(props.data))} />
                                 <SparkButton text="Selecionar colaboradores" pallete="secondary" onClick={toggle} />
                                 <ModalEmailSelect isOpen={isOpen} toggle={toggle}/>
                             </div> 
