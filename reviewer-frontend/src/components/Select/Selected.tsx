@@ -1,3 +1,4 @@
+import { useAuth } from 'context/AuthProvider';
 import React, { SelectHTMLAttributes, useRef, useState } from 'react'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
@@ -7,13 +8,13 @@ export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | 
 }
 
 export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, ...rest) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const {changeLanguage, language} = useAuth();
   const dropdownRef = useRef<HTMLButtonElement | undefined>()
  
   // seta a opção escolhida
   const handleOptionClick = (value: any) => {
-    setSelectedValue(value);
+    changeLanguage(value)
     setIsOpen(false);
   };
 
@@ -31,8 +32,8 @@ export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, 
           } 
         </div>
       )}
-      {selectedValue && !isOpen ? <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{selectedValue}</p> : <p></p>}
-      {!selectedValue && !isOpen && (<p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray text-start ">Selecione uma opção</p>)}
+      {language && !isOpen ? <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{language}</p> : <p></p>}
+      {!language && !isOpen && (<p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray text-start ">Selecione uma opção</p>)}
     </div>
   )
 }
