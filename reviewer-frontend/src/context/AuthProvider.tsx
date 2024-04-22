@@ -9,6 +9,8 @@ interface AuthContextType {
   setAccessToken: (token: string | null) => void;
   active: boolean,
   setActiveValue: (active: boolean) => void;
+  language: string;
+  changeLanguage:(language: string)=> void;
   
 }
 
@@ -24,6 +26,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
   const [active, setActive] = useState<boolean>();
+  const [language, setLanguage] = useState<string>("Português")
 
   useEffect(() => {
     localStorage.setItem('accessToken', accessToken || '');
@@ -56,9 +59,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function setActiveValue(active: boolean){
     setActive(active)
   }
-
+  function changeLanguage(language:string){
+    setLanguage(language)
+  }
   return (
-    <AuthContext.Provider value={{active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user}}>
+    <AuthContext.Provider value={{active, changeLanguage,language, setActiveValue, accessToken, setAccessToken, setDetailsUser, user}}>
       {children}
     </AuthContext.Provider>
   );
