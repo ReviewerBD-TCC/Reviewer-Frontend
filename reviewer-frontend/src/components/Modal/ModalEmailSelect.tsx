@@ -35,7 +35,7 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
                                 <p>Agora, escolha para quem enviá-lo.</p>
                             </div>
                             <div>
-                                <TableUser  />
+                                <TableUser/>
                             </div>
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Enviar" pallete="primary" />
