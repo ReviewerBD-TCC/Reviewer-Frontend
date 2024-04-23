@@ -12,7 +12,7 @@ function Form() {
     const [form, setForm] = useState<Form>()
     const {language} = useAuth();
    useEffect(()=>{
-    const formQuestion = getFormQuestions(token, 12)
+    const formQuestion = getFormQuestions(token, 1)
     const data = formQuestion.then(function(response){
         const data = response.map(element=>{
             return element
@@ -46,7 +46,7 @@ function Form() {
                        { dataApi.map((element, index)=>(
                         <div className='mt-14 list-decimal'>
                         {/* <ol className='list-decimal'> */}
-                            <p className='font text-lg' >{index+1} - {language == "Português"?element.questions[index].questionPt:element.questions[index].questionEn}</p>
+                            <p className='font text-lg' >{index+1} - {language == "Português"?element.questionPt:element.questionEn}</p>
                         {/* </ol> */}
                         <div className='mt-3'>
                             <SparkTextarea/>

@@ -9,7 +9,8 @@ export interface SendForm{
 export interface Form{
     id: number,
     title:string,
-    questions: Array<QuestionProps>
-    
+    questionPt: string,
+    questionEn:string,
     year: string
+
 }
