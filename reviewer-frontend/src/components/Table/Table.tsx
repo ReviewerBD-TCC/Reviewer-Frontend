@@ -26,9 +26,10 @@ export const TableUser:React.FC = () =>{
     const [users, setUsers] = useState<string[]>([])
    
     return(
-        <div id="tableUser" className="w-auto h-72 max-h-72 bg-boschWhite overflow-y-auto p-1">
+        <div id="tableUser" className="w-auto h-62 max-h-62 bg-boschWhite overflow-y-auto p-1">
             <table className="w-full justify-start flex flex-col border-collapse">
                 <thead className="w-full bg-boschWhite h-9 flex items-center p-3 border-b-[1.5px] border-boschBlack">
+                    <th>Selected</th>
                     <th>Nomes</th>
                 </thead>
                 <tbody className="w-full h-auto bg-red-200 overflow-y-auto">
