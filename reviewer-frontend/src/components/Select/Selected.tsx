@@ -1,7 +1,5 @@
 import { useAuth } from 'context/AuthProvider';
-import { QuestionProps } from 'interfaces/Question';
-import React, { SelectHTMLAttributes, useEffect, useRef, useState } from 'react'
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import React, { SelectHTMLAttributes, useRef, useState } from 'react'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
@@ -10,32 +8,22 @@ export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | 
   zIndex: number;
 }
 
-export const Selected: React.FC<SelectedProps> = ({ labelText, options, question, zIndex }, ...rest) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(null);
-  const { setListQuestion, listQuestion } = useAuth()
+export const Selected: React.FC<SelectedProps> = ({labelText, options, zIndex}, ...rest) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState();
+  const {changeLanguage, language} = useAuth();
   const dropdownRef = useRef<HTMLButtonElement | undefined>()
 
   // seta a opção escolhida
   const handleOptionClick = (value: any) => {
-
-    if (typeof value === 'object') {
-
-      const index = listQuestion.findIndex((questionId: number) => questionId === value.id);
-
-      if (!listQuestion.includes(value.id)) {
-        console.log(index)
-        setSelectedValue(value.questionPt);
-        setListQuestion((prevList: number[]) => [...prevList, value.id]);
-      } else {
-        console.log(index)
-        showToastMessageError()
-      }
-
-    } else {
-      setSelectedValue(value);
+    setSelected(value)
+    if(value == 'Inglês'){
+      changeLanguage('Inglês')
+    }else{
+      changeLanguage('Português')
     }
-
+    console.log(language)
+    // changeLanguage(value)
     setIsOpen(false);
   };
 
@@ -71,9 +59,8 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
           ) : null}
         </div>
       )}
-      {selectedValue && !isOpen ? <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{selectedValue}</p> : <p></p>}
-      {!selectedValue && !isOpen && (<p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray text-start ">Selecione uma opção</p>)}
-      <ToastContainer />
+      {selected && !isOpen ? <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{selected}</p> : <p></p>}
+      {!selected && !isOpen && (<p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray text-start ">Selecione uma opção</p>)}
     </div>
   )
 }

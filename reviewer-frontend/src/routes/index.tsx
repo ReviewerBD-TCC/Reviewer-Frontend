@@ -1,4 +1,4 @@
-import {  RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Register from "../pages/Register/Register";
 import Indication from "../pages/Indicacation/Indication";
 import QuestionDb from "../pages/QuestionDb/QuestionDb";
@@ -6,6 +6,7 @@ import {CreateForms} from "../pages/CreateForms/CreateForms";
 import Login from "../pages/Login/Login";
 import { Homepage } from "../pages/Homepage/Homepage";
 import EmailIndicationUser from "pages/EmailIndicationUser/EmailIndicationUser";
+import Form from "pages/Form/Form";
 
 
 export const route = createBrowserRouter([
@@ -36,6 +37,10 @@ export const route = createBrowserRouter([
     {
       path: "/send-indication",
       element: <EmailIndicationUser/>
+    },
+    {
+      path: "/form",
+      element: <Form/>
     }
   ]);
 

@@ -71,7 +71,7 @@ const ModalEmailConfirmation:React.FC<ModalProps> = (props) => {
                             <div className="flex items-end justify-end gap-4">
                                 <SparkButton text="Enviar para todos" pallete="primary" onClick={()=>(sendEmail(props.data))} />
                                 <SparkButton text="Selecionar colaboradores" pallete="secondary" onClick={toggle} />
-                                <ModalEmailSelect isOpen={isOpen} toggle={toggle}/>
+                                <ModalEmailSelect data={props.data} isOpen={isOpen} toggle={toggle}/>
                             </div> 
                         </div>
                     </div>

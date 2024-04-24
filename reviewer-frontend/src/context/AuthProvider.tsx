@@ -11,9 +11,10 @@ interface AuthContextType {
 
   active: boolean,
   setActiveValue: (active: boolean) => void;
-
-  listQuestion: number[];
-  setListQuestion: React.Dispatch<React.SetStateAction<number[]>>;
+  language: string;
+  changeLanguage:(language: string)=> void;
+  selectedUsers: string[];
+  selectUser: (selectedUsers: string)=> void
   
 }
 
@@ -28,8 +29,9 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
+  const selectedUsers:string[] = []
   const [active, setActive] = useState<boolean>();
-  const [listQuestion, setListQuestion] = useState<number[]>([]);
+  const [language, setLanguage] = useState<string>("Português")
 
   useEffect(() => {
     localStorage.setItem('accessToken', accessToken || '');
@@ -62,9 +64,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function setActiveValue(active: boolean){
     setActive(active)
   }
+  function changeLanguage(language:string){
+    setLanguage(language)
+  }
+  function selectUser(user:any){
+    selectedUsers.push(user);
+  }
 
   return (
-    <AuthContext.Provider value={{active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, listQuestion, setListQuestion}}>
+    <AuthContext.Provider value={{active, changeLanguage,language, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, selectedUsers, selectUser}}>
       {children}
     </AuthContext.Provider>
   );
