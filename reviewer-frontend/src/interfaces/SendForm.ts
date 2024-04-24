@@ -12,5 +12,10 @@ export interface Form{
     questionPt: string,
     questionEn:string,
     year: string
+}
 
+export interface AnswerForm{
+    questionFormId: number,
+    userId: number,
+    answers: Array<string>,
 }
