@@ -10,7 +10,7 @@ import { CreateFormResolver } from "validations/CreateFormResolver";
 import { CreateForm } from "interfaces/CreateForm";
 import { AxiosResponse } from "axios";
 
-export const CreateForms = () => {
+export function CreateForms(){
     const { accessToken } = useAuth();    
     const [components, setComponents]: any = useState([]);
     const yearOptions = [2024, 2025, 2026]
