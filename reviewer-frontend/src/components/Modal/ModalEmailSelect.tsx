@@ -53,7 +53,8 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
             body:props.data.body,
             subject:props.data.subject
        }
-       mailSender(data, token)
+       const {status} = mailSender(data, token)
+       console.log(status)
        showToastMessage()
        setTimeout(() => {
        console.log(accessToken)
