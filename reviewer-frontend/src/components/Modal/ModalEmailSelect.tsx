@@ -1,6 +1,6 @@
 import { SparkButton, SparkSearchBar, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
-import React, { ReactNode } from "react"
+import React, { ReactNode, useEffect } from "react"
 import api from "../../api/Api";
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,16 +15,30 @@ import { TableUser } from "components/Table/Table";
 
 import { SparkNotification } from "@bosch-web-dds/spark-ui-react";
 
+import { mailSender } from "services/EmailServices";
+import { Email } from "interfaces/Emaill";
+
 
 interface ModalProps{
+    data:Email;
     isOpen: boolean;
     toggle: () => void
 }
 
 const ModalEmailSelect:React.FC<ModalProps> = (props) => {
 
-    const { accessToken } = useAuth();
+    const { accessToken, selectedUsers } = useAuth();
     const token = accessToken
+
+    const sendEmailSelected = ()=>{
+
+       const data:Email = {
+            bcc:selectedUsers,
+            body:props.data.body,
+            subject:props.data.subject
+       }
+       mailSender(data, token)
+    }
 
     return (
         <>{props.isOpen && (
@@ -38,18 +52,18 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
                            
                             <div className="flex flex-col gap-2 ">
 
-                                <h1 className="text-3xl font-bold">Indicação pronta</h1>
+                                <h1 className="text-3xl font-semibold">Indicação pronta</h1>
                                 <SparkNotification type="bar" variant="neutral" icon="info-i">
                                     <p>Selecione os colaboradores a receberem o formulário de indicação</p>
                                 </SparkNotification>
                                 <SparkTextfield type="search" placeholder="Digite o nome do colaborador."/>
 
                             </div>
-                            <div className="">
+                            <div>
                                 <TableUser/>
                             </div>
                             <div className="flex justify-end">
-                                <SparkButton text="Enviar" pallete="primary" />
+                                <SparkButton text="Enviar" pallete="primary" onClick={()=>sendEmailSelected()} />
                             </div> 
                         </div>
                     </div>
