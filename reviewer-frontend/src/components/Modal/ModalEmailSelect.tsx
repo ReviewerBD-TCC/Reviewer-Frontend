@@ -18,6 +18,8 @@ import { SparkNotification } from "@bosch-web-dds/spark-ui-react";
 import { mailSender } from "services/EmailServices";
 import { Email } from "interfaces/Emaill";
 
+import { ToastContainer, Bounce, toast } from "react-toastify";
+
 
 interface ModalProps{
     data:Email;
@@ -26,6 +28,20 @@ interface ModalProps{
 }
 
 const ModalEmailSelect:React.FC<ModalProps> = (props) => {
+
+    const showToastMessage = () => {
+        toast.success('Colaboradores indicados com sucesso!', {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
 
     const { accessToken, selectedUsers } = useAuth();
     const token = accessToken
@@ -38,6 +54,11 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
             subject:props.data.subject
        }
        mailSender(data, token)
+       showToastMessage()
+       setTimeout(() => {
+       console.log(accessToken)
+       window.location.reload()
+       }, 1500)
     }
 
     return (
@@ -68,6 +89,7 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
             )}
         </>
