@@ -6,7 +6,7 @@ export const Homepage = () => {
     const [cardList]: any = useState([
         {
             key:1,
-            title: <h2 className='text-white font-bold text-lg'>Vizualizar <br></br>Feedbacks</h2>,
+            title: <h2 className='text-white font-bold text-lg'>Visualizar <br></br>Feedbacks</h2>,
             backgroundColor: 'bg-boschRed',
             nav: '/'
         },
