@@ -82,7 +82,6 @@ export default function EmailIndicationUser() {
                 <div className='flex justify-end'>
                     <SparkButton type='submit' pallete='primary' customWidth='13rem' text='Continuar' onClick={handleSubmit(toggle)}/>
                     <ModalEmailConfirmation isOpen={isOpen} data={allData}  toggle={toggle}/>
-
                 </div>
             </form>
         </div>
