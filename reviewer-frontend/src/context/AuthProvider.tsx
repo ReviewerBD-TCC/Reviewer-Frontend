@@ -11,6 +11,8 @@ interface AuthContextType {
   setActiveValue: (active: boolean) => void;
   language: string;
   changeLanguage:(language: string)=> void;
+  selectedUsers: string[];
+  selectUser: (selectedUsers: string)=> void
   
 }
 
@@ -25,6 +27,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
+  const selectedUsers:string[] = []
   const [active, setActive] = useState<boolean>();
   const [language, setLanguage] = useState<string>("Português")
 
@@ -62,8 +65,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function changeLanguage(language:string){
     setLanguage(language)
   }
+  function selectUser(user:any){
+    selectedUsers.push(user);
+  }
+
   return (
-    <AuthContext.Provider value={{active, changeLanguage,language, setActiveValue, accessToken, setAccessToken, setDetailsUser, user}}>
+    <AuthContext.Provider value={{active, changeLanguage,language, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, selectedUsers, selectUser}}>
       {children}
     </AuthContext.Provider>
   );
