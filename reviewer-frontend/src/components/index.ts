@@ -7,6 +7,7 @@ import { Selected } from "./Select/Selected"
 import {Question} from "./Question/Question"
 import ModalAdd from "./Modal/ModalAdd"
 import { TableUser } from "./Table/Table"
+import {PrivateRoute} from "./PrivateRoute/PrivateRoute"
 
 export {
     Header,
@@ -17,5 +18,6 @@ export {
     Card,
     ModalAdd,
     Selected,
-    TableUser
+    TableUser,
+    PrivateRoute
 }
