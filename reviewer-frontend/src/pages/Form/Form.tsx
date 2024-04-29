@@ -11,18 +11,10 @@ import { useQuery } from "react-query";
 function Form() {
   const [dataApi, setDataAPi] = useState<Form[]>([]);
   const [form, setForm] = useState<Form>();
-  const { language, accessToken } = useAuth();
-  //    useEffect(()=>{
-  //     const formQuestion = getFormQuestions(token, 1)
-  //     const data = formQuestion.then(function(response){
-  //         const data = response.map(element=>{
-  //             return element
-  //         })
-  //       setDataAPi(data)
-  //       setForm(data[1])
-  //       console.log(data)
-  //     })
-  //    },[])
+  const { accessToken } = useAuth();
+  const languageOptions = ["Português", "Inglês"];
+  const [ languageSelect, setLanguageSelect ] = useState<string>("Português")
+  var formatTitle = form?.title;
 
   const { data: responseList = [] } = useQuery("form", () => {
     return getFormQuestions(accessToken, 1);
@@ -34,9 +26,8 @@ function Form() {
       setForm(responseList[0]);
       console.log(responseList[0]);
     }
-  });
+  }, [responseList]);
 
-  const languageOptions = ["Português", "Inglês"];
 
   const {
     register,
@@ -48,13 +39,10 @@ function Form() {
     resolver: AnswerFormResolver,
   });
 
-  var formatTitle = form?.title;
   if (formatTitle) {
     formatTitle =
       formatTitle.charAt(0).toUpperCase() + formatTitle.slice(1).toLowerCase();
   }
-
-  // console.log(getValues('answers'))
 
   const postAnswers = (value: any) => {
     const answerForm: AnswerForm = {
@@ -64,6 +52,10 @@ function Form() {
     };
     postFormAnswers(accessToken, answerForm);
     console.log(value);
+  };
+
+  const handleLanguageChange = (value: string) => {
+    setLanguageSelect(value);
   };
 
   return (
@@ -78,8 +70,10 @@ function Form() {
             <div className="w-[20%]">
               <Selected
                 labelText="Idioma"
-                zIndex={50}
                 options={languageOptions}
+                zIndex={50}
+                selectedValue={languageSelect}
+                setSelectedValue={handleLanguageChange}
               />
             </div>
           </div>
@@ -89,14 +83,12 @@ function Form() {
           <div>
             {dataApi.map((element, index) => (
               <div className="mt-14 list-decimal">
-                {/* <ol className='list-decimal'> */}
                 <p className="font text-lg">
                   {index + 1} -{" "}
-                  {language == "Português"
+                  {languageSelect === "Português"
                     ? element.questionPt
                     : element.questionEn}
                 </p>
-                {/* </ol> */}
                 <div className="mt-3">
                   <SparkTextarea
                     {...register("answers", {

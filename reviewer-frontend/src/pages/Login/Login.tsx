@@ -47,7 +47,8 @@ function Login() {
   const {
     handleSubmit,
     register,
-    formState: { isValid },
+    formState: {  errors, isValid },
+    
   } = useForm<UserLogin>({
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
@@ -70,9 +71,9 @@ function Login() {
         }, 1500)
       }
     } catch (error) {
-      if(error.response.status === 401){
-        showToastMessageError()
-      }
+
+      showToastMessageError()
+      
       console.error(error);
     }
   };

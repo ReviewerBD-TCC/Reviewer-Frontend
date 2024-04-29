@@ -33,13 +33,12 @@ export function CreateForms() {
 
     const createForm = async () => {
         try {
+
             const requestData: CreateFormInterface = {
                 title: title,
                 year: year,
                 questionsId: questions
             };
-
-            console.log(requestData)
 
             const { data, status } = await FormService.createForm(requestData, accessToken);
 
@@ -133,11 +132,11 @@ export function CreateForms() {
                             <Selected
                                 labelText="Ano"
                                 options={yearOptions}
-                                selectedValue={year} // Defina a variável de estado como o valor inicial
-                                setSelectedValue={handleYearChange} // Atualiza o estado quando o valor muda
+                                selectedValue={year} 
+                                setSelectedValue={handleYearChange}
                                 {...register("year", {
                                     setValueAs: (value) => {
-                                        setYear(value); // Atualiza o estado
+                                        setYear(value);
                                         return value;
                                     },
                                 })}
