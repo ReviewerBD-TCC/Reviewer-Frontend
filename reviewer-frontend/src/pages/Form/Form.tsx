@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Header, Selected } from "components";
-import { SparkButton, SparkTextarea } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextarea, SparkActivityIndicator } from "@bosch-web-dds/spark-ui-react";
 import { getFormQuestions, postFormAnswers } from "services/FormsService";
 import { useAuth } from "context/AuthProvider";
 import { Form, SendForm, AnswerForm } from "interfaces/SendForm";
@@ -16,7 +16,7 @@ function Form() {
   const [ languageSelect, setLanguageSelect ] = useState<string>("Português")
   var formatTitle = form?.title;
 
-  const { data: responseList = [] } = useQuery("form", () => {
+  const { data: responseList = [], isLoading} = useQuery("form", () => {
     return getFormQuestions(accessToken, 1);
   });
 
@@ -104,6 +104,7 @@ function Form() {
               </div>
             ))}
           </div>
+          {isLoading&&<SparkActivityIndicator/>}
           <div className="flex justify-end">
             <SparkButton text="Enviar" onClick={handleSubmit(postAnswers)} />
           </div>
