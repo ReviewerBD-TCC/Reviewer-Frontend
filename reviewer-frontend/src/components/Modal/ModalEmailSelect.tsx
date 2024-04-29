@@ -1,6 +1,6 @@
 import { SparkButton, SparkSearchBar, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import { AxiosResponse } from "axios";
-import React, { ReactNode, useEffect } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import api from "../../api/Api";
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,6 +29,8 @@ interface ModalProps{
 
 const ModalEmailSelect:React.FC<ModalProps> = (props) => {
 
+    const [search, setSearch] = useState('')
+
     const showToastMessage = () => {
         toast.success('Colaboradores indicados com sucesso!', {
           position: "top-right",
@@ -53,13 +55,19 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
             body:props.data.body,
             subject:props.data.subject
        }
-       const {status} = mailSender(data, token)
-       console.log(status)
-       showToastMessage()
-       setTimeout(() => {
-       console.log(accessToken)
-       window.location.reload()
-       }, 1500)
+
+       try{
+        mailSender(data, token)
+        console.log()
+        showToastMessage()
+        setTimeout(() => {
+        console.log(accessToken)
+        window.location.reload()
+        }, 1500)
+       }catch(error){
+        console.error(error)
+       }
+
     }
 
     return (
@@ -78,8 +86,6 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
                                 <SparkNotification type="bar" variant="neutral" icon="info-i">
                                     <p>Selecione os colaboradores a receberem o formulário de indicação</p>
                                 </SparkNotification>
-                                <SparkTextfield type="search" placeholder="Digite o nome do colaborador."/>
-
                             </div>
                             <div>
                                 <TableUser/>

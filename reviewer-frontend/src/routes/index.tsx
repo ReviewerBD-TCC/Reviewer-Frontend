@@ -46,6 +46,6 @@ export const route = createBrowserRouter([
 
   export default function AppRoutes() {
     return (
-          <RouterProvider router={route}/>
+          <RouterProvider router={route} />
     );
   }
