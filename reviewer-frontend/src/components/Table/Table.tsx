@@ -41,7 +41,8 @@ export const TableUser:React.FC = () =>{
         }
     };
 
-    const filteredUsers = users.filter((user) => user.name.includes(search));
+    const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
+
 
     console.log(search)
 
