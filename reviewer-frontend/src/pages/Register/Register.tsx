@@ -2,7 +2,7 @@ import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-u
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { UserData } from "../../interfaces/CreateUser";
-import { ClienteResolver } from "../../validations/ClienteResolver";
+import { ClienteResolver } from "../../validations/CreateUserResolver";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Header } from "../../components/index"
@@ -78,10 +78,6 @@ function Register() {
     }
   };
 
-  const handleSearch = (fieldName: string, value: string | number | boolean) => {
-    // console.log(`Campo: ${fieldName}, Valor: ${value}`);    
-  };
-
   return (
     <div className="w-full h-screen flex flex-col">
       <Header />
@@ -96,7 +92,6 @@ function Register() {
             <form className="w-[50%] flex flex-col justify-center gap-6">
               <SparkTextfield type="text" label="Usuário" {...register("user", {
                 setValueAs: (value) => {
-                  handleSearch("user", value);
                   return value;
                 },
               })} whenChange={(event) => setValue("user", event.target.value)} placeholder="Nome de usuário" />
@@ -106,7 +101,6 @@ function Register() {
               <SparkTextfield type="text" label="Nome"
                 {...register("name", {
                   setValueAs: (value) => {
-                    handleSearch("name", value);
                     return value;
                   },
                 })} whenChange={(event) => setValue("name", event.target.value)} placeholder="Nome completo" />
@@ -115,7 +109,6 @@ function Register() {
               
               <SparkTextfield type="text" label="E-mail"  {...register("email", {
                 setValueAs: (value) => {
-                  handleSearch("email", value);
                   return value;
                 },
               })} whenChange={(event) => setValue("email", event.target.value)} placeholder="E-mail" />
@@ -124,7 +117,6 @@ function Register() {
 
               <SparkTextfield type="text" label="Departamento" {...register("gkz", {
                 setValueAs: (value) => {
-                  handleSearch("gkz", value);
                   return value;
                 },
               })} whenChange={(event) => setValue("gkz", event.target.value)} placeholder="Departamento" />
@@ -133,7 +125,6 @@ function Register() {
 
               <SparkTextfield type="text" label="Gestor" {...register("manager", {
                 setValueAs: (value) => {
-                  handleSearch("manager", value);
                   return value;
                 },
               })} whenChange={(event) => setValue("manager", event.target.value)} placeholder="Gestor" />
@@ -142,7 +133,6 @@ function Register() {
 
               <SparkTextfield type="password" label="Senha" {...register("password", {
                 setValueAs: (value) => {
-                  handleSearch("password", value);
                   return value;
                 },
               })} whenChange={(event) => setValue("password", event.target.value)} placeholder="Senha" />
