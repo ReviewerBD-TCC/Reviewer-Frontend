@@ -12,14 +12,13 @@ interface AuthContextType {
   active: boolean,
   setActiveValue: (active: boolean) => void;
 
-  listQuestion: number[];
-  setListQuestion: React.Dispatch<React.SetStateAction<number[]>>;
+  selectedUsers: string[];
+  selectUser: (selectedUsers: string)=> void
   
 }
 
 
 const AuthContext = createContext<AuthContextType  | undefined>(undefined)
-// const QuestionContext = createContext< | undefined>(undefined)
 
 interface AuthProviderProps {
   children: ReactNode; 
@@ -28,8 +27,8 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
+  const selectedUsers:string[] = []
   const [active, setActive] = useState<boolean>();
-  const [listQuestion, setListQuestion] = useState<number[]>([]);
 
   useEffect(() => {
     localStorage.setItem('accessToken', accessToken || '');
@@ -62,9 +61,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function setActiveValue(active: boolean){
     setActive(active)
   }
+  function selectUser(user:any){
+    selectedUsers.push(user);
+  }
 
   return (
-    <AuthContext.Provider value={{active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, listQuestion, setListQuestion}}>
+    <AuthContext.Provider value={{ active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, selectedUsers, selectUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -79,6 +81,7 @@ export function useAuth(){
 
   return context;
 }
+
 export function useQuestion(){
   const context = useContext(AuthContext);
   return context
