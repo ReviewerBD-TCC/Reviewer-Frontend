@@ -11,7 +11,7 @@ import { useAuth } from 'context/AuthProvider'
 import api from '../../api/Api';
 import { LoginResolver } from 'validations/LoginResolver';
 
-function Login() {
+export const Login = () => {
 
   const { setAccessToken, accessToken } = useAuth();
 
@@ -125,4 +125,3 @@ function Login() {
 
   )
 }
-export default Login
