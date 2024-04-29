@@ -6,7 +6,6 @@ import Modal from "./Modal/Modal"
 import { Selected } from "./Select/Selected"
 import {Question} from "./Question/Question"
 import ModalAdd from "./Modal/ModalAdd"
-import { RenderFormContent } from "./RenderFormContent/RenderFormContent"
 
 export {
     Header,
@@ -17,5 +16,4 @@ export {
     Card,
     ModalAdd,
     Selected,
-    RenderFormContent,
 }
