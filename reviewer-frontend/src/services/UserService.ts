@@ -1,7 +1,10 @@
+import { UserData } from "interfaces/CreateUser";
 import api from "../api/Api";
 import { UserLogin } from "../interfaces/LoginUser"; 
 
 const handleLogin = (data: UserLogin) => api.post('/auth/login', data);
+
+const createClient = (data: UserData) => api.post('auth/register', data);
 
 const getUsers = async (token: string | null) => {
   try {
@@ -33,5 +36,5 @@ const userDetails = async (token: string | null) => {
   }
 
 export const UserService = {
-    handleLogin, userDetails, getUsers
+    handleLogin, userDetails, getUsers, createClient
 };
