@@ -2,26 +2,14 @@ import Supergraphic from '../../assets/images/Supergraphic.png'
 import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod';
-import z from 'zod'
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
-
-import React, { useEffect, useState } from 'react';
 import { UserService } from '../../services/UserService'
 import { UserLogin } from '../../interfaces/LoginUser'
-
-import { UserData } from 'interfaces/CreateUser'
 import { useAuth } from 'context/AuthProvider'
 import api from '../../api/Api';
-
-const schema = z.object({
-  email: z.string().email('Formato de e-mail inválido'),
-  password: z.string().min(8, 'A senha precisa de no mínimo 6 caracteres')
-});
-
-type FormProps = z.infer<typeof schema>;
+import { LoginResolver } from 'validations/LoginResolver';
 
 function Login() {
 
@@ -59,12 +47,13 @@ function Login() {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
-  } = useForm<FormProps>({
+    formState: {  errors, isValid },
+    
+  } = useForm<UserLogin>({
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: zodResolver(schema),
+    resolver: LoginResolver,
   });
 
 
@@ -82,14 +71,14 @@ function Login() {
         }, 1500)
       }
     } catch (error) {
-      if(error.response.status === 401){
-        showToastMessageError()
-      }
+
+      showToastMessageError()
+      
       console.error(error);
     }
   };
 
-  
+
 
   return (
 

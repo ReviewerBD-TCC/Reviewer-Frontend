@@ -4,13 +4,14 @@ import { UserData } from '../interfaces/CreateUser';
 
 interface AuthContextType {
   setDetailsUser: (values: UserData) => void;
-  user: UserData | null;
+  user: UserData;
+
   accessToken: string;
-  setAccessToken: (token: string | null) => void;
+  setAccessToken: (token: string ) => void;
+
   active: boolean,
   setActiveValue: (active: boolean) => void;
-  language: string;
-  changeLanguage:(language: string)=> void;
+
   selectedUsers: string[];
   selectUser: (selectedUsers: string)=> void
   
@@ -18,7 +19,6 @@ interface AuthContextType {
 
 
 const AuthContext = createContext<AuthContextType  | undefined>(undefined)
-// const QuestionContext = createContext< | undefined>(undefined)
 
 interface AuthProviderProps {
   children: ReactNode; 
@@ -29,7 +29,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserData | null>();
   const selectedUsers:string[] = []
   const [active, setActive] = useState<boolean>();
-  const [language, setLanguage] = useState<string>("Português")
 
   useEffect(() => {
     localStorage.setItem('accessToken', accessToken || '');
@@ -62,15 +61,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function setActiveValue(active: boolean){
     setActive(active)
   }
-  function changeLanguage(language:string){
-    setLanguage(language)
-  }
   function selectUser(user:any){
     selectedUsers.push(user);
   }
 
   return (
-    <AuthContext.Provider value={{active, changeLanguage,language, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, selectedUsers, selectUser}}>
+    <AuthContext.Provider value={{ active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, selectedUsers, selectUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -85,6 +81,7 @@ export function useAuth(){
 
   return context;
 }
+
 export function useQuestion(){
   const context = useContext(AuthContext);
   return context
