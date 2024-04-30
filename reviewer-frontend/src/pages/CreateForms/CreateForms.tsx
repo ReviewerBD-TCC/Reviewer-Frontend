@@ -1,7 +1,7 @@
 import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
 import { Header } from "../../components/Header/Header"
 import { Selected } from "../../components/Select/Selected"
-import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
 import { CreateFormInterface } from "interfaces/CreateForm";
@@ -11,6 +11,7 @@ import { CreateFormResolver } from "validations/CreateFormResolver";
 import { QuestionService } from "services/questionService";
 import { useQuery } from "react-query";
 import { QuestionProps } from 'interfaces/Question';
+import { useNavigate } from "react-router-dom";
 
 
 export function CreateForms() {
@@ -22,6 +23,7 @@ export function CreateForms() {
     const [questionListRender, setQuestionListRender] = useState<number[]>([])
     const [selectedValues, setSelectedValues] = useState<QuestionProps[]>([]);
     const [ valido, setValido ] = useState<Boolean>(false)
+    const navigate = useNavigate()
 
     const addNewQuestion = () => {
         setQuestionListRender([...questionListRender, questionListRender[questionListRender.length] + 1])
@@ -43,7 +45,11 @@ export function CreateForms() {
             const { data, status } = await FormService.createForm(requestData, accessToken);
 
             if (status === 201) {
-                console.log(data)
+                showToastSuccessMessage()
+                setTimeout(() => {
+                    console.log(data)
+                    navigate('/home')
+                  }, 1500)
             }
 
         } catch (error) {
@@ -83,6 +89,19 @@ export function CreateForms() {
 
     const showToastMessageError = () => {
         toast.warning('Essa pergunta já foi adicionada!', {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Zoom,
+        });
+    }
+    const showToastSuccessMessage = () => {
+        toast.success('Formulário criado com sucesso!', {
             position: "top-right",
             autoClose: 2500,
             hideProgressBar: false,
