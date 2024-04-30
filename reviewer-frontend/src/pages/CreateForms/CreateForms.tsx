@@ -1,7 +1,7 @@
 import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react"
 import { Header } from "../../components/Header/Header"
 import { Selected } from "../../components/Select/Selected"
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
 import { CreateFormInterface } from "interfaces/CreateForm";
@@ -91,7 +91,7 @@ export function CreateForms() {
             draggable: true,
             progress: undefined,
             theme: "light",
-            transition: Bounce,
+            transition: Zoom,
         });
     }
 

@@ -1,5 +1,5 @@
 import { SparkButton, SparkChip } from "@bosch-web-dds/spark-ui-react";
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { User } from "../../interfaces/CreateUser";
 import { MouseEventHandler, useEffect, useState } from "react";
@@ -80,7 +80,7 @@ function Indication() {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
+        transition: Zoom,
         });
     }
 
