@@ -6,9 +6,7 @@ import { ClienteResolver } from "../../validations/CreateUserResolver";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Header } from "../../components/index"
-// import { onSubmit } from "services/CreateUserService"; 
-import api from "../../api/Api";
-import z from 'zod'
+import { UserService } from "services/UserService";
 
 function Register() {
   const navigate = useNavigate()
@@ -26,10 +24,6 @@ function Register() {
   function handleToggle(e: ChangeEvent<HTMLInputElement>) {
     setIsAdmin(e.target.checked);
   }
-
-
-
-  const createClient = (data: UserData) => api.post('auth/register', data);
 
   const showToastSuccessMessage = () => {
     toast.success('Usuário cadastrado com sucesso!', {
@@ -63,7 +57,7 @@ function Register() {
   const onSubmit: SubmitHandler<UserData> = async (values) => {
 
     try {
-      const { status, data } = await createClient(values);
+      const { status, data } = await UserService.createClient(values);
       if (status === 201) {
         console.log('data: ', data)
         showToastSuccessMessage()

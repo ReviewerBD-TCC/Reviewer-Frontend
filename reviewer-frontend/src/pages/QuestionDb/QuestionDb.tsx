@@ -17,8 +17,6 @@ function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
 
   const { accessToken } = useAuth();
-  
-   
 
   const { data: responseList = [], isLoading, error } = useQuery("questions", () => {
     console.log(accessToken);
@@ -51,7 +49,7 @@ function QuestionDb(props?: QuestionProps) {
                       }
                       <div className="flex justify-center">
                         {isLoading&&<SparkActivityIndicator/>}
-                        {error&&  <img src={error404} alt="GIF 404" />}
+                        {error &&  <img src={error404} alt="GIF 404" />}
                       </div>
                     </div>
                 </div>
