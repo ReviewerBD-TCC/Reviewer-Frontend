@@ -1,7 +1,7 @@
 import React from "react";
 
 interface DefaultProps {
-  bgColor: string;
+  bgColor?: string;
   onFunction: (color: string) => void;
 }
 
