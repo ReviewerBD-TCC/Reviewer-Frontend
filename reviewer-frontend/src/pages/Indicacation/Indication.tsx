@@ -112,13 +112,13 @@ function Indication() {
     };
 
     return (
-        <>
+        <div className="h-auto min-h-screen w-full flex flex-col items-center">
             <Header />
-            <div className="bg-[#D0D0D0] w-full h-screen flex justify-center items-center">
-                <div className="bg-boschWhite h-screen w-[90%] flex items-center justify-center">
-                    <form className="w-[80%] h-auto flex flex-col justify-center gap-10">
+            <div className="w-[90%] min-h-[90%] h-auto flex items-center justify-center pt-7">
+                <div className="w-[95%] h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7">
+                    <form className="w-[80%] min-h-[90%] h-auto flex flex-col justify-center gap-10">
                         <div className="flex flex-col gap-2 mb-10">
-                            <h1 className="font-bold text-4xl">Olá {user?.name}</h1>
+                            <h1 className="font-bold text-4xl">Olá, {user?.name}.</h1>
                             <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
                             <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
                         </div>
@@ -143,7 +143,7 @@ function Indication() {
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
