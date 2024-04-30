@@ -2,7 +2,7 @@ import Supergraphic from '../../assets/images/Supergraphic.png'
 import Logo from '../../assets/images/Logo.png'
 import { SparkTextfield, SparkButton, SparkLink } from '@bosch-web-dds/spark-ui-react'
 import { useForm } from 'react-hook-form'
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../services/UserService'
@@ -27,7 +27,7 @@ export const Login = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      transition: Bounce,
+      transition: Zoom,
     });
   }
   const showToastMessageError = () => {
@@ -40,7 +40,7 @@ export const Login = () => {
       draggable: true,
       progress: undefined,
       theme: "colored",
-      transition: Bounce,
+      transition: Zoom,
     });
   }
 

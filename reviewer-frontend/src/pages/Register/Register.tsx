@@ -1,5 +1,5 @@
 import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-ui-react"
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { UserData } from "../../interfaces/CreateUser";
 import { ClienteResolver } from "../../validations/CreateUserResolver";
@@ -35,7 +35,7 @@ function Register() {
       draggable: true,
       progress: undefined,
       theme: "light",
-      transition: Bounce,
+      transition: Zoom,
     }
     );
   }
@@ -50,7 +50,20 @@ function Register() {
       draggable: true,
       progress: undefined,
       theme: "light",
-      transition: Bounce,
+      transition: Zoom,
+    });
+  }
+  const showToastFailMessageDuplicated = () => {
+    toast.warning('Um usuário com este e-mail ou nome de usuário já existe!', {
+      position: 'top-right',
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Zoom,
     });
   }
 
@@ -68,6 +81,9 @@ function Register() {
     } catch (error) {
       if(error.response.status == 404){
         showToastFailMessage()
+      }
+      if(error.response.status == 409){
+        showToastFailMessageDuplicated()
       }
     }
   };
