@@ -7,7 +7,7 @@ import {Login} from "../pages/Login/Login";
 import { Homepage } from "../pages/Homepage/Homepage";
 import EmailIndicationUser from "pages/EmailIndicationUser/EmailIndicationUser";
 import Form from "pages/Form/Form";
-import { PrivateRoute } from "components";
+import { Default, PrivateRoute } from "components";
 
 
 export const route = createBrowserRouter([
@@ -65,6 +65,14 @@ export const route = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Form />
+      </PrivateRoute>
+    )
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Default/>
       </PrivateRoute>
     )
   }
