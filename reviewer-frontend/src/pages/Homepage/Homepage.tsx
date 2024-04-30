@@ -28,6 +28,12 @@ export const Homepage = () => {
             backgroundColor: 'bg-boschTurquoise',
             nav: '/send-indication'
         },
+        {
+            key:5,
+            title: <h2 className='text-white font-bold text-lg'>Visualizar Dashboard<br></br></h2>,
+            backgroundColor: 'bg-boschGreen',
+            nav: '/dashboard'
+        }
     ])
 
   return (
@@ -38,7 +44,7 @@ export const Homepage = () => {
                     <div className='w-full h-16 flex'>
                         <h1 className='font-bold text-3xl'>Painel administrador</h1>
                     </div>
-                    <div className='w-full h-2/4 flex justify-between items-center flex-row'>
+                    <div className='w-full h-2/4 flex justify-between items-center flex-row gap-2'>
                         {cardList.map((i:any) => (
                             <Card key={i.key} text={i.title} backgroundColor={i.backgroundColor} nav={i.nav}/>
                         ))}
