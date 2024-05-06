@@ -31,6 +31,7 @@ function Indication() {
                     console.log(user)
                     const usernames = data.map(user => user);
                     setUsers(usernames)
+                    
                 }
             } catch (error) {
                 console.error('Erro ao buscar usuários:', error);
@@ -43,11 +44,11 @@ function Indication() {
 
     const addChip = (value: User) => {
         if (chips.length < 5) {
-            console.log(value);
+
             setChips((prevChips) => [...prevChips, value]);
             setUserListSelect((prevUserList) => [...prevUserList, value.id!]);
             setShowChip(true);
-            console.log(userListSelect);
+
         }
     };
 
@@ -70,17 +71,30 @@ function Indication() {
         }
     };
 
-    const showToastMessage = () =>{
+    const showToastMessage = () => {
         toast.success('Indicação realizada com sucesso!', {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Zoom,
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Zoom,
+        });
+    }
+    const showToastWarningMessage = () => {
+        toast.warning('Você não pode se adicionar!', {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Zoom,
         });
     }
 
@@ -101,8 +115,8 @@ function Indication() {
             console.log(requestData)
             if (status === 201) {
                 showToastMessage()
-                setTimeout(()=>{
-                navigate('/home')
+                setTimeout(() => {
+                    navigate('/home')
                 }, 1500)
             }
 
@@ -110,6 +124,11 @@ function Indication() {
             console.error('Erro ao enviar o cliente:', error);
         }
     };
+    userList.findIndex((each, index)=>{
+        if(each.name == user.name){
+            userList.splice(index, 1)
+        }
+    })
 
     return (
         <div className="h-auto min-h-screen w-full flex flex-col items-center">
