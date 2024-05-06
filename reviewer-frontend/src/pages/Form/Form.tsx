@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header, Selected } from "components";
 import { SparkButton, SparkTextarea, SparkActivityIndicator } from "@bosch-web-dds/spark-ui-react";
-import { getFormQuestions, postFormAnswers } from "services/FormsService";
+import { AnswerService } from "services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { Form, SendForm, AnswerForm } from "interfaces/SendForm";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,7 +17,7 @@ function Form() {
   var formatTitle = form?.title;
 
   const { data: responseList = [], isLoading} = useQuery("form", () => {
-    return getFormQuestions(accessToken, 1);
+    return AnswerService.getFormQuestions(accessToken, 1);
   });
 
   useEffect(() => {
@@ -50,8 +50,8 @@ function Form() {
       answers: getValues("answers"),
       questionFormId: 1,
     };
-    postFormAnswers(accessToken, answerForm);
-    console.log(value);
+   // AnswerService.postFormAnswers(accessToken, answerForm);
+    console.log(answerForm);
   };
 
   const handleLanguageChange = (value: string) => {
