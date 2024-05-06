@@ -3,7 +3,7 @@ import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { User } from "../../interfaces/CreateUser";
 import { MouseEventHandler, useEffect, useState } from "react";
-import { Header } from "../../components/index";
+import { Header, TableUser } from "../../components/index";
 import { CreateIndication } from "interfaces/CreateIndication";
 import { SelectedIndication } from "components/SelectedIndication/SelectedIndication";
 import { useAuth } from "context/AuthProvider";
@@ -18,8 +18,8 @@ function Indication() {
 
     const [userListSelect, setUserListSelect] = useState<number[]>([])
     const [userList, setUsers] = useState<any[]>([]);
-    const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-    const { accessToken, user } = useAuth();
+    // const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+    const { accessToken, user, selectedUsers } = useAuth();
 
     const navigate = useNavigate()
 
@@ -55,19 +55,19 @@ function Indication() {
     const removeChip = (item: User) => {
         setChips((prevChips) => prevChips.filter((chip) => chip !== item));
         setShowChip(false);
-        setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== item.name));
+        // setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== item.name));
     };
 
     const handleUserSelect = (value: User) => {
         if (value !== null && !selectedUsers.includes(value.name)) {
             if (selectedUsers.length < 5) {
-                setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, value.name]);
+                // setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, value.name]);
                 console.log(value.id)
                 addChip(value);
             }
         } else {
             removeChip(value);
-            setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== value.name));
+            // setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== value.name));
         }
     };
 
@@ -129,7 +129,7 @@ function Indication() {
             userList.splice(index, 1)
         }
     })
-
+   console.log(selectedUsers[0])
     return (
         <div className="h-auto min-h-screen w-full flex flex-col items-center">
             <Header />
@@ -142,15 +142,18 @@ function Indication() {
                             <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
                         </div>
 
-                        <SelectedIndication
+                        {/* <SelectedIndication
                             labelText="Selecione o usuário"
                             options={userList.map(userFix => ({ name: userFix.name, id: userFix.id }))}
                             zIndex={50}
                             onChange={handleUserSelect}
-                        />
+                        /> */}
+                          <div>
+                                <TableUser/>
+                            </div>
 
                         <div className="flex gap-4 overflow-auto">
-                            {chips.map((item, id) => {
+                            {selectedUsers.map((item, id) => {
                                 return (
                                     <SparkChip key={id} content={item.name} onClick={() => removeChip(item)} selected close={showChip} />
                                 );
