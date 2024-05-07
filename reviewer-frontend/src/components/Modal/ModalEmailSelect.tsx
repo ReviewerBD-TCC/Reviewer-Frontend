@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect, useState } from "react"
 import api from "../../api/Api";
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import  z  from 'zod' 
+import  z, { string }  from 'zod' 
 
 import { useForm } from 'react-hook-form'
 
@@ -49,9 +49,12 @@ const ModalEmailSelect:React.FC<ModalProps> = (props) => {
     const token = accessToken
 
     const sendEmailSelected = ()=>{
-
+        let bccAccounts:string[] = []
+        selectedUsers.map(each=>{
+            bccAccounts.push(each.email)
+        })
        const data:Email = {
-            bcc:selectedUsers,
+            bcc:bccAccounts,
             body:props.data.body,
             subject:props.data.subject
        }
