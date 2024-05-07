@@ -9,7 +9,6 @@ export const getAllForms = async (token: string | null) => {
         }
         )
         return response.data
-        
     }
     catch(error){
         throw(error)
