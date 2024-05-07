@@ -16,7 +16,6 @@ export function Header() {
           <Link className="w-[75%]" to={'/home'}>
             <img src={Logo} alt="CompanyLogo" className='w-44'/>
           </Link>
-
           <p className='font-medium text-boschGrayText text-[14px]'>{user?.name}</p>
           <div className='w-auto'>
             <SparkIcon icName='logout' pallete='secondary' />
