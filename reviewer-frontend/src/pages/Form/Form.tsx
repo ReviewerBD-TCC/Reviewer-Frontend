@@ -78,7 +78,7 @@ function Form() {
             </div>
           </div>
           <div className="">
-            <p>Este feedback é referente ao ano de {form?.year}</p>
+            <p>Este feedback é referente ao ano de {(form?.year)?.slice(0,4)}.</p>
           </div>
           <div>
             {dataApi.map((element, index) => (

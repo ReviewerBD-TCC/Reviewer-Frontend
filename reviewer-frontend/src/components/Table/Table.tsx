@@ -5,6 +5,7 @@ import { mailSender } from "services/EmailServices";
 import { Email } from "interfaces/Emaill";
 import { useQuery } from "react-query";
 import { SparkSearchBar, SparkTextfield } from "@bosch-web-dds/spark-ui-react";
+import { User } from "interfaces/CreateUser";
 
 export interface TableUser{
     guid: number
@@ -25,26 +26,34 @@ export const TableUser:React.FC = () =>{
         })
     }, [])
 
-    const [users, setUsers] = useState<string[]>([])
-    const {selectedUsers, selectUser} = useAuth()
+    const [users, setUsers] = useState<User[]>([])
+    const {selectedUsers, selectUser, user} = useAuth()
     const [search, setSearch] = useState('')
 
     const checkedUsers = (value: any, checked:boolean)=>{
         if (checked == true){
-            selectUser(value)
+           const user:any = users.find((each:User)=>each.id == value)
+            console.log(value)
+            selectUser(user)
+            
         }else{
             selectedUsers.findIndex((e, i)=>{
                if(e == value){
                 selectedUsers.splice(i, 1)
                }
+              
             })
         }
     };
 
     const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
 
+    users.findIndex((each:any, index)=>{
+        if(each.name == user.name){
+            users.splice(index, 1)
+        }
+    })
 
-    console.log(search)
 
     return(
         <div className="">
@@ -60,7 +69,7 @@ export const TableUser:React.FC = () =>{
                 {
                     filteredUsers?.map((user:any) => (
                     <tr className="border-b border-slate-300 w-full h-12 flex flex-row items-center justify-between bg-boschWhite p-3 hover:bg-boschLightGray">
-                        <td className="w-[4%] h-full flex justify-center items-center"><input type="checkbox" className="w-4 h-4 bg-gray-200 " value={user.email} name="checkbox" id="inputId" onClick={(e)=>{
+                        <td className="w-[4%] h-full flex justify-center items-center"><input type="checkbox" className="w-4 h-4 bg-gray-200 " value={user.id} name="checkbox" id="inputId" onClick={(e)=>{
                             
                             checkedUsers(e.target.value, e.target.checked)
                             console.log(selectedUsers)

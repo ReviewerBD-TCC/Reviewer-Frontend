@@ -1,6 +1,6 @@
 import { useContext, ReactNode, useState, createContext, useEffect } from 'react';
 import { UserService } from '../services/UserService';
-import { UserData } from '../interfaces/CreateUser';
+import { User, UserData } from '../interfaces/CreateUser';
 
 interface AuthContextType {
   setDetailsUser: (values: UserData) => void;
@@ -12,8 +12,8 @@ interface AuthContextType {
   active: boolean,
   setActiveValue: (active: boolean) => void;
 
-  selectedUsers: string[];
-  selectUser: (selectedUsers: string)=> void
+  selectedUsers: User[];
+  selectUser: (selectedUsers: User)=> void
   
 }
 
@@ -27,7 +27,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
   const [user, setUser] = useState<UserData | null>();
-  const selectedUsers:string[] = []
+  const selectedUsers:User[] = []
   const [active, setActive] = useState<boolean>();
 
   useEffect(() => {
@@ -62,6 +62,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setActive(active)
   }
   function selectUser(user:any){
+    console.log(user)
     selectedUsers.push(user);
   }
 
