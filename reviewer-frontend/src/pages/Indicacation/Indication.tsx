@@ -31,7 +31,7 @@ function Indication() {
                     console.log(user)
                     const usernames = data.map(user => user);
                     setUsers(usernames)
-                    
+
                 }
             } catch (error) {
                 console.error('Erro ao buscar usuários:', error);
@@ -42,34 +42,6 @@ function Indication() {
 
     console.log(selectedUsers)
 
-    const addChip = (value: User) => {
-        if (chips.length < 5) {
-
-            setChips((prevChips) => [...prevChips, value]);
-            setUserListSelect((prevUserList) => [...prevUserList, value.id!]);
-            setShowChip(true);
-
-        }
-    };
-
-    const removeChip = (item: User) => {
-        setChips((prevChips) => prevChips.filter((chip) => chip !== item));
-        setShowChip(false);
-        // setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== item.name));
-    };
-
-    const handleUserSelect = (value: User) => {
-        if (value !== null && !selectedUsers.includes(value.name)) {
-            if (selectedUsers.length < 5) {
-                // setSelectedUsers(prevSelectedUsers => [...prevSelectedUsers, value.name]);
-                console.log(value.id)
-                addChip(value);
-            }
-        } else {
-            removeChip(value);
-            // setSelectedUsers(prevSelectedUsers => prevSelectedUsers.filter(userList => userList !== value.name));
-        }
-    };
 
     const showToastMessage = () => {
         toast.success('Indicação realizada com sucesso!', {
@@ -102,16 +74,21 @@ function Indication() {
         event.preventDefault();
 
         try {
-            const indicateds: UserIndicatedInterface[] = userListSelect.map(userId => ({ userIndicated: userId }));
+            const indicateds: UserIndicatedInterface[] = selectedUsers.map((userId:any) => {
 
+                const eachUser: UserIndicatedInterface = {
+                    userIndicated: userId.id
+                }
+                return eachUser
+            }
+            );
             const requestData: CreateIndication = {
                 userIndication: user.id,
                 indicateds: indicateds
             };
 
             console.log(requestData)
-
-            const { status, data } = await IndicationService.createIndication(accessToken, requestData);
+            const { status } = await IndicationService.createIndication(accessToken, requestData);
             console.log(requestData)
             if (status === 201) {
                 showToastMessage()
@@ -124,12 +101,8 @@ function Indication() {
             console.error('Erro ao enviar o cliente:', error);
         }
     };
-    userList.findIndex((each, index)=>{
-        if(each.name == user.name){
-            userList.splice(index, 1)
-        }
-    })
-   console.log(selectedUsers[0])
+
+
     return (
         <div className="h-auto min-h-screen w-full flex flex-col items-center">
             <Header />
@@ -142,22 +115,8 @@ function Indication() {
                             <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
                         </div>
 
-                        {/* <SelectedIndication
-                            labelText="Selecione o usuário"
-                            options={userList.map(userFix => ({ name: userFix.name, id: userFix.id }))}
-                            zIndex={50}
-                            onChange={handleUserSelect}
-                        /> */}
-                          <div>
-                                <TableUser/>
-                            </div>
-
-                        <div className="flex gap-4 overflow-auto">
-                            {selectedUsers.map((item, id) => {
-                                return (
-                                    <SparkChip key={id} content={item.name} onClick={() => removeChip(item)} selected close={showChip} />
-                                );
-                            })}
+                        <div >
+                            <TableUser />
                         </div>
 
                         <SparkButton text="Indicar" customWidth="15rem" type="button" onClick={onSubmit} />
