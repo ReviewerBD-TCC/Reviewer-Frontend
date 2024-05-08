@@ -12,6 +12,8 @@ export const AllForms = () => {
     return AllFormsService.getAllForms(accessToken);
   });
 
+  
+
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
       <Header/>
