@@ -1,21 +1,9 @@
 import { QuestionProps } from "./Question"
-
-export interface SendForm{
-    id: number,
-    questionFormId: number,
-    answers: Array<string>,
-}
+import { QuestionList } from "./QuestionList"
 
 export interface Form{
     id: number,
     title:string,
-    questionPt: string,
-    questionEn:string,
+    questions: QuestionList[],
     year: string
-}
-
-export interface AnswerForm{
-    questionFormId: number,
-    userId: number,
-    answers: Array<string>,
 }
