@@ -1,22 +1,20 @@
-import { QuestionProps } from "interfaces/Question";
+import { useQuestion } from 'context/AuthProvider';
 import api, { headers } from "../api/Api";
-import { useQuery } from "react-query";
 
 const useQuestions = async (token: string | null) => {
-  try {
+  try{
     const response = await api.get('/question', {
       headers: {
         Authorization: `Bearer ${token}`
-      }
-      ,
+      },
     });
-    return response.data;
-  } catch (error) {
-    throw error;
+    return response.data
+  } catch (error){
+    console.log(error)
   }
 }
 
-async function updateQuestion(token: string | null, id: number, active: boolean) {
+const updateQuestion = async (token: string | null, id: number, active: boolean) => {
 
   try{
       const response = await api.patch(
@@ -29,8 +27,8 @@ async function updateQuestion(token: string | null, id: number, active: boolean)
               }
           }
       );
-      console.log(active);
-      // window.location.reload()
+   
+      return response.data
   }catch(error){
       console.log(error)
   }
