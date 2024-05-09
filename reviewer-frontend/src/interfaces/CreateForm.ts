@@ -1,6 +1,6 @@
 import { QuestionList } from "./QuestionList";
 
-export interface CreateFormInterface{
+export interface FormInterface{
     title: string;
     year: Date;
     questions?: QuestionList[];
