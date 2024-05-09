@@ -8,6 +8,8 @@ import { Homepage } from "../pages/Homepage/Homepage";
 import EmailIndicationUser from "pages/EmailIndicationUser/EmailIndicationUser";
 import Form from "pages/Form/Form";
 import { Default, PrivateRoute } from "components";
+import { AllForms } from "pages/AllForms/AllForms";
+import { SingleForm } from "pages/SingleForm/SingleForm";
 
 
 export const route = createBrowserRouter([
@@ -73,6 +75,22 @@ export const route = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Default/>
+      </PrivateRoute>
+    )
+  },
+  {
+    path: '/all-forms',
+    element: (
+      <PrivateRoute>
+        <AllForms/>
+      </PrivateRoute>
+    )
+  },
+  {
+    path: '/all-forms/single-form/',
+    element: (
+      <PrivateRoute>
+        <SingleForm/>
       </PrivateRoute>
     )
   }

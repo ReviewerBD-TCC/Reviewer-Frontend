@@ -24,6 +24,7 @@ export default {
         boschYellow: '#FFCF00',
         boschLightGray: '#E0E2E5',
         boschGrayText: '#808080',
+        boschLightGray: '#EFF1F2'
       },
       backgroundColor:{
         '14': '14px',
