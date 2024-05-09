@@ -1,24 +1,17 @@
-import { SparkButton, SparkChip } from "@bosch-web-dds/spark-ui-react";
-import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
+import { SparkButton } from "@bosch-web-dds/spark-ui-react";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { User } from "../../interfaces/CreateUser";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useEffect } from "react";
 import { Header, TableUser } from "../../components/index";
 import { CreateIndication } from "interfaces/CreateIndication";
-import { SelectedIndication } from "components/SelectedIndication/SelectedIndication";
 import { useAuth } from "context/AuthProvider";
 import { IndicationService } from "services/IndicationService";
 import { UserIndicatedInterface } from "interfaces/UserIndicated";
 import { useNavigate } from "react-router-dom";
+import { QuestionProps } from "interfaces/Question";
 
 function Indication() {
 
-    const [showChip, setShowChip] = useState(true);
-    const [chips, setChips] = useState<User[]>([]);
-
-    const [userListSelect, setUserListSelect] = useState<number[]>([])
-    const [userList, setUsers] = useState<any[]>([]);
-    // const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
     const { accessToken, user, selectedUsers } = useAuth();
 
     const navigate = useNavigate()
@@ -26,12 +19,9 @@ function Indication() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const { status, data } = await IndicationService.getUsers(accessToken);
+                const { status } = await IndicationService.getUsers(accessToken);
                 if (status === 200) {
                     console.log(user)
-                    const usernames = data.map(user => user);
-                    setUsers(usernames)
-
                 }
             } catch (error) {
                 console.error('Erro ao buscar usuários:', error);
@@ -56,25 +46,12 @@ function Indication() {
             transition: Zoom,
         });
     }
-    const showToastWarningMessage = () => {
-        toast.warning('Você não pode se adicionar!', {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Zoom,
-        });
-    }
 
     const onSubmit: MouseEventHandler<HTMLSparkButtonElement> = async (event) => {
         event.preventDefault();
 
         try {
-            const indicateds: UserIndicatedInterface[] = selectedUsers.map((userId:any) => {
+            const indicateds: UserIndicatedInterface[] = selectedUsers.map((userId: QuestionProps) => {
 
                 const eachUser: UserIndicatedInterface = {
                     userIndicated: userId.id

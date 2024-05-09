@@ -9,18 +9,17 @@ import { AnswerService } from "services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
-import { Form } from "interfaces/SendForm";
+import { Form, QuestionAnswer } from "interfaces/SendForm";
 import { toast, Zoom } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/Question";
-import { QuestionAnswer } from "interfaces/QuestionAnswer";
 
 const FormComponent = () => {
   const { accessToken, user } = useAuth();
   const languageOptions = ["Português", "Inglês"];
   const [languageSelect, setLanguageSelect] = useState("Português");
 
-  const convertToDate = (input) => {
+  const convertToDate = (input: Date) => {
     const date = new Date(input);
     return isNaN(date.getTime()) ? undefined : date;
   };
@@ -71,7 +70,7 @@ const FormComponent = () => {
 
     console.log("questions: ", questionsIds);
 
-    const questionAnswer: QuestionAnswer[] = questionsIds.map((id, index) => ({
+    const questionAnswer: QuestionAnswer[] = questionsIds.map((id: number, index: number) => ({
       question: id,
       answer: {
         answer: answers[index],
@@ -140,7 +139,7 @@ const FormComponent = () => {
             <p>Este feedback é referente ao ano de {formattedYear}.</p>
           </div>
           <div>
-            {form.questions.map((q, index) => (
+            {form.questions.map((q: QuestionProps, index: number) => (
               <div className="mt-14 list-decimal">
                 <p className="font text-lg">
                   {index + 1} -{" "}

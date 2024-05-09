@@ -8,7 +8,7 @@ export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | 
   zIndex: number;
   onSelect?: () => void;
   setSelectedValue: any;
-  selectedValue?: number | string | Date;
+  selectedValue?: number | string | Date | QuestionProps[];
 }
 
 export const Selected: React.FC<SelectedProps> = ({ labelText, options, question, zIndex, onSelect, setSelectedValue, selectedValue }, ...rest) => {
