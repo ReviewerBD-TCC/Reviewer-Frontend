@@ -16,16 +16,18 @@ import { format } from "date-fns";
 import { QuestionList } from "interfaces/QuestionList";
 
 export function CreateForms() {
-  
   const { accessToken } = useAuth();
   const yearOptions = [2024, 2025, 2026];
   const [title, setTitle] = useState<string>("");
   const [year, setYear] = useState<number>();
-  const [questions, setQuestions] = useState<QuestionList[]>([]);
   const [questionListRender, setQuestionListRender] = useState<number[]>([]);
   const [selectedValues, setSelectedValues] = useState<QuestionProps[]>([]);
   const [valido, setValido] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const { data: responseList = [] } = useQuery("question", () => {
+    return QuestionService.getQuestions(accessToken);
+  });
 
   const addNewQuestion = () => {
     setQuestionListRender([
@@ -34,9 +36,7 @@ export function CreateForms() {
     ]);
   };
 
-  const {
-    register,
-  } = useForm<CreateFormInterface>({
+  const { register } = useForm<CreateFormInterface>({
     resolver: CreateFormResolver,
   });
 
@@ -83,13 +83,9 @@ export function CreateForms() {
       }
     } catch (error) {
       console.error(error);
-      showToastMessageError(); 
+      showToastMessageError();
     }
   };
-
-  const { data: responseList = [] } = useQuery("question", () => {
-    return QuestionService.useQuestions(accessToken);
-  });
 
   const handleSelectChange = (index: number, newValue: QuestionProps) => {
     const questionExists = selectedValues.some(
@@ -113,20 +109,7 @@ export function CreateForms() {
     if (title) {
       setValido(true);
     }
-  
-    const validIds = selectedValues
-      .map((q) => q.id)
-      .filter((id): id is number => id !== undefined);
-  
-    const uniqueIds = new Set([...validIds]);
-  
-    const questionList: QuestionList[] = Array.from(uniqueIds).map((id) => ({
-      question: id,
-    }));
-  
-    setQuestions(questionList);
-  }, [selectedValues]);
-  
+  }, [title]);
 
   const showToastMessageError = () => {
     toast.warning("Essa pergunta já foi adicionada!", {
@@ -191,6 +174,7 @@ export function CreateForms() {
             </div>
             <div className="w-[22%]">
               <Selected
+                zIndex={25}
                 labelText="Ano"
                 options={yearOptions}
                 selectedValue={year}
@@ -215,7 +199,9 @@ export function CreateForms() {
                     }
                     zIndex={25}
                     labelText="Pergunta"
-                    question={responseList.map((item: QuestionProps) => item)}
+                    question={responseList.filter(
+                      (item: QuestionProps) => item.active
+                    )}
                   />
                 </div>
               </div>
