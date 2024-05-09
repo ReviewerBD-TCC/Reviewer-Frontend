@@ -8,11 +8,9 @@ import CardForm from "components/CardForm/CardForm";
 export const AllForms = () => {
   const { accessToken } = useAuth();
 
-  const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
-    return AllFormsService.getAllForms(accessToken);
-  });
-
-  
+  // const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
+  //   return AllFormsService.getAllForms(accessToken);
+  // });
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -31,7 +29,7 @@ export const AllForms = () => {
               </div>
               
               <div className="w-full h-auto flex flex-col gap-4">
-                {
+                {/* {
                   isLoading && <SparkActivityIndicator/>
                 }
                 {
@@ -39,7 +37,7 @@ export const AllForms = () => {
                       <CardForm key={index} link="/home" titleForm={i.title}/>
                     )
                   )
-                }
+                } */}
               </div>
           </div>
       </div>
