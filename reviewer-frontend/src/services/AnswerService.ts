@@ -7,8 +7,7 @@ const getFormQuestions = async (token: string | null, formId: number | null) => 
       const response = await api.get(`/form/${formId}`, {
         headers: {
           Authorization: `Bearer ${token}`
-        }
-        ,
+        },
       });
       return response.data;
     } catch (error) {

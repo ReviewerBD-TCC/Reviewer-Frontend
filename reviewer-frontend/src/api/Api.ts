@@ -8,7 +8,7 @@ export const headers = {
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   };
 
-  // export const baseURL =  "http://10.234.84.188:8056/api/v1/"
+  //  export const baseURL =  "http://10.234.88.116:8056/api/v1/"
   export const baseURL = "http://10.234.81.142:8056/api/v1/"
 
 const api = axios.create({ baseURL, headers: headers })

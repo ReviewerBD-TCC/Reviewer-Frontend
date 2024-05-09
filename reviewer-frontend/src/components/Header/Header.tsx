@@ -12,7 +12,7 @@ export function Header() {
     <div className='border-b w-full bg-white top-0 flex justify-center items-center flex-col relative'>
         <img src={Supergraphic} alt="Supergraphic" />
     
-        <div className='w-[80%] p-1 flex flex-row justify-between items-center'>
+        <div className='w-[80%] p-1 flex flex-row justify-between items-center bg-boschWhite'>
           <Link className="w-[75%]" to={'/home'}>
             <img src={Logo} alt="CompanyLogo" className='w-44'/>
           </Link>

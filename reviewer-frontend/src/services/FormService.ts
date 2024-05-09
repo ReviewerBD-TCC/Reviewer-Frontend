@@ -17,6 +17,22 @@ const createForm = async (data: CreateFormInterface, token: string ) => {
     }
 }
 
+const getFormQuestions = async (token: string | null, formId: number | null) => {
+    try {
+      const response = await api.get(`/form/${formId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+        ,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
 export const FormService = {
-    createForm
+    createForm,
+    getFormQuestions
 };
