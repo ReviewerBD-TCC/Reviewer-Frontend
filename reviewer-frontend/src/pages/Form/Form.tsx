@@ -1,57 +1,116 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Header, Selected } from "components";
-import { SparkButton, SparkTextarea, SparkActivityIndicator } from "@bosch-web-dds/spark-ui-react";
+import {
+  SparkButton,
+  SparkTextarea,
+  SparkActivityIndicator,
+} from "@bosch-web-dds/spark-ui-react";
 import { AnswerService } from "services/AnswerService";
 import { useAuth } from "context/AuthProvider";
-import { Form, SendForm, AnswerForm } from "interfaces/SendForm";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
+import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
+import { Form } from "interfaces/SendForm";
+import { toast, Zoom } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { QuestionProps } from "interfaces/Question";
+import { QuestionAnswer } from "interfaces/QuestionAnswer";
 
-function Form() {
-  const [dataApi, setDataAPi] = useState<Form[]>([]);
-  const [form, setForm] = useState<Form>();
-  const { accessToken } = useAuth();
+const FormComponent = () => {
+  const { accessToken, user } = useAuth();
   const languageOptions = ["Português", "Inglês"];
-  const [ languageSelect, setLanguageSelect ] = useState<string>("Português")
-  var formatTitle = form?.title;
+  const [languageSelect, setLanguageSelect] = useState("Português");
 
-  const { data: responseList = [], isLoading} = useQuery("form", () => {
-    return AnswerService.getFormQuestions(accessToken, 1);
-  });
+  const convertToDate = (input) => {
+    const date = new Date(input);
+    return isNaN(date.getTime()) ? undefined : date;
+  };
 
-  useEffect(() => {
-    {
-      setDataAPi(responseList);
-      setForm(responseList[0]);
-      console.log(responseList[0]);
-    }
-  }, [responseList]);
+  const { register, handleSubmit, getValues } = useForm();
 
+  const navigate = useNavigate();
 
   const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm<AnswerForm>({
-    resolver: AnswerFormResolver,
-  });
+    data: formData,
+    isLoading,
+    error,
+  } = useQuery(
+    ["form", 5],
+    () => AnswerService.getFormQuestions(accessToken, 5)
+  );
 
+  if (isLoading) {
+    return <SparkActivityIndicator />;
+  }
+
+  if (error) {
+    return <div>Erro ao carregar dados.</div>;
+  }
+
+  const form = formData?.[0];
+  if (!form) {
+    return <div>Nenhum dado do formulário disponível.</div>;
+  }
+
+  let formatTitle = formData?.[0].title;
   if (formatTitle) {
     formatTitle =
       formatTitle.charAt(0).toUpperCase() + formatTitle.slice(1).toLowerCase();
   }
 
-  const postAnswers = (value: any) => {
-    const answerForm: AnswerForm = {
-      userId: 1,
-      answers: getValues("answers"),
-      questionFormId: 1,
+  const yearDate = convertToDate(formData?.[0].year);
+  let formattedYear;
+  if (yearDate) {
+    formattedYear = yearDate.toLocaleDateString("pt-BR", { year: "numeric" });
+  } else {
+    formattedYear = "Data não disponível";
+  }
+
+  const postAnswers = async () => {
+    const answers = getValues("answers");
+    const questionsIds = form.questions.map((q: QuestionProps) => q.id);
+
+    console.log("questions: ", questionsIds);
+
+    const questionAnswer: QuestionAnswer[] = questionsIds.map((id, index) => ({
+      question: id,
+      answer: {
+        answer: answers[index],
+      },
+    }));
+
+    const answerForm: Form = {
+      questionFormId: 5,
+      userId: user.id,
+      questionAnswer,
     };
-   // AnswerService.postFormAnswers(accessToken, answerForm);
+
     console.log(answerForm);
+
+    try {
+      const response = await AnswerService.postFormAnswers(
+        accessToken,
+        answerForm
+      );
+
+      if (response.status === 201) {
+        toast.success("Respostas enviadas com sucesso!", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          transition: Zoom,
+        });
+
+        setTimeout(() => {
+          navigate("/home");
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Erro ao enviar respostas:", error);
+      toast.error("Erro ao enviar respostas.");
+    }
   };
 
   const handleLanguageChange = (value: string) => {
@@ -78,33 +137,25 @@ function Form() {
             </div>
           </div>
           <div className="">
-            <p>Este feedback é referente ao ano de {(form?.year)?.slice(0,4)}.</p>
+            <p>Este feedback é referente ao ano de {formattedYear}.</p>
           </div>
           <div>
-            {dataApi.map((element, index) => (
+            {form.questions.map((q, index) => (
               <div className="mt-14 list-decimal">
                 <p className="font text-lg">
                   {index + 1} -{" "}
-                  {languageSelect === "Português"
-                    ? element.questionPt
-                    : element.questionEn}
+                  {languageSelect === "Português" ? q.questionPt : q.questionEn}
                 </p>
                 <div className="mt-3">
                   <SparkTextarea
-                    {...register("answers", {
-                      setValueAs: (value) => {
-                        return value;
-                      },
-                    })}
-                    whenChange={(event) =>
-                      setValue("answers", event.target.value)
-                    }
+                    {...register(`answers.${index}`)}
+                    placeholder="Escreva sua resposta aqui"
                   />
                 </div>
               </div>
             ))}
           </div>
-          {isLoading&&<SparkActivityIndicator/>}
+          {isLoading && <SparkActivityIndicator />}
           <div className="flex justify-end">
             <SparkButton text="Enviar" onClick={handleSubmit(postAnswers)} />
           </div>
@@ -112,6 +163,6 @@ function Form() {
       </div>
     </div>
   );
-}
+};
 
-export default Form;
+export default FormComponent;

@@ -1,9 +1,14 @@
-import { QuestionProps } from "./Question"
-import { QuestionList } from "./QuestionList"
+export interface Answer{
+    answer: string
+}
+
+export interface QuestionAnswer{
+    question: number,
+    answer: Answer
+}
 
 export interface Form{
-    id: number,
-    title:string,
-    questions: QuestionList[],
-    year: string
+    questionFormId: number,
+    userId: number,
+    questionAnswer: QuestionAnswer[]
 }
