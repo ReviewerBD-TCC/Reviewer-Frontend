@@ -1,6 +1,5 @@
-import { useAuth } from 'context/AuthProvider';
 import { QuestionProps } from 'interfaces/Question';
-import React, { SelectHTMLAttributes, useEffect, useRef, useState } from 'react'
+import React, { SelectHTMLAttributes, useRef, useState } from 'react'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
@@ -16,17 +15,10 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLButtonElement | undefined>()
   const [optSelected, setOptSelected] = useState()
-  const { changeLanguage, language } = useAuth
 
   function handleOptionClick(value: any) {
     setSelectedValue(value);
     setOptSelected(value.questionPt)
-
-    if(value == 'Inglês'){
-      changeLanguage('Inglês')
-    }else{
-      changeLanguage('Português')
-    }
 
     if (onSelect) {
       return value
