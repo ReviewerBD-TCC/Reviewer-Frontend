@@ -1,6 +1,3 @@
-import { QuestionAnswer } from "./QuestionAnswer"
-
-
 export interface Answer{
     answer: string
 }
