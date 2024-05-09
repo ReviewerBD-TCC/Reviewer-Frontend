@@ -7,9 +7,9 @@ import { getFormQuestions } from "services/FormsService";
 export const SingleForm = () => {
     const { accessToken } = useAuth();
 
-    const { data: responseFormList = [], isLoading } = useQuery("form", () => {
-        return getFormQuestions(accessToken, 1)
-    })
+    // const { data: responseFormList = [], isLoading } = useQuery("form", () => {
+    //     return getFormQuestions(accessToken, 1)
+    // })
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -22,8 +22,7 @@ export const SingleForm = () => {
                 </div>
 
                 <div className="w-full h-auto flex flex-col gap-8 ">
-                    {/* <div className="w-full h-auto flex justify-center items-center"></div> */}
-                    {
+                    {/* {
                         isLoading && <SparkActivityIndicator/>
                     }
                     {
@@ -33,7 +32,7 @@ export const SingleForm = () => {
                                 <p><span className="font-bold mr-3 text-black">EN -</span>{element.questionEn}</p>
                             </div>
                         ))
-                    }
+                    } */}
                 </div>
             </div>
         </div>
