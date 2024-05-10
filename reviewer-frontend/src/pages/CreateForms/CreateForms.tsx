@@ -4,7 +4,7 @@ import { Selected } from "../../components/Select/Selected";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
-import { CreateFormInterface } from "interfaces/CreateForm";
+import { FormInterface } from "interfaces/CreateForm";
 import { FormService } from "services/FormService";
 import { useForm } from "react-hook-form";
 import { CreateFormResolver } from "validations/CreateFormResolver";
@@ -36,7 +36,7 @@ export function CreateForms() {
     ]);
   };
 
-  const { register } = useForm<CreateFormInterface>({
+  const { register } = useForm<FormInterface>({
     resolver: CreateFormResolver,
   });
 
@@ -58,7 +58,7 @@ export function CreateForms() {
           question: question.id,
         }));
 
-        const requestData: CreateFormInterface = {
+        const requestData: FormInterface = {
           title: title,
           year: new Date(formattedDate),
           questions,

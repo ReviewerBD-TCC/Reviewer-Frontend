@@ -29,10 +29,27 @@ const getFormQuestions = async (token: string | null, formId: number | null) => 
     } catch (error) {
       throw error;
     }
+}
+
+export const getAllForms = async (token: string | null) => {
+  try{
+      const response = await api.get(`/form`, {
+          headers:{
+              Authorization: `Bearer ${token}`
+          },
+      }
+      )
+      return response.data
   }
+  catch(error){
+      throw(error)
+  }
+}
+
 
 
 export const FormService = {
     createForm,
-    getFormQuestions
+    getFormQuestions,
+    getAllForms
 };

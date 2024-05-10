@@ -1,14 +1,14 @@
 import { SparkButton, SparkTextarea, SparkTextfield } from '@bosch-web-dds/spark-ui-react'
-import { Header, Input, Selected } from 'components'
+import { Header, Selected } from 'components'
 import { Email } from 'interfaces/Emaill'
-import { mailSender } from 'services/EmailServices'
 import { EmailResolver } from 'validations/EmailResolver'
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAuth } from 'context/AuthProvider'
 import ModalEmailConfirmation from 'components/Modal/ModalEmailConfirmation'
 import useModal from '../../hooks/useModal'
 import { UserService } from 'services/UserService'
 import { useEffect, useState } from 'react'
+import { User } from 'interfaces/CreateUser'
 
 export default function EmailIndicationUser() {
   const { accessToken } = useAuth();
@@ -25,25 +25,14 @@ export default function EmailIndicationUser() {
 
   const [userList, setUserList] = useState<string[]>([])
 
-  const sendEmail: SubmitHandler<Email> = async (values) => {
-    mailSender(values, accessToken);
-  }
-
   useEffect(() => {
-    const users = UserService.getUsers(accessToken).then(
+    UserService.getUsers(accessToken).then(
       user => {
-        const email: any = user.map((item: any) => item.email)
+        const email: string[] = user.map((item: User) => item.email)
         setUserList(email)
       })
 
   }, [])
-
-  // const data:Email = {
-  //   to:getValues("to"),
-  //   bcc:[getValues("bcc")],
-  //   body:getValues("body"),
-  //   subject:getValues("subject"),
-  //  }
 
   const allData: Email = {
     to: getValues("to"),

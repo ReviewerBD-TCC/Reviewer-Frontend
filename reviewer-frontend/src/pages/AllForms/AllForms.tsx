@@ -2,15 +2,16 @@ import { Header } from "components"
 import { SparkActivityIndicator, SparkNotification } from "@bosch-web-dds/spark-ui-react"
 import { useAuth } from "context/AuthProvider";
 import { useQuery } from "react-query";
-import { AllFormsService } from "services/AllFormsService";
 import CardForm from "components/CardForm/CardForm";
+import { FormService } from "services/FormService";
+import { FormInterface } from "interfaces/CreateForm";
 
 export const AllForms = () => {
   const { accessToken } = useAuth();
 
-  // const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
-  //   return AllFormsService.getAllForms(accessToken);
-  // });
+  const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
+    return FormService.getAllForms(accessToken);
+  });
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -29,15 +30,15 @@ export const AllForms = () => {
               </div>
               
               <div className="w-full h-auto flex flex-col gap-4">
-                {/* {
+                {
                   isLoading && <SparkActivityIndicator/>
                 }
                 {
-                  responseFormList.map((i: any, index: number) =>(
+                  responseFormList.map((i: FormInterface, index: number) =>(
                       <CardForm key={index} link="/home" titleForm={i.title}/>
                     )
                   )
-                } */}
+                }
               </div>
           </div>
       </div>

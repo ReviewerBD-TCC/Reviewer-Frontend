@@ -6,12 +6,10 @@ import useModal from "../../hooks/useModal";
 import Modal from "../../components/Modal/ModalAdd";
 import error404 from "../../assets/images/404.png";
 
-import api from "../../api/Api";
 import { useQuery } from "react-query";
 import { QuestionProps } from "interfaces/Question";
 import { QuestionService } from "services/questionService";
 import { useAuth } from "context/AuthProvider";
-import { UserService } from "services/UserService";
 
 function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
@@ -20,7 +18,7 @@ function QuestionDb(props?: QuestionProps) {
 
   const { data: responseList = [], isLoading, error } = useQuery("questions", () => {
     console.log(accessToken);
-    return QuestionService.useQuestions(accessToken);  
+    return QuestionService.getQuestions(accessToken);  
   });
 
 
