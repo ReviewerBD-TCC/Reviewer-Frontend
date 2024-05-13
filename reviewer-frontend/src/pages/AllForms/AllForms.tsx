@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import CardForm from "components/CardForm/CardForm";
 import { FormService } from "services/FormService";
 import { FormInterface } from "interfaces/CreateForm";
+import { useEffect } from "react";
 
 export const AllForms = () => {
   const { accessToken } = useAuth();
@@ -12,6 +13,10 @@ export const AllForms = () => {
   const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
     return FormService.getAllForms(accessToken);
   });
+
+  useEffect(() => {
+    console.log(responseFormList)
+  }, [responseFormList])
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -35,7 +40,7 @@ export const AllForms = () => {
                 }
                 {
                   responseFormList.map((i: FormInterface, index: number) =>(
-                      <CardForm key={index} link="/home" titleForm={i.title}/>
+                      <CardForm key={index} id={i.id} titleForm={i.title}/>
                     )
                   )
                 }
