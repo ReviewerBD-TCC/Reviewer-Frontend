@@ -31,7 +31,7 @@ const getFormQuestions = async (token: string | null, formId: number | null) => 
     }
 }
 
-export const getAllForms = async (token: string | null) => {
+const getAllForms = async (token: string | null) => {
   try{
       const response = await api.get(`/form`, {
           headers:{

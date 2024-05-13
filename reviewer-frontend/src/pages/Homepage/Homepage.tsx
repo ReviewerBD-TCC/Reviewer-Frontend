@@ -32,7 +32,7 @@ export const Homepage = () => {
             key:1,
             title: <h2 className='text-white font-bold text-lg'>Visualizar <br></br>Formulário</h2>,
             backgroundColor: 'bg-boschRed',
-            nav: '/form'
+            nav: '/all-forms'
         },
     ])
 
