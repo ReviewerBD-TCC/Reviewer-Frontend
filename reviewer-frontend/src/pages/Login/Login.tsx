@@ -111,7 +111,7 @@ export const Login = () => {
 
           />
 
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.password && <span className="text-red-600 text-sm">A senha precisa ter no mínimo 8 caractéres</span>}
 
           <SparkLink type="primary" href="" target="" label="Esqueceu sua senha?" icon-position="" size="6xl" />
         </div>
