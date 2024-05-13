@@ -1,12 +1,16 @@
-import { useAuth } from 'context/AuthProvider'
+import { AuthProvider, useAuth } from 'context/AuthProvider'
 import Logo from '../../assets/images/Logo.png'
 import Supergraphic from '../../assets/images/Supergraphic.png'
 import { Link } from 'react-router-dom'
 import { SparkIcon } from '@bosch-web-dds/spark-ui-react' 
 
 export function Header() {
-
   const { user } = useAuth();
+
+  function logout(){
+    localStorage.clear()
+    window.location.href = '/'
+  }
 
   return (
     <div className='border-b w-full bg-white top-0 flex justify-center items-center flex-col relative'>
@@ -20,7 +24,9 @@ export function Header() {
             <p className='font-medium text-boschGrayText text-[14px]'>{user?.name}</p>
           </div>
           <div className='w-auto'>
-            <SparkIcon icName='logout' pallete='secondary' />
+            <button className='w-auto h-auto'>
+              <SparkIcon icName='logout' pallete='secondary' noPadding={true} onClick={()=> logout()} />
+            </button>
           </div>
         </div>
     </div>
