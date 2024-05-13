@@ -9,7 +9,7 @@ export const headers = {
   };
 
   //  export const baseURL =  "http://10.234.88.116:8056/api/v1/"
-  export const baseURL = "http://10.234.81.142:8056/api/v1/"
+  export const baseURL = "http://10.234.81.220:8056/api/v1/"
 
 const api = axios.create({ baseURL, headers: headers })
 export default api  
