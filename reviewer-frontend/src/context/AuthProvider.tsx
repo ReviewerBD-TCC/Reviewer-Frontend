@@ -1,40 +1,48 @@
-import { useContext, ReactNode, useState, createContext, useEffect } from 'react';
-import { UserService } from '../services/UserService';
-import { User, UserData } from '../interfaces/CreateUser';
+import {
+  useContext,
+  ReactNode,
+  useState,
+  createContext,
+  useEffect,
+} from "react";
+import { UserService } from "../services/UserService";
+import { User, UserData } from "../interfaces/CreateUser";
 
 interface AuthContextType {
   setDetailsUser: (values: UserData) => void;
   user: UserData;
 
   accessToken: string;
-  setAccessToken: (token: string ) => void;
+  setAccessToken: (token: string) => void;
 
-  active: boolean,
+  active: boolean;
   setActiveValue: (active: boolean) => void;
 
   selectedUsers: User[];
-  selectUser: (selectedUsers: User)=> void
-  
+  selectUser: (selectedUsers: User) => void;
+
+  convertToDate: (input: Date) => Date | undefined;
 }
 
-
-const AuthContext = createContext<AuthContextType  | undefined>(undefined)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
-  children: ReactNode; 
+  children: ReactNode;
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [accessToken, setAccessTokenState] = useState<string | null>(() => localStorage.getItem('accessToken'));
+  const [accessToken, setAccessTokenState] = useState<string | null>(() =>
+    localStorage.getItem("accessToken")
+  );
   const [user, setUser] = useState<UserData | null>();
-  const selectedUsers:User[] = []
+  const selectedUsers: User[] = [];
   const [active, setActive] = useState<boolean>();
 
   useEffect(() => {
-    localStorage.setItem('accessToken', accessToken || '');
+    localStorage.setItem("accessToken", accessToken || "");
   }, [accessToken]);
 
-  const setAccessToken: AuthContextType['setAccessToken'] = (token) => {
+  const setAccessToken: AuthContextType["setAccessToken"] = (token) => {
     setAccessTokenState(token);
   };
 
@@ -58,32 +66,49 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function setDetailsUser(values: UserData) {
     setUser(values);
   }
-  function setActiveValue(active: boolean){
-    setActive(active)
+  function setActiveValue(active: boolean) {
+    setActive(active);
   }
-  function selectUser(user:any){
-    console.log(user)
+  function selectUser(user: any) {
+    console.log(user);
     selectedUsers.push(user);
   }
 
+  const convertToDate = (input: Date) => {
+    const date = new Date(input);
+    return isNaN(date.getTime()) ? undefined : date;
+  };
+
   return (
-    <AuthContext.Provider value={{ active, setActiveValue, accessToken, setAccessToken, setDetailsUser, user, selectedUsers, selectUser }}>
+    <AuthContext.Provider
+      value={{
+        active,
+        setActiveValue,
+        accessToken,
+        setAccessToken,
+        setDetailsUser,
+        user,
+        selectedUsers,
+        selectUser,
+        convertToDate
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuth(){
+export function useAuth() {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('useAuth deve ser usado dentro de um AuthProvider');
+    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
   }
 
   return context;
 }
 
-export function useQuestion(){
+export function useQuestion() {
   const context = useContext(AuthContext);
-  return context
+  return context;
 }
