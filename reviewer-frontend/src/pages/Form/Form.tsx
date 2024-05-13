@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header, Selected } from "components";
 import {
   SparkButton,
@@ -13,11 +13,14 @@ import { Form, QuestionAnswer } from "interfaces/SendForm";
 import { toast, Zoom } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/Question";
+import { FormService } from "services/FormService";
+import { FormInterface, FormResponseInterface } from "interfaces/CreateForm";
 
 const FormComponent = () => {
   const { accessToken, user } = useAuth();
   const languageOptions = ["Português", "Inglês"];
   const [languageSelect, setLanguageSelect] = useState("Português");
+  const [formData, setFormData] = useState<FormResponseInterface>();
 
   const convertToDate = (input: Date) => {
     const date = new Date(input);
@@ -28,35 +31,39 @@ const FormComponent = () => {
 
   const navigate = useNavigate();
 
-  const {
-    data: formData,
-    isLoading,
-    error,
-  } = useQuery(
-    ["form", 5],
-    () => AnswerService.getFormQuestions(accessToken, 5)
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const forms = await FormService.getAllForms(accessToken);
+        const currentYear = new Date().getFullYear();
+        const currentFormFiltered = forms.find(
+          (form: FormInterface) =>
+            convertToDate(form.year)?.getFullYear() === currentYear
+        );
 
-  if (isLoading) {
-    return <SparkActivityIndicator />;
-  }
+        setFormData(currentFormFiltered || null);
+      } catch (error) {
+        console.error("Erro ao carregar formulários:", error);
+      }
+    };
 
-  if (error) {
-    return <div>Erro ao carregar dados.</div>;
-  }
+    fetchData();
+  }, [accessToken]);
 
-  const form = formData?.[0];
+
+
+  const form = formData;
   if (!form) {
     return <div>Nenhum dado do formulário disponível.</div>;
   }
 
-  let formatTitle = formData?.[0].title;
+  let formatTitle = formData.title;
   if (formatTitle) {
     formatTitle =
       formatTitle.charAt(0).toUpperCase() + formatTitle.slice(1).toLowerCase();
   }
 
-  const yearDate = convertToDate(formData?.[0].year);
+  const yearDate = convertToDate(formData.year);
   let formattedYear;
   if (yearDate) {
     formattedYear = yearDate.toLocaleDateString("pt-BR", { year: "numeric" });
@@ -66,11 +73,11 @@ const FormComponent = () => {
 
   const postAnswers = async () => {
     const answers = getValues("answers");
-    const questionsIds = form.questions.map((q: QuestionProps) => q.id);
+    const questionsIds = form.questions?.map((q: QuestionProps) => q.id);
 
     console.log("questions: ", questionsIds);
 
-    const questionAnswer: QuestionAnswer[] = questionsIds.map((id: number, index: number) => ({
+    const questionAnswer: QuestionAnswer[] = questionsIds?.map((id: number, index: number) => ({
       question: id,
       answer: {
         answer: answers[index],
@@ -82,8 +89,6 @@ const FormComponent = () => {
       userId: user.id,
       questionAnswer,
     };
-
-    console.log(answerForm);
 
     try {
       const response = await AnswerService.postFormAnswers(
@@ -139,7 +144,7 @@ const FormComponent = () => {
             <p>Este feedback é referente ao ano de {formattedYear}.</p>
           </div>
           <div>
-            {form.questions.map((q: QuestionProps, index: number) => (
+            {form.questions?.map((q: QuestionProps, index: number) => (
               <div className="mt-14 list-decimal">
                 <p className="font text-lg">
                   {index + 1} -{" "}
@@ -154,7 +159,6 @@ const FormComponent = () => {
               </div>
             ))}
           </div>
-          {isLoading && <SparkActivityIndicator />}
           <div className="flex justify-end">
             <SparkButton text="Enviar" onClick={handleSubmit(postAnswers)} />
           </div>
