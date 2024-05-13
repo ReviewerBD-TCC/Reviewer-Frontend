@@ -17,7 +17,7 @@ import { QuestionList } from "interfaces/QuestionList";
 
 export function CreateForms() {
   const { accessToken } = useAuth();
-  const yearOptions = [2024, 2025, 2026];
+  const yearOptions:number[] = [];
   const [title, setTitle] = useState<string>("");
   const [year, setYear] = useState<number>();
   const [questionListRender, setQuestionListRender] = useState<number[]>([]);
@@ -48,6 +48,12 @@ export function CreateForms() {
 
     return format(fullDate, "yyyy-MM-dd");
   };
+
+  for(let i= 0; i<5;i++){
+    let year =new Date().getFullYear()+i
+    yearOptions.push(year)
+    console.log(i)
+  }
 
   const createForm = async () => {
     try {
