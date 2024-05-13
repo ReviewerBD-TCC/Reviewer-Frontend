@@ -1,4 +1,4 @@
-import { AuthProvider, useAuth } from 'context/AuthProvider'
+import { useAuth } from 'context/AuthProvider'
 import Logo from '../../assets/images/Logo.png'
 import Supergraphic from '../../assets/images/Supergraphic.png'
 import { Link } from 'react-router-dom'
