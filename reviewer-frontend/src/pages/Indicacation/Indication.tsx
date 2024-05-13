@@ -9,12 +9,16 @@ import { IndicationService } from "services/IndicationService";
 import { UserIndicatedInterface } from "interfaces/UserIndicated";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/Question";
+import useModal from "../../hooks/useModal";
+import ModalIndication from "components/Modal/ModalIndication.tsx";
 
 function Indication() {
 
     const { accessToken, user, selectedUsers } = useAuth();
 
     const navigate = useNavigate()
+
+    const {isOpen, toggle} = useModal()
 
     useEffect(() => {
         async function fetchData() {
@@ -91,13 +95,14 @@ function Indication() {
                             <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
                             <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
                         </div>
-
+{/* 
                         <div >
                             <TableUser />
-                        </div>
+                        </div> */}
 
-                        <SparkButton text="Indicar" customWidth="15rem" type="button" onClick={onSubmit} />
+                        <SparkButton text="Selecionar colaboradores" customWidth="15rem" type="button" onClick={toggle}/>
                         <ToastContainer />
+                        <ModalIndication isOpen={isOpen} toggle={toggle} />
                     </form>
                 </div>
             </div>
