@@ -14,7 +14,7 @@ export const Homepage = () => {
             key:3,
             title: <h2 className='text-white font-bold text-lg'>Criação de <br></br>Feedback</h2>,
             backgroundColor: `bg-boschBlue`,
-            nav: '/createform'
+            nav: '/create-form'
         },
         {
             key:4,
