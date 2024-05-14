@@ -16,7 +16,11 @@ import { PublicRoute } from "components/PublicRoute/PublicRoute";
 export const route = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: (
+    <PublicRoute>
+      <Login />
+    </PublicRoute>
+    )
   },
   {
     path: "/register",
