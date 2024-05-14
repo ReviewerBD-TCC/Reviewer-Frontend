@@ -11,6 +11,7 @@ export default {
       backgroundImage:{
         'login-background': "url('/src/assets/images/Login-Background.jpg')",
         'dropdown-background': "url('/src/assets/icons/wide-angled-arrow.svg')",
+        'supergraphic-background': "url('/src/assets/images/Supergraphic-background.png')"
       },
       colors: {
         boschWhite: '#FFFFFF',
