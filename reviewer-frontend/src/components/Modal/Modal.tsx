@@ -85,7 +85,7 @@ const Modal:React.FC<ModalProps> = (props) => {
       });
     
     async function updateQuestion(props :ModalProps) {
-        console.log("setouuu", active)
+        // console.log("setouuu", active)
         try{
             const response: AxiosResponse = await api.put(
                 `question/${id}`,

@@ -113,7 +113,7 @@ export const Login = () => {
 
           {errors.password && <span className="text-red-600 text-sm">A senha precisa ter no mínimo 8 caractéres</span>}
 
-          <SparkLink type="primary" href="" target="" label="Esqueceu sua senha?" icon-position="" size="6xl" />
+          <SparkLink type="primary" href='/register' target="" label="Não tem cadastro? Clique aqui" icon-position="" size="6xl" />
         </div>
 
         <div className='flex w-full h-[25%] justify-center items-end'>

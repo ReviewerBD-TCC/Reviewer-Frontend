@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 interface cardFormProps{
   titleForm: AllFormsInterface["title"];
-  link: string;
+  id: number;
 }
 
-const CardForm: React.FC<cardFormProps> = ({titleForm, link}: cardFormProps) => {
+const CardForm: React.FC<cardFormProps> = ({titleForm, id}: cardFormProps) => {
   return (
-    <Link to={link}>
+    <Link to={`/all-forms/single-form/${id}`}>
       <div className='bg-boschLightGray w-full min-h-[3.8rem] p-4'> 
         <h2 className='font-bold text-xl'>
             {titleForm}

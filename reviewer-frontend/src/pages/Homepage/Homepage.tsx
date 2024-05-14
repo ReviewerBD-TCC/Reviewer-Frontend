@@ -14,7 +14,7 @@ export const Homepage = () => {
             key:3,
             title: <h2 className='text-white font-bold text-lg'>Criação de <br></br>Feedback</h2>,
             backgroundColor: `bg-boschBlue`,
-            nav: '/createform'
+            nav: '/create-form'
         },
         {
             key:4,
@@ -32,7 +32,7 @@ export const Homepage = () => {
             key:1,
             title: <h2 className='text-white font-bold text-lg'>Visualizar <br></br>Formulário</h2>,
             backgroundColor: 'bg-boschRed',
-            nav: '/form'
+            nav: '/all-forms'
         },
     ])
 
