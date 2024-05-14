@@ -9,12 +9,13 @@ import { AnswerService } from "services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
-import { Form, QuestionAnswer } from "interfaces/SendForm";
-import { toast, Zoom } from "react-toastify";
+import { Answer, Form, QuestionAnswer } from "interfaces/SendForm";
+import { toast, Zoom, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/Question";
 import { FormService } from "services/FormService";
 import { FormInterface, FormResponseInterface } from "interfaces/CreateForm";
+import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
 
 const FormComponent = () => {
   const { accessToken, user } = useAuth();
@@ -27,7 +28,19 @@ const FormComponent = () => {
     return isNaN(date.getTime()) ? undefined : date;
   };
 
-  const { register, handleSubmit, getValues } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: {  errors },
+    getValues,
+    
+  } = useForm<Answer>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    resolver: AnswerFormResolver,
+    defaultValues: { answer: '' },
+
+  });
 
   const navigate = useNavigate();
 
@@ -71,8 +84,23 @@ const FormComponent = () => {
     formattedYear = "Data não disponível";
   }
 
+  const showToastSuccessMessage = () => {
+    toast.success('Resposta enviadas com sucesso!', {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Zoom,
+    }
+    );
+  }
+
   const postAnswers = async () => {
-    const answers = getValues("answers");
+    const answers = getValues("answer");
     const questionsIds = form.questions?.map((q: QuestionProps) => q.id);
 
     console.log("questions: ", questionsIds);
@@ -95,22 +123,10 @@ const FormComponent = () => {
         accessToken,
         answerForm
       );
-
-      if (response.status === 201) {
-        toast.success("Respostas enviadas com sucesso!", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          transition: Zoom,
-        });
-
+        showToastSuccessMessage()
         setTimeout(() => {
-          navigate("/home");
+          navigate("/");
         }, 1500);
-      }
     } catch (error) {
       console.error("Erro ao enviar respostas:", error);
       toast.error("Erro ao enviar respostas.");
@@ -124,7 +140,7 @@ const FormComponent = () => {
   return (
     <div className="h-auto min-h-screen w-full flex flex-col items-center">
       <Header />
-      <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
+      <form className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
         <div className="w-[85%] h-auto flex flex-col gap-9 pb-7 pt-7">
           <div className="w-full flex justify-between">
             <div className="w-4/5 h-auto">
@@ -152,9 +168,10 @@ const FormComponent = () => {
                 </p>
                 <div className="mt-3">
                   <SparkTextarea
-                    {...register(`answers.${index}`)}
+                    {...register("answer")}
                     placeholder="Escreva sua resposta aqui"
                   />
+                  {errors.answer && <span className="text-red-600 text-sm">A resposta não pode ser vazia.</span>}
                 </div>
               </div>
             ))}
@@ -163,7 +180,8 @@ const FormComponent = () => {
             <SparkButton text="Enviar" onClick={handleSubmit(postAnswers)} />
           </div>
         </div>
-      </div>
+      </form>
+      <ToastContainer/>
     </div>
   );
 };
