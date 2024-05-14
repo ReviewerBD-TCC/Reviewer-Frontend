@@ -55,7 +55,6 @@ export function CreateForms() {
   for(let i= 0; i<5;i++){
     let year =new Date().getFullYear()+i
     yearOptions.push(year)
-    console.log(i)
   }
 
   const createForm = async () => {
@@ -95,25 +94,36 @@ export function CreateForms() {
       showToastMessageError();
     }
   };
-
+  
   const handleSelectChange = (index: number, newValue: QuestionProps) => {
     const questionExists = selectedValues.some(
       (question) => question.id === newValue.id
     );
-
+   
     if (!questionExists) {
       if (index >= 0 && index < selectedValues.length) {
         const updatedQuestions = [...selectedValues];
+        console.log(updatedQuestions)
         updatedQuestions[index] = newValue;
         setSelectedValues(updatedQuestions);
+        
       } else {
         setSelectedValues([...selectedValues, newValue]);
+          let index = responseList.findIndex((question: QuestionProps)=> question === newValue)
+          responseList.splice(index, 1)
       }
     } else {
       showToastMessageError();
+      
+
+      
+
+             
+      
     }
   };
-
+  
+  console.log(selectedValues)
   const showToastMessageError = () => {
     toast.warning("Essa pergunta já foi adicionada!", {
       position: "top-right",
