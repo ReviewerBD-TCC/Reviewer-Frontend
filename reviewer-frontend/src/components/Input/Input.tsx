@@ -6,11 +6,12 @@ interface InputProps {
   titlePt:string,
   active: boolean,
   titleEn:string,
+  className:string,
 }
 
 export const Input: React.FC<InputProps> = (props) => {
   return (
-    <div className='bg-[#D0D4D8]  w-[100%] h-[40px] border-b-[1px] border-black'>
+    <div className={`bg-[#D0D4D8]  w-[100%] h-[40px] border-b-[1px] border-black ${props.className}`}>
       <Question titlePt={props.titlePt} active={props.active} titleEn={props.titleEn} id={props.id} />
     </div>
   )
