@@ -1,42 +1,23 @@
-import { SparkButton, SparkSearchBar, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
-import { AxiosResponse } from "axios";
-import React, { ReactNode, useEffect, useState, MouseEventHandler } from "react"
-import api from "../../api/Api";
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import  z, { string }  from 'zod' 
-
-import { useForm } from 'react-hook-form'
-
+import { SparkButton } from "@bosch-web-dds/spark-ui-react";
+import React, { MouseEventHandler } from "react"
 import { useAuth } from "context/AuthProvider";
-import useModal from "hooks/useModal";
-
 import { TableUser } from "components/Table/Table";
-
 import { SparkNotification } from "@bosch-web-dds/spark-ui-react";
-
 import { IndicationService } from "services/IndicationService";
 import { Email } from "interfaces/Emaill";
-
 import { CreateIndication } from "interfaces/CreateIndication";
-
 import { UserIndicatedInterface } from "interfaces/UserIndicated";
-
 import { ToastContainer, Bounce, toast } from "react-toastify";
-
 import { useNavigate } from "react-router-dom";
-
 import { QuestionProps } from "interfaces/Question";
 
 interface ModalProps{
-    data:Email;
+    data?:Email;
     isOpen: boolean;
     toggle: () => void;
 }
 
 const ModalIndication:React.FC<ModalProps> = (props) => {
-
-    const [search, setSearch] = useState('')
 
     const showToastMessage = () => {
         toast.success('Colaboradores indicados com sucesso!', {
@@ -55,7 +36,7 @@ const ModalIndication:React.FC<ModalProps> = (props) => {
     const { accessToken, selectedUsers, user } = useAuth();
     const navigate = useNavigate()
 
-    const onSubmit: MouseEventHandler<HTMLSparkButtonElement> = async (event) => {
+    const onSubmit: MouseEventHandler<HTMLSparkButtonElement> = async () => {
      
 
         try {
@@ -107,7 +88,7 @@ const ModalIndication:React.FC<ModalProps> = (props) => {
                                 <TableUser/>
                             </div>
                             <div className="flex justify-end">
-                                <SparkButton text="Enviar" pallete="primary" onClick={()=>onSubmit()} />
+                                <SparkButton text="Enviar" pallete="primary" onClick={onSubmit} />
                             </div> 
                         </div>
                     </div>

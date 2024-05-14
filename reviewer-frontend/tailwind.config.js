@@ -32,9 +32,6 @@ export default {
       },
       backgroundPosition:{
         'drop-position': 'center right 1rem'
-      },
-      screens: {
-        'laptop': '1024px'
       }
     },
   
