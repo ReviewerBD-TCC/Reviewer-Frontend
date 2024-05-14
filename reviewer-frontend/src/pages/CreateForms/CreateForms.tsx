@@ -124,7 +124,7 @@ export function CreateForms() {
         
       } else {
         setSelectedValues([...selectedValues, newValue]);
-          let index = responseList.findIndex((question: QuestionProps)=> question === newValue)
+          const index = responseList.findIndex((question: QuestionProps)=> question === newValue)
           responseList.splice(index, 1)
       }
     } else {
@@ -182,7 +182,7 @@ export function CreateForms() {
       <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
         <form
           action=""
-          className="w-[85%] h-auto flex flex-col gap-9 pb-7 pt-7"
+          className="w-full pl-6 h-auto flex flex-col gap-9 pb-7 pt-10"
         >
           <div className="w-full h-12 flex items-center">
             <h1 className="text-3xl font-bold">Criação de formulário</h1>
@@ -225,7 +225,7 @@ export function CreateForms() {
           <div className="w-full h-auto flex flex-col gap-6">
             {questionListRender.map((component, index) => (
               <div className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center">
-                <div className="w-[95%]">
+                <div className="w-[95%] cursor-pointer">
                   <Selected
                     selectedValue={selectedValues}
                     setSelectedValue={(newValue: QuestionProps) =>
