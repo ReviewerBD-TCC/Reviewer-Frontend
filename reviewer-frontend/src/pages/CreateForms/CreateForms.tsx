@@ -34,6 +34,9 @@ export function CreateForms() {
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
     ]);
+    if (title && year && (selectedValues.length >0)) {
+      setValido(true);
+    }
   };
 
   const { register } = useForm<FormInterface>({
@@ -110,12 +113,6 @@ export function CreateForms() {
       showToastMessageError();
     }
   };
-
-  useEffect(() => {
-    if (title) {
-      setValido(true);
-    }
-  }, [title]);
 
   const showToastMessageError = () => {
     toast.warning("Essa pergunta já foi adicionada!", {
