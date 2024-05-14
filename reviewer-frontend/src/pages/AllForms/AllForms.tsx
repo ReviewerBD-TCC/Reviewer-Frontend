@@ -21,8 +21,8 @@ export const AllForms = () => {
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
       <Header/>
-      <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center p-7">
-          <div className=" w-[80%] h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7 pr-1 pl-1">
+      <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center pl-5 pt-7">
+          <div className=" w-[90%] h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7 pr-1 pl-1">
             
               <div className="w-full h-12 flex items-center">
                 <h1 className="font-bold text-3xl text-start w-full">Formulários de feedback</h1>
@@ -40,7 +40,7 @@ export const AllForms = () => {
                 }
                 {
                   responseFormList.map((i: FormInterface, index: number) =>(
-                      <CardForm key={index} id={i.id} titleForm={i.title}/>
+                      <CardForm key={index} id={i.id} titleForm={i.title} className="hover:bg-boschGray/25"/>
                     )
                   )
                 }
