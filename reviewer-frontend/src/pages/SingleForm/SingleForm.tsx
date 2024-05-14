@@ -2,7 +2,6 @@ import { SparkActivityIndicator } from "@bosch-web-dds/spark-ui-react";
 import { Header } from "components"
 import { useAuth } from "context/AuthProvider"
 import { QuestionProps } from "interfaces/Question";
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { FormService } from "services/FormService";
