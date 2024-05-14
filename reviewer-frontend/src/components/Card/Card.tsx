@@ -6,14 +6,15 @@ interface cardProps{
   key:number;
   text:string;
   backgroundColor:string;
-  nav: string
+  nav: string;
+  className: string;
 }
 
-export const Card: React.FC<cardProps> = ({text, backgroundColor, nav}) => {
+export const Card: React.FC<cardProps> = ({text, backgroundColor, nav, className}) => {
   return (
-    <Link to={nav} className={`${backgroundColor} flex justify-center items-center w-[22%] h-[45%] notebook:h-[55%]`}>
+    <Link to={nav} className={`${backgroundColor} flex justify-center items-center w-[22%] h-[95%] xl:h-[50%] lg:h-[60%] ${className}`}>
       <div className='w-full flex justify-center items-center flex-row '>
-        <div className='w-[80%] flex justify-between'>
+        <div className={`w-[80%] flex justify-between`}>
           {text}
           <img src={RightArrow} alt="" width={40} color='white' />
         </div>
