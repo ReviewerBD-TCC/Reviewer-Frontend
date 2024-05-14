@@ -37,18 +37,14 @@ export const TableUser:React.FC = () =>{
             selectUser(user)
             
         }else{
-            selectedUsers.findIndex((e, i)=>{
-               if(e == value){
-                selectedUsers.splice(i, 1)
-               }
-              
-            })
+            let index = selectedUsers.findIndex((user:User)=>user.id == value)
+            selectedUsers.splice(index, 1)
         }
     };
 
-    const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
+    const filteredUsers = users.filter((user:User) => user.name.toLowerCase().includes(search.toLowerCase()));
 
-    users.findIndex((each:any, index)=>{
+    users.findIndex((each:any, index:number)=>{
         if(each.name == user.name){
             users.splice(index, 1)
         }
