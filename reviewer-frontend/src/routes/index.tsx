@@ -10,6 +10,7 @@ import Form from "pages/Form/Form";
 import { Default, PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { SingleForm } from "pages/SingleForm/SingleForm";
+import { PublicRoute } from "components/PublicRoute/PublicRoute";
 
 
 export const route = createBrowserRouter([
@@ -19,7 +20,11 @@ export const route = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    )
   },
   {
 
