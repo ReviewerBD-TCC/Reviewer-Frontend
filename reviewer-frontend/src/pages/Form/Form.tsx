@@ -125,7 +125,7 @@ const FormComponent = () => {
       );
         showToastSuccessMessage()
         setTimeout(() => {
-          navigate("/");
+          navigate("/confirmation");
         }, 1500);
     } catch (error) {
       console.error("Erro ao enviar respostas:", error);
