@@ -16,25 +16,40 @@ import { format } from "date-fns";
 import { QuestionList } from "interfaces/QuestionList";
 
 export function CreateForms() {
-  const { accessToken } = useAuth();
-  const yearOptions:number[] = [];
+  const { accessToken, convertToDate } = useAuth();
+  const yearOptions: number[] = [];
   const [title, setTitle] = useState<string>("");
   const [year, setYear] = useState<number>();
   const [questionListRender, setQuestionListRender] = useState<number[]>([]);
   const [selectedValues, setSelectedValues] = useState<QuestionProps[]>([]);
   const [valido, setValido] = useState<boolean>(false);
+  const [formList, setFormList] = useState<FormInterface[]>([]);
   const navigate = useNavigate();
 
   const { data: responseList = [] } = useQuery("question", () => {
     return QuestionService.getQuestions(accessToken);
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const forms = await FormService.getAllForms(accessToken);
+       
+       setFormList(forms)
+      } catch (error) {
+        console.error("Erro ao carregar formulários:", error);
+      }
+    };
+
+    fetchData();
+  }, [accessToken]);
+
   const addNewQuestion = () => {
     setQuestionListRender([
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
     ]);
-    if (title && year && (selectedValues.length >0)) {
+    if (title && year && selectedValues.length > 0) {
       setValido(true);
     }
   };
@@ -52,9 +67,9 @@ export function CreateForms() {
     return format(fullDate, "yyyy-MM-dd");
   };
 
-  for(let i= 0; i<5;i++){
-    let year =new Date().getFullYear()+i
-    yearOptions.push(year)
+  for (let i = 0; i < 5; i++) {
+    const year = new Date().getFullYear() + i;
+    yearOptions.push(year);
   }
 
   const createForm = async () => {
@@ -84,14 +99,14 @@ export function CreateForms() {
             navigate("/home");
           }, 1500);
         } else {
-          showToastMessageError();
+          showToastMessageError("Erro ao criar formulário");
         }
       } else {
-        showToastMessageError();
+        showToastMessageError("Erro ao criar formulário");
       }
     } catch (error) {
       console.error(error);
-      showToastMessageError();
+      showToastMessageError("Erro ao criar formulário");
     }
   };
   
@@ -113,19 +128,12 @@ export function CreateForms() {
           responseList.splice(index, 1)
       }
     } else {
-      showToastMessageError();
-      
-
-      
-
-             
-      
+      showToastMessageError("Essa pergunta já foi adicionada!");
     }
   };
-  
-  console.log(selectedValues)
-  const showToastMessageError = () => {
-    toast.warning("Essa pergunta já foi adicionada!", {
+
+  const showToastMessageError = (message: string) => {
+    toast.warning(message, {
       position: "top-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -137,6 +145,7 @@ export function CreateForms() {
       transition: Zoom,
     });
   };
+
   const showToastSuccessMessage = () => {
     toast.success("Formulário criado com sucesso!", {
       position: "top-right",
@@ -152,7 +161,19 @@ export function CreateForms() {
   };
 
   const handleYearChange = (value: number) => {
-    setYear(value);
+
+    const currentFormFiltered = formList?.find(
+      (form: FormInterface) =>
+        convertToDate(form.year)?.getFullYear() === value
+    );
+
+    if (currentFormFiltered) {
+      showToastMessageError(
+        "Um formulário com esse ano já existe, verifique no banco de formulários"
+      );
+    } else {
+      setYear(value);
+    }
   };
 
   return (
