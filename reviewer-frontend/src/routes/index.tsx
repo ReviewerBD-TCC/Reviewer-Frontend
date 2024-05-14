@@ -10,8 +10,8 @@ import Form from "pages/Form/Form";
 import { Default, PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { SingleForm } from "pages/SingleForm/SingleForm";
+import { Confirmation } from "pages/Confirmation/Confirmation";
 import { PublicRoute } from "components/PublicRoute/PublicRoute";
-
 
 export const route = createBrowserRouter([
   {
@@ -102,6 +102,10 @@ export const route = createBrowserRouter([
         <SingleForm/>
       </PrivateRoute>
     )
+  },
+  {
+    path: '/confirmation',
+    element: <Confirmation/>
   }
 ]);
 
