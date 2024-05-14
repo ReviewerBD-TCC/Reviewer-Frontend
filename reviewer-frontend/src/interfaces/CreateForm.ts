@@ -2,7 +2,7 @@ import { QuestionProps } from "./Question";
 import { QuestionList } from "./QuestionList";
 
 export interface FormInterface{
-    id: number;
+    id?: number;
     title: string;
     year: Date;
     questions?: QuestionList[];
