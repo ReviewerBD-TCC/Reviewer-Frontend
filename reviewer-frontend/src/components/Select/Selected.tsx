@@ -1,19 +1,19 @@
 import { QuestionProps } from 'interfaces/Question';
-import React, { SelectHTMLAttributes, useRef, useState } from 'react'
+import React, { SelectHTMLAttributes, useEffect, useRef, useState } from 'react'
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
   options?: Array<string | number>;
   question?: Array<QuestionProps>;
-  zIndex: number;
+  // zIndex: number;
   onSelect?: () => void;
   setSelectedValue: any;
   selectedValue?: number | string | Date | QuestionProps[];
 }
 
-export const Selected: React.FC<SelectedProps> = ({ labelText, options, question, zIndex, onSelect, setSelectedValue, selectedValue }, ...rest) => {
+export const Selected: React.FC<SelectedProps> = ({ labelText, options, question, onSelect, setSelectedValue, selectedValue }, ...rest) => {
   const [isOpen, setIsOpen] = useState(false)
-  const dropdownRef = useRef<HTMLButtonElement | undefined>()
+  const dropdownRef = useRef<any>(null)
   const [optSelected, setOptSelected] = useState()
 
   function handleOptionClick(value: any) {
@@ -27,36 +27,49 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
     setIsOpen(false);
   };
 
+  useEffect(() => {
+		function handleClickOutside(event: any) {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				setIsOpen(false);
+			}
+		}
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [dropdownRef]);
+  
+
   return (
-    <div className={`w-full w-max-full pb-1 flex flex-col h-12 bg-[#E0E2E5] relative z-${zIndex}`} {...rest} onClick={() => setIsOpen(!isOpen)} ref={dropdownRef}>
+    <div className={`w-full w-max-full pb-1 flex flex-col h-12 bg-[#E0E2E5] relative`} {...rest} onClick={() => setIsOpen(!isOpen)} ref={dropdownRef}>
       <label className="mt-1 mr-4 ml-4 mb-auto text-xs w-auto" >
         {labelText}
       </label>
       {isOpen && (
-        <div id='menu-dropdown' className="mt-7 pt-1 pl-4 pb-1 w-max-[90%] w-full min-h-[115px] h-auto text-start bg-[#fff] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] overflow-y-auto scroll-smooth">
+        <ul id='menu-dropdown' className="w-full mt-7 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] list-none z-50">
           {options ? (
             options.map((opcao, index) => (
-              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => { handleOptionClick(opcao) }}>{opcao}</div>
+              <li className='bg-boschWhite z-50 pl-3 pt-1 pb-1 pr-3 hover:text-white h-7 w-full max-w-full hover:bg-boschBlue' key={index} onClick={() => { handleOptionClick(opcao)}}>{opcao}</li>
             ))
           ) : question ? (
             question.map((question, index) => (
-              <div className='hover:bg-boschBlue hover:text-white max-w-full mt-2' key={index} onClick={() => { handleOptionClick(question) }}>{question.questionPt}</div>
+              <li className='bg-boschWhite z-50 pl-3 pt-1 pb-1 h-6 hover:text-white max-w-full w-full hover:bg-boschBlue' key={index} onClick={() => { handleOptionClick(question)}}>{question.questionPt}</li>
             ))
           ) : null}
-        </div>
+        </ul>
       )}
       {
         typeof selectedValue === 'object' ? (
           selectedValue && !isOpen ? (
-            <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{optSelected}</p>
+            <li className="pr-11 pb-1 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate list-none">{optSelected}</li>
           ) : (
-            <p></p>
+            <li className='list-none'></li>
           )
         ) : (
           selectedValue && !isOpen ? (
-            <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{selectedValue}</p>
+            <li className="pr-11 pb-1 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate list-none">{selectedValue}</li>
           ) : (
-            <p></p>
+            <li className='list-none'></li>
           )
         )
       }
