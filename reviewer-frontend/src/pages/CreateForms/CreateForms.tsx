@@ -109,19 +109,23 @@ export function CreateForms() {
       showToastMessageError("Erro ao criar formulário");
     }
   };
-
+  
   const handleSelectChange = (index: number, newValue: QuestionProps) => {
     const questionExists = selectedValues.some(
       (question) => question.id === newValue.id
     );
-
+   
     if (!questionExists) {
       if (index >= 0 && index < selectedValues.length) {
         const updatedQuestions = [...selectedValues];
+        console.log(updatedQuestions)
         updatedQuestions[index] = newValue;
         setSelectedValues(updatedQuestions);
+        
       } else {
         setSelectedValues([...selectedValues, newValue]);
+          let index = responseList.findIndex((question: QuestionProps)=> question === newValue)
+          responseList.splice(index, 1)
       }
     } else {
       showToastMessageError("Essa pergunta já foi adicionada!");
