@@ -37,6 +37,7 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
+
 	}, [dropdownRef]);
   
 
@@ -46,24 +47,26 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
         {labelText}
       </label>
       {isOpen && (
-        <ul id='menu-dropdown' className="w-full mt-7 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] list-none z-50">
+        <div className='w-full max-h-28 z-50 transition-all'>
+          <ul id='menu-dropdown' className="bg-boschWhite w-full min-h-9 h-auto max-h-36 mt-7 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] list-none z-50 overflow-y-auto scroll-smooth transition-transform">
           {options ? (
             options.map((opcao, index) => (
-              <li className='bg-boschWhite z-50 pl-3 pt-1 pb-1 pr-3 hover:text-white h-7 w-full max-w-full hover:bg-boschBlue' key={index} onClick={() => { handleOptionClick(opcao)}}>{opcao}</li>
-            ))
-          ) : question ? (
-            question.map((question, index) => (
-              <li className='bg-boschWhite z-50 pl-3 pt-1 pb-1 h-6 hover:text-white max-w-full w-full hover:bg-boschBlue' key={index} onClick={() => { handleOptionClick(question)}}>{question.questionPt}</li>
-            ))
-          ) : null}
-        </ul>
+              <li className='bg-boschWhite z-50 pl-3 pt-1 pb-1 pr-3 min-h-9 max-h-14 h-auto hover:text-white w-full max-w-full hover:bg-boschBlue' key={index} onClick={() => { handleOptionClick(opcao)}}>{opcao}</li>
+              ))
+            ) : question ? (
+              question.map((question, index) => (
+                <li className='bg-boschWhite z-50 pl-3 pt-1 pb-1 min-h-9 max-h-14 h-auto hover:text-white max-w-full w-full hover:bg-boschBlue' key={index} onClick={() => { handleOptionClick(question)}}>{question.questionPt}</li>
+              ))
+            ) : null}
+          </ul>
+        </div>
       )}
       {
         typeof selectedValue === 'object' ? (
           selectedValue && !isOpen ? (
             <li className="pr-11 pb-1 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate list-none">{optSelected}</li>
           ) : (
-            <li className='list-none'></li>
+            <li className='list-none'>mbvbvnbvn</li>
           )
         ) : (
           selectedValue && !isOpen ? (
@@ -74,8 +77,7 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
         )
       }
 
-      {/* {selectedValue && !isOpen ? <p className="pr-11 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate">{selectedValue}</p> : <p></p>} */}
-      {!selectedValue && !isOpen && (<p className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray text-start ">Selecione uma opção</p>)}
+      {!selectedValue && !isOpen && (<li className="pr-11 pl-4 mb-2 w-max-[90%] text-xs h-auto text-boschGray text-start list-none">Selecione uma opção</li>)}
     </div>
   )
 }
