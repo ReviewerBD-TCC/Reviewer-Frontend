@@ -32,8 +32,8 @@ export const Card: React.FC<cardProps> = ({
           <img src={RightArrow} alt="" width={40} color="white" />
         </div>
         {isHovered && (
-          <div className="absolute bottom-6 left-0 right-0 p-4 text-white overflow-hidden">
-            {description}
+          <div className="absolute bottom-2 left-0 right-0 p-4 text-white overflow-hidden">
+            <p className="text-xs">{description}</p>
           </div>
         )}
       </div>
