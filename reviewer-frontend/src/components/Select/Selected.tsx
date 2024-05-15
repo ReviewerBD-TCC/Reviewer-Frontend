@@ -5,7 +5,6 @@ export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | 
   labelText: string;
   options?: Array<string | number>;
   question?: Array<QuestionProps>;
-  // zIndex: number;
   onSelect?: () => void;
   setSelectedValue: any;
   selectedValue?: number | string | Date | QuestionProps[];
@@ -40,7 +39,6 @@ export const Selected: React.FC<SelectedProps> = ({ labelText, options, question
 
 	}, [dropdownRef]);
   
-
   return (
     <div className={`w-full w-max-full pb-1 flex flex-col h-12 bg-[#E0E2E5] relative`} {...rest} onClick={() => setIsOpen(!isOpen)} ref={dropdownRef}>
       <label className="mt-1 mr-4 ml-4 mb-auto text-xs w-auto" >
