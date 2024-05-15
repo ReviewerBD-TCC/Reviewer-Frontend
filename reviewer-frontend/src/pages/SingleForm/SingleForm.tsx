@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { FormService } from "services/FormService";
+import { QuestionService } from "services/questionService";
 
 export const SingleForm = () => {
     const { accessToken, convertToDate } = useAuth();
@@ -14,7 +15,10 @@ export const SingleForm = () => {
     const { data: responseFormList = [], isLoading } = useQuery("form", () => {
         return FormService.getFormQuestions(accessToken, id)
     });
-
+    const { data: allQuestions = []} = useQuery("questions", () => {
+        return QuestionService.getQuestions(accessToken);
+      });
+    
     const form = responseFormList.length > 0 ? responseFormList[0] : null;
 
     let formattedYear = "Data não disponível";
@@ -24,9 +28,8 @@ export const SingleForm = () => {
             formattedYear = yearDate.toLocaleDateString("pt-BR", { year: "numeric" });
         }
     }
-    const handleSelect = (index: number, question: QuestionProps) => {
+    const handleSelect = (question: QuestionProps) => {
         setSelectedValues([...selectedValues, question])
-        console.log(question)
     }
     return (
         <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -52,14 +55,12 @@ export const SingleForm = () => {
                                     <div className="w-[95%]">
                                     <Selected
                                         selectedValue={element.questionPt}
-                                        setSelectedValue={(newValue: QuestionProps, index: number) =>
-                                            handleSelect(index, newValue)
+                                        setSelectedValue={(newValue: QuestionProps) =>
+                                            handleSelect(newValue)
                                         }
                                         zIndex={25}
                                         labelText="Pergunta"
-                                        question={form.questions.filter(
-                                            (item: any) => item.active
-                                        )}
+                                        question={allQuestions.filter((item:any)=>item.active)}
                                     />
                                     </div>
                                    
