@@ -1,17 +1,12 @@
 import { SparkButton, SparkTextarea, SparkTextfield, SparkToggle } from "@bosch-web-dds/spark-ui-react";
-import { AxiosResponse } from "axios";
 import React, { ReactNode, useContext, useState } from "react"
-import api from "../../api/Api";
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import  z  from 'zod' 
-
-import { useForm } from 'react-hook-form'
-
-import { useAuth, useQuestion } from "context/AuthProvider";
-
 import { ToastContainer, Bounce, toast } from "react-toastify";
-
+import { useAuth, useQuestion } from "context/AuthProvider";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form'
+import { AxiosResponse } from "axios";
+import api from "../../api/Api";
+import  z  from 'zod' 
 
 const schema = z.object({
     titlePtValue: z.string(),
@@ -31,17 +26,10 @@ interface ModalProps{
 }
 
 const Modal:React.FC<ModalProps> = (props) => {
-
     const id = props.id
-
     const { accessToken,  setActiveValue } = useAuth();
     const [active, setActive] = useState<boolean>(props.active);
-
-
-    
     const token = accessToken
-   
-
 
     // const dropdownOptions =
     //  '[{"label":"Dissertativa","value":"2"}]'
@@ -59,6 +47,7 @@ const Modal:React.FC<ModalProps> = (props) => {
           transition: Bounce,
         });
       }
+
     const showToastMessageError400 = () => {
         toast.warning('Por favor preencha os campos corretamente!', {
           position: "top-right",
@@ -111,15 +100,14 @@ const Modal:React.FC<ModalProps> = (props) => {
             }
         }
     }
-    // console.log(active)
 
     return (
         <>{props.isOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={props.toggle}>
                 <div className="flex justify-center items-center bg-black bg-opacity-40 w-full h-full ">
-                    <div className="flex bg-boschWhite w-[60%] 2xl:h-[60%] md:h-[75%]" onClick={(e)=>e.stopPropagation()}>
+                    <div className="flex bg-boschWhite max-w-[40rem] w-[40rem] pt-6 pb-6 pl-8 pr-8" onClick={(e)=>e.stopPropagation()}>
                         {props.children}
-                        <div className="w-[80%] h-auto flex flex-col justify-center gap-10 m-auto">
+                        <div className="w-full h-auto flex flex-col justify-center gap-8 m-auto">
                             <h1 className="text-3xl font-bold">{props.title}</h1>
                             <div className="flex justify-end items-end"> 
                                 <SparkToggle onClick={()=>{}} whenChange={()=>{setActive(!active)}} leftLabel="Pergunta ativa" guid="spark-toggle-right-label" selected={active}/>
