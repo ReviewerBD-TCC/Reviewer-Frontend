@@ -1,26 +1,22 @@
-import { Header } from "components";
 import { SparkButton, SparkNotification, SparkActivityIndicator} from "@bosch-web-dds/spark-ui-react"
-import { Input } from "components";
-import useModal from "../../hooks/useModal";
-
+import { QuestionService } from "services/questionService";
+import { QuestionProps } from "interfaces/Question";
 import Modal from "../../components/Modal/ModalAdd";
 import error404 from "../../assets/images/404.png";
-
-import { useQuery } from "react-query";
-import { QuestionProps } from "interfaces/Question";
-import { QuestionService } from "services/questionService";
 import { useAuth } from "context/AuthProvider";
+import useModal from "../../hooks/useModal";
+import { useQuery } from "react-query";
+import { Header } from "components";
+import { Input } from "components";
 
 function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
-
   const { accessToken } = useAuth();
 
   const { data: responseList = [], isLoading, error } = useQuery("questions", () => {
     console.log(accessToken);
     return QuestionService.getQuestions(accessToken);  
   });
-
 
   return (
     <div className="h-auto min-h-screen w-full flex flex-col items-center">
@@ -31,14 +27,12 @@ function QuestionDb(props?: QuestionProps) {
                   <div className="w-full h-12 flex items-center">
                     <h1 className="font-bold text-3xl text-start w-full">Banco de perguntas</h1>
                   </div>
-
-                   
                     <div className="w-[100%] my-4">
                       <SparkNotification type="bar" variant="neutral" icon="info-i">
                           <p>É possível editar estas perguntas.</p>
                       </SparkNotification>
                     </div>
-                    <div className="w-[100%] flex flex-col gap-4 ">
+                    <div className="w-[100%] flex flex-col gap-3">
                       {
                         responseList.map((t: any) => (
                           <Input key={t.id} titlePt={t.questionPt} active={t.active} titleEn={t.questionEn} id={t.id} className="mt-1 cursor-pointer" />                        ))

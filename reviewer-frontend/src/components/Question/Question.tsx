@@ -8,7 +8,6 @@ import { useAuth } from 'context/AuthProvider';
 import editIcon from '../../assets/images/edit-3.png';
 import { useState } from 'react';
 
-
 interface QuestionProps{
     titlePt: string;
     titleEn: string;
@@ -19,7 +18,6 @@ interface QuestionProps{
 export const Question: React.FC<QuestionProps> = (props) => {
     const { isOpen, toggle, } = useModal();
     const [active, setActive] = useState<boolean>(props.active)
-    
     const id = props.id
     const token = useAuth()
 
@@ -43,10 +41,10 @@ export const Question: React.FC<QuestionProps> = (props) => {
     }
 
     return (
-        <div className='h-full flex  justify-between items-center p-1'>
+        <div className='h-full flex justify-between items-center p-1'>
             <div className='w-[95%] max-w-[100%] flex'>
                 {/* <p className='max-w-full overflow-x-scroll'>{props.titlePt}</p> */}
-                <p onClick={toggle} className='m-2 truncate w-[90%]'>{props.titlePt}</p>
+                <p onClick={toggle} className='truncate w-[90%]'>{props.titlePt}</p>
                 {/* <input type="text" defaultValue={props.titlePt} className='bg-transparent w-full outline-none' /> */}
                 {/* <input>{props.titlePt}</input> */}
                 {/* <div className='flex w-auto items-center' >

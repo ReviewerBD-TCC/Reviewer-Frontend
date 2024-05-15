@@ -11,7 +11,7 @@ interface InputProps {
 
 export const Input: React.FC<InputProps> = (props) => {
   return (
-    <div className={`bg-[#D0D4D8]  w-[100%] h-[40px] border-b-[1px] border-black ${props.className}`}>
+    <div className={`bg-[#e0e2e5] p-2 w-full h-12 ${props.className}`}>
       <Question titlePt={props.titlePt} active={props.active} titleEn={props.titleEn} id={props.id} />
     </div>
   )
