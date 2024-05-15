@@ -14,21 +14,26 @@ export interface TableUser{
 
 export const TableUser:React.FC = () =>{
     const token = useAuth()
-    
+    const [users, setUsers] = useState<User[]>([])
+    const {selectedUsers, selectUser, user} = useAuth()
+    const [search, setSearch] = useState('')
     const dataUser = UserService.getUsers(token.accessToken)
 
     useEffect(()=>{
         dataUser.then(function(response){
             const user = response.map((user:any)=>{
-               return user
+
+                let each:User = {
+                    email: user.email,
+                    id:user.id,
+                    name:(user.name).normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+                }
+                console.log(each.name)
+               return each
             })
             setUsers(user)
         })
     }, [])
-
-    const [users, setUsers] = useState<User[]>([])
-    const {selectedUsers, selectUser, user} = useAuth()
-    const [search, setSearch] = useState('')
 
     const checkedUsers = (value: any, checked:boolean)=>{
         if (checked == true){
@@ -50,11 +55,10 @@ export const TableUser:React.FC = () =>{
         }
     })
 
-
     return(
-        <div className="">
+        <div className="w-full">
         <div className="flex w-full max-w-full">
-            <SparkTextfield type="search" placeholder="Digite o nome do colaborador." value={search} onClick={(e)=>setSearch(e.target.value)} />
+            <SparkSearchBar inputs={search} whenSearch={(value:any)=>setSearch(value)} />
         </div>
         <div id="tableUser" className="w-auto h-40 max-h-62 bg-boschWhite overflow-y-auto p-1">
             <table className="w-full justify-start flex flex-col border-collapse">
