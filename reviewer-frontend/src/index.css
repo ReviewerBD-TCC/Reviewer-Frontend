@@ -21,6 +21,13 @@
     
 }
 
+:root{
+    --bosch-white: #ffffff;
+    --bosch-gray-50: #71767c;
+    --bosch-gray-40: #595e62;
+    --bosch-gray-30: #43464a;
+}
+
 *{
     font-family: 'BoschSans';
 }
@@ -35,5 +42,23 @@
 }
 
 #menu-dropdown::-webkit-scrollbar {
-    background-color: transparent;
+    background-color: #fff;
+    width: 0.5rem;
+}
+
+#menu-dropdown::-webkit-scrollbar-thumb {
+    background-color: var(--bosch-gray-50);
+    height: 0.375rem;
+}
+
+#menu-dropdown::-webkit-scrollbar-thumb:hover {
+    background-color: var(--bosch-gray-40);
+}
+
+#menu-dropdown::-webkit-scrollbar-thumb:active {
+    background-color: var(--bosch-gray-30);
+}
+
+#menu-dropdown::-webkit-scrollbar-track {
+    margin: 0.25rem;
 }
