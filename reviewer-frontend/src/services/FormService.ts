@@ -46,19 +46,20 @@ const getAllForms = async (token: string | null) => {
   }
 }
 
-const deleteForm = async (token: string | null, formId: number | null)=>{
-    try{
-        const response = await api.delete(`/delete/${formId}`,{
-            headers:{
+const deleteForm = async (token: string | null, formId: number | any) => {
+    try {
+        const response = await api.delete(`/form/${formId}`,
+         {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
-        }
-        )
-        return response.data
-    }catch(error){
-        throw(error)
+        });
+        return response;
+    } catch (error) {
+        throw(error);
     }
 }
+
 
 
 
