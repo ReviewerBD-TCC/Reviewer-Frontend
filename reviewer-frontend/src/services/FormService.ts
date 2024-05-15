@@ -1,4 +1,4 @@
-import api from "../api/Api";
+import api, { headers } from "../api/Api";
 import { CreateFormInterface } from "interfaces/CreateForm";
 
 
@@ -46,10 +46,26 @@ const getAllForms = async (token: string | null) => {
   }
 }
 
+const deleteForm = async (token: string | null, formId: number | any) => {
+    try {
+        const response = await api.delete(`/form/${formId}`,
+         {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        throw(error);
+    }
+}
+
+
 
 
 export const FormService = {
     createForm,
     getFormQuestions,
-    getAllForms
+    getAllForms,
+    deleteForm
 };

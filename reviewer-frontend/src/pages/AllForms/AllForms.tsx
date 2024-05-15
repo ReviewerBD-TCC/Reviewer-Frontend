@@ -18,6 +18,8 @@ export const AllForms = () => {
     console.log(responseFormList)
   }, [responseFormList])
 
+
+
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
       <Header/>

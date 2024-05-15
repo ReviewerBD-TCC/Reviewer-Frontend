@@ -9,10 +9,11 @@ const Default: React.FC = () => {
     setBgColor(newColor);
   };
 
+
   return (
     <>
       <Header />
-      <Default bgColor={bgColor} onFunction={changeColor}/>
+      <Default bgColor={bgColor} onFunction={toggle}/>
     </>
   );
 };
