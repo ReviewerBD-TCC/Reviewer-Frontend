@@ -24,6 +24,7 @@ export function CreateForms() {
   const [selectedValues, setSelectedValues] = useState<QuestionProps[]>([]);
   const [valido, setValido] = useState<boolean>(false);
   const [formList, setFormList] = useState<FormInterface[]>([]);
+  const [question, setQuestion] = useState<QuestionProps>();
   const navigate = useNavigate();
 
   const { data: responseList = [] } = useQuery("question", () => {
@@ -49,6 +50,8 @@ export function CreateForms() {
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
     ]);
+    const index = responseList.findIndex((eachQuestion: QuestionProps)=> eachQuestion === question)
+    responseList.splice(index, 1)
     if (title && year && selectedValues.length > 0) {
       setValido(true);
     }
@@ -121,11 +124,11 @@ export function CreateForms() {
         console.log(updatedQuestions)
         updatedQuestions[index] = newValue;
         setSelectedValues(updatedQuestions);
+        setQuestion(newValue)
         
       } else {
         setSelectedValues([...selectedValues, newValue]);
-          const index = responseList.findIndex((question: QuestionProps)=> question === newValue)
-          responseList.splice(index, 1)
+        setQuestion(newValue)
       }
     } else {
       showToastMessageError("Essa pergunta já foi adicionada!");
