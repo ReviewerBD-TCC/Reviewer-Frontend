@@ -9,7 +9,7 @@ const postFormAnswers = async (token: string | null, data: AnswerForm) => {
         Authorization: `Bearer ${token}`
       }
     });
-    return response.data
+    return response
   }catch(error) {
     throw error
   }

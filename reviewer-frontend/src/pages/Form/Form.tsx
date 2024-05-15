@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
 import { Header, Selected } from "components";
-import {
-  SparkButton,
-  SparkTextarea,
-  SparkActivityIndicator,
-} from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextarea } from "@bosch-web-dds/spark-ui-react";
 import { AnswerService } from "services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
-import { Answer, Form, QuestionAnswer } from "interfaces/SendForm";
 import { toast, Zoom, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/Question";
 import { FormService } from "services/FormService";
 import { FormInterface, FormResponseInterface } from "interfaces/CreateForm";
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
+import { Form } from "interfaces/SendForm";
 
 const FormComponent = () => {
   const { accessToken, user } = useAuth();
@@ -31,15 +26,12 @@ const FormComponent = () => {
   const {
     handleSubmit,
     register,
-    formState: {  errors },
+    formState: { errors },
     getValues,
-    
-  } = useForm<Answer>({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+  } = useForm<Form>({
+    mode: "onChange",
+    reValidateMode: "onChange",
     resolver: AnswerFormResolver,
-    defaultValues: { answer: '' },
-
   });
 
   const navigate = useNavigate();
@@ -63,8 +55,6 @@ const FormComponent = () => {
     fetchData();
   }, [accessToken]);
 
-
-
   const form = formData;
   if (!form) {
     return <div>Nenhum dado do formulário disponível.</div>;
@@ -85,7 +75,7 @@ const FormComponent = () => {
   }
 
   const showToastSuccessMessage = () => {
-    toast.success('Resposta enviadas com sucesso!', {
+    toast.success("Resposta enviadas com sucesso!", {
       position: "top-right",
       autoClose: 1500,
       hideProgressBar: false,
@@ -95,38 +85,35 @@ const FormComponent = () => {
       progress: undefined,
       theme: "light",
       transition: Zoom,
-    }
-    );
-  }
+    });
+  };
 
   const postAnswers = async () => {
-    const answers = getValues("answer");
-    const questionsIds = form.questions?.map((q: QuestionProps) => q.id);
 
-    console.log("questions: ", questionsIds);
+    const answers = getValues()
 
-    const questionAnswer: QuestionAnswer[] = questionsIds?.map((id: number, index: number) => ({
-      question: id,
-      answer: {
-        answer: answers[index],
-      },
-    }));
-
-    const answerForm: Form = {
-      questionFormId: 5,
+    const answerForm = {
+      questionFormId: formData.id,
       userId: user.id,
-      questionAnswer,
+      questionAnswer: form.questions?.map(
+        (q: QuestionProps, index: number) => ({
+          question: q.id,
+          answer: { answer: answers.questionAnswer[index].answer.answer },
+        })
+      ),
     };
 
     try {
-      const response = await AnswerService.postFormAnswers(
-        accessToken,
-        answerForm
-      );
-        showToastSuccessMessage()
+      const { status, data } = await AnswerService.postFormAnswers(accessToken, answerForm);
+
+      if(status === 201){
+        console.log(data)
+        showToastSuccessMessage();
         setTimeout(() => {
           navigate("/confirmation");
         }, 1500);
+      }
+  
     } catch (error) {
       console.error("Erro ao enviar respostas:", error);
       toast.error("Erro ao enviar respostas.");
@@ -160,28 +147,38 @@ const FormComponent = () => {
             <p>Este feedback é referente ao ano de {formattedYear}.</p>
           </div>
           <div>
-            {form.questions?.map((q: QuestionProps, index: number) => (
-              <div className="mt-10 list-decimal">
+          {form.questions?.map((q: QuestionProps, index: number) => (
+              <div key={index} className="mt-10 list-decimal">
                 <p className="font text-lg">
                   {index + 1} -{" "}
                   {languageSelect === "Português" ? q.questionPt : q.questionEn}
                 </p>
                 <div className="mt-3">
                   <SparkTextarea
-                    {...register("answer")}
+                    {...register(`questionAnswer.${index}.answer.answer`, {
+                      required: "A resposta não pode ser vazia.",
+                    })}
                     placeholder="Escreva sua resposta aqui"
                   />
-                  {errors.answer && <span className="text-red-600 text-sm">A resposta não pode ser vazia.</span>}
+                  {errors.questionAnswer?.[index]?.answer?.answer && (
+                    <span className="text-red-600 text-sm">
+                        {errors.questionAnswer && <span className="text-red-600">*Pergunta obrigatória</span>}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
           </div>
           <div className="flex justify-end">
-            <SparkButton text="Enviar" onClick={handleSubmit(postAnswers)} />
+            <SparkButton
+              text="Enviar"
+              type="submit"
+              onClick={handleSubmit(postAnswers)}
+            />
           </div>
         </div>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
