@@ -14,6 +14,7 @@ import { QuestionProps } from "interfaces/Question";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { QuestionList } from "interfaces/QuestionList";
+import BackButton from "components/BackButton/BackButton";
 
 export function CreateForms() {
   const { accessToken, convertToDate } = useAuth();
@@ -187,6 +188,9 @@ export function CreateForms() {
           action=""
           className="w-full pl-6 h-auto flex flex-col gap-9 pb-7 pt-10"
         >
+          <div className="">
+            <BackButton navigateTo="/"/>
+          </div>
           <div className="w-full h-12 flex items-center">
             <h1 className="text-3xl font-bold">Criação de formulário</h1>
           </div>
