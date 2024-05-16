@@ -1,5 +1,7 @@
 import api, { headers } from "../api/Api";
 import { CreateFormInterface } from "interfaces/CreateForm";
+import { FormInterface } from "interfaces/CreateForm";
+import { updateQuestion } from "interfaces/SendForm";
 
 
 const createForm = async (data: CreateFormInterface, token: string ) => {
@@ -46,7 +48,7 @@ const getAllForms = async (token: string | null) => {
   }
 }
 
-const deleteForm = async (token: string | null, formId: number | any) => {
+const deleteForm = async (token: string | null, formId: number | any, data: updateQuestion) => {
     try {
         const response = await api.delete(`/form/${formId}`,
          {
@@ -60,6 +62,22 @@ const deleteForm = async (token: string | null, formId: number | any) => {
     }
 }
 
+const editFormQuestion = async (token: string | null, formId: number | any, data: updateQuestion) => {
+    try{
+        const response = await api.patch(`/form/${formId}`,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        );
+        return response;
+    } catch(error){
+        throw(error);
+    }
+}
+
 
 
 
@@ -67,5 +85,6 @@ export const FormService = {
     createForm,
     getFormQuestions,
     getAllForms,
-    deleteForm
+    deleteForm,
+    editFormQuestion
 };
