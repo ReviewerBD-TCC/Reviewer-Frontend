@@ -6,6 +6,7 @@ import CardForm from "components/CardForm/CardForm";
 import { FormService } from "services/FormService";
 import { FormInterface } from "interfaces/CreateForm";
 import { useEffect } from "react";
+import BackButton from "components/BackButton/BackButton";
 
 export const AllForms = () => {
   const { accessToken } = useAuth();
@@ -25,7 +26,9 @@ export const AllForms = () => {
       <Header/>
       <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center pl-5 pt-7">
           <div className=" w-[90%] h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7 pr-1 pl-1">
-            
+              <div className="w-full justify-start items-start w-auto">
+                <BackButton navigateTo="/"/>
+              </div>
               <div className="w-full h-12 flex items-center">
                 <h1 className="font-bold text-3xl text-start w-full">Formulários de feedback</h1>
               </div>

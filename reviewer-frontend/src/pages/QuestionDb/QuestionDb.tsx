@@ -8,6 +8,7 @@ import useModal from "../../hooks/useModal";
 import { useQuery } from "react-query";
 import { Header } from "components";
 import { Input } from "components";
+import BackButton from "components/BackButton/BackButton";
 
 function QuestionDb(props?: QuestionProps) {
   const { isOpen, toggle } = useModal();
@@ -23,7 +24,10 @@ function QuestionDb(props?: QuestionProps) {
         <Header/>
           <div className="bg-boschWhite w-full h-auto flex items-center justify-center">
             <div className="w-full h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7 pl-7">
-                <div className="flex flex-col pt-7 pb-7 justify-center items-start gap-3 lg:w-[90%]">
+                <div className="flex flex-col pt-7 pb-7 justify-center items-start gap-4 lg:w-[90%]">
+                  <div className="">
+                    <BackButton navigateTo="/"/>
+                  </div>
                   <div className="w-full h-12 flex items-center">
                     <h1 className="font-bold text-3xl text-start w-full">Banco de perguntas</h1>
                   </div>
