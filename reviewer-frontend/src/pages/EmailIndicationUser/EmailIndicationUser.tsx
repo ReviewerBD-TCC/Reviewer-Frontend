@@ -9,6 +9,7 @@ import useModal from '../../hooks/useModal'
 import { UserService } from 'services/UserService'
 import { useEffect, useState } from 'react'
 import { User } from 'interfaces/CreateUser'
+import BackButton from 'components/BackButton/BackButton';
 
 export default function EmailIndicationUser() {
   const { accessToken } = useAuth();
@@ -59,6 +60,9 @@ export default function EmailIndicationUser() {
       <div className="bg-boschWhite h-auto w-full flex justify-center items-center">
         <div className='h-auto w-[90%] flex items-center justify-center pt-10 pb-10'>
           <form className="w-full pl-7 pt-7 h-auto flex flex-col justify-center gap-10">
+            <div>
+              <BackButton navigateTo='/'/>
+            </div>
             <h1 className='font-bold text-4xl'>Disparo de indicações</h1>
             <div className="w-[45%] flex flex-row gap-8 pb-5">
               <div className='w-[35%] lg:w-[45%] cursor-pointer'>
