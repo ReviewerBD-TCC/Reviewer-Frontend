@@ -2,6 +2,7 @@ import { SparkActivityIndicator, SparkButton } from "@bosch-web-dds/spark-ui-rea
 import { Header, Selected } from "components"
 import { useAuth } from "context/AuthProvider"
 import { QuestionProps } from "interfaces/Question";
+import { updateQuestion } from "interfaces/SendForm";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
@@ -31,6 +32,9 @@ export const SingleForm = () => {
     const handleSelect = (question: QuestionProps) => {
         setSelectedValues([...selectedValues, question])
     }
+
+
+
     return (
         <div className="w-full min-h-screen h-auto flex flex-col items-center">
             <Header />
@@ -58,9 +62,10 @@ export const SingleForm = () => {
                                         setSelectedValue={(newValue: QuestionProps) =>
                                             handleSelect(newValue)
                                         }
-                                        zIndex={25}
+                                        
                                         labelText="Pergunta"
                                         question={allQuestions.filter((item:any)=>item.active)}
+                                        formId={id}
                                     />
                                     </div>
                                    
