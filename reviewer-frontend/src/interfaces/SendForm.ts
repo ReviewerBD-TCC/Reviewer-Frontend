@@ -12,3 +12,8 @@ export interface Form{
     userId: number,
     questionAnswer: QuestionAnswer[]
 }
+
+export interface updateQuestion{
+    questionId: number,
+    newQuestionId: number
+}

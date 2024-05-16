@@ -1,5 +1,8 @@
 import { QuestionProps } from 'interfaces/Question';
 import React, { SelectHTMLAttributes, useEffect, useRef, useState } from 'react'
+import { updateQuestion } from 'interfaces/SendForm';
+import { FormService } from 'services/FormService';
+import { useAuth } from 'context/AuthProvider';
 
 export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
   labelText: string;
@@ -8,16 +11,45 @@ export interface SelectedProps extends SelectHTMLAttributes<HTMLButtonElement | 
   onSelect?: () => void;
   setSelectedValue: any;
   selectedValue?: number | string | Date | QuestionProps[];
+  formId?: string | number;
 }
 
-export const Selected: React.FC<SelectedProps> = ({ labelText, options, question, onSelect, setSelectedValue, selectedValue }, ...rest) => {
+export const Selected: React.FC<SelectedProps> = ({ labelText, options, question, onSelect, setSelectedValue, selectedValue, formId }, ...rest) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<any>(null)
   const [optSelected, setOptSelected] = useState()
+  const {accessToken} = useAuth()
+  
+  async function editFormQuestion(token: string | null, formId: number , data: updateQuestion) {
+    try {
+        const response = await FormService.editFormQuestion(token, formId, data);
+       return response
+    } catch (error) {
+        console.error(error);
+    }
+  }
+  
+
+   
 
   function handleOptionClick(value: any) {
     setSelectedValue(value);
     setOptSelected(value.questionPt)
+    console.log(selectedValue)
+    console.log(formId)
+    
+   
+    let e:any = ""
+    if(optSelected != selectedValue){
+      e = question?.find((each)=>each.questionPt === selectedValue)
+    }
+     let newQuestion: updateQuestion = {
+      newQuestionId:6,
+      questionId: e.id
+    
+  }
+    const response = editFormQuestion(accessToken, formId, newQuestion)
+    console.log(response)
 
     if (onSelect) {
       return value
