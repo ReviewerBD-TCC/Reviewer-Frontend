@@ -9,9 +9,9 @@ import EmailIndicationUser from "pages/EmailIndicationUser/EmailIndicationUser";
 import Form from "pages/Form/Form";
 import { Default, PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
-import { SingleForm } from "pages/SingleForm/SingleForm";
 import { Confirmation } from "pages/Confirmation/Confirmation";
 import { PublicRoute } from "components/PublicRoute/PublicRoute";
+import { SingleForm } from "pages/SingleForm/SingleForm";
 
 export const route = createBrowserRouter([
   {
