@@ -11,7 +11,7 @@ const createIndication = async (token: string | null, data: CreateIndication) =>
 
         return response;
     } catch(error){
-        throw error;
+        console.error(error);
     }
 }
 
@@ -25,7 +25,7 @@ const getUsers = async (token: string | null) => {
 
         return response;
     } catch(error){
-        throw error;
+        console.error(error);
     }
 }
 
