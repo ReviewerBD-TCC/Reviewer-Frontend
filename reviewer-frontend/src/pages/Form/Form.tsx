@@ -10,18 +10,13 @@ import { QuestionProps } from "interfaces/Question";
 import { FormService } from "services/FormService";
 import { FormInterface, FormResponseInterface } from "interfaces/CreateForm";
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
-import { Form } from "interfaces/SendForm";
+import { Form, QuestionAnswer } from "interfaces/SendForm";
 
 const FormComponent = () => {
-  const { accessToken, user } = useAuth();
+  const { accessToken, user, convertToDate } = useAuth();
   const languageOptions = ["Português", "Inglês"];
   const [languageSelect, setLanguageSelect] = useState("Português");
   const [formData, setFormData] = useState<FormResponseInterface>();
-
-  const convertToDate = (input: Date) => {
-    const date = new Date(input);
-    return isNaN(date.getTime()) ? undefined : date;
-  };
 
   const {
     handleSubmit,
@@ -92,22 +87,25 @@ const FormComponent = () => {
 
     const answers = getValues()
 
-    const answerForm = {
+     const questionAnswer: QuestionAnswer[] = form.questions?.map(
+      (q: QuestionProps, index: number) => ({
+        question: q.id,
+        answer: { answer: answers.questionAnswer[index].answer.answer },
+      })
+    ) || [];
+
+    const answerForm: Form = {
       questionFormId: formData.id,
       userId: user.id,
-      questionAnswer: form.questions?.map(
-        (q: QuestionProps, index: number) => ({
-          question: q.id,
-          answer: { answer: answers.questionAnswer[index].answer.answer },
-        })
-      ),
+      questionAnswer: questionAnswer,
     };
 
-    try {
-      const { status, data } = await AnswerService.postFormAnswers(accessToken, answerForm);
 
-      if(status === 201){
-        console.log(data)
+    try {
+      const response = await AnswerService.postFormAnswers(accessToken, answerForm);
+
+      if(response?.status === 201){
+        console.log(response?.data)
         showToastSuccessMessage();
         setTimeout(() => {
           navigate("/confirmation");
@@ -137,7 +135,6 @@ const FormComponent = () => {
               <Selected
                 labelText="Idioma"
                 options={languageOptions}
-                zIndex={50}
                 selectedValue={languageSelect}
                 setSelectedValue={handleLanguageChange}
               />
