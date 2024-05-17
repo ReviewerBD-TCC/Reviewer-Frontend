@@ -1,8 +1,7 @@
-import { AnswerForm } from "interfaces/SendForm";
+import { Form } from "interfaces/SendForm";
 import api from "../api/Api";
-import { useAuth } from "context/AuthProvider";
 
-const postFormAnswers = async (token: string | null, data: AnswerForm) => {
+const postFormAnswers = async (token: string | null, data: Form) => {
   try {
     const response = await api.post(`/answer_form`, data, {
       headers: {
@@ -11,7 +10,7 @@ const postFormAnswers = async (token: string | null, data: AnswerForm) => {
     });
     return response
   }catch(error) {
-    throw error
+    console.error(error);
   }
 }
 
