@@ -9,7 +9,7 @@ const getQuestions = async (token: string | null) => {
     });
     return response.data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -29,7 +29,7 @@ const updateQuestion = async (token: string | null, id: number, active: boolean)
 
     return response.data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

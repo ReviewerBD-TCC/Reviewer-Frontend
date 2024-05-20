@@ -31,7 +31,7 @@ const userDetails = async (token: string | null) => {
 
     return response;
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 }
 

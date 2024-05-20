@@ -1,6 +1,5 @@
 import api from '../api/Api'
 import { Email } from "interfaces/Emaill";
-import { useAuth } from 'context/AuthProvider';
 
 export const mailSender = (data: Email, token:string) =>  {
     console.log(data.body)
