@@ -106,7 +106,7 @@ export const Selected: React.FC<SelectedProps> = (
             {optSelected}
           </li>
         ) : (
-          <li className="list-none">mbvbvnbvn</li>
+          <li className="list-none"></li>
         )
       ) : selectedValue && !isOpen ? (
         <li className="pr-11 pb-1 pl-4 w-max-[90%] text-[13.5px] h-auto text-start truncate list-none">
