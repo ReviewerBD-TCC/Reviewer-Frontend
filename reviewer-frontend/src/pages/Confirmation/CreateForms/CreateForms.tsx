@@ -1,8 +1,4 @@
-import {
-  SparkButton,
-  SparkTextfield,
-  SparkIcon,
-} from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkTextfield, SparkIcon } from "@bosch-web-dds/spark-ui-react";
 import { Header } from "../../components/Header/Header";
 import { Selected } from "../../components/Select/Selected";
 import { ToastContainer, toast, Zoom } from "react-toastify";
@@ -30,17 +26,11 @@ export function CreateForms() {
   const [valido, setValido] = useState<boolean>(false);
   const [formList, setFormList] = useState<FormInterface[]>([]);
   const [question, setQuestion] = useState<QuestionProps>();
-  const [responseList, setResponseList] = useState<QuestionProps[]>([]);
-
   const navigate = useNavigate();
 
-  const { data: initialResponseList = [] } = useQuery("question", () => {
+  const { data: responseList = [] } = useQuery("question", () => {
     return QuestionService.getQuestions(accessToken);
   });
-
-  useEffect(() => {
-    setResponseList(initialResponseList);
-  }, [initialResponseList]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,12 +47,14 @@ export function CreateForms() {
   }, [accessToken]);
 
   const addNewQuestion = () => {
-    console.log("adicionei");
     setQuestionListRender([
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
     ]);
-
+    const index = responseList.findIndex(
+      (eachQuestion: QuestionProps) => eachQuestion === question
+    );
+    responseList.splice(index, 1);
     if (title && year && selectedValues.length > 0) {
       setValido(true);
     }
@@ -136,7 +128,6 @@ export function CreateForms() {
         updatedQuestions[index] = newValue;
         setSelectedValues(updatedQuestions);
         setQuestion(newValue);
-
       } else {
         setSelectedValues([...selectedValues, newValue]);
         setQuestion(newValue);
@@ -188,31 +179,16 @@ export function CreateForms() {
     }
   };
 
-  const removeQuestion = (index: number, event: MouseEvent) => {
-    event.preventDefault();
-
-    const questionToRemove = selectedValues[index];
-    const updatedSelectedValues = selectedValues.filter((_, i) => i !== index);
-    setSelectedValues(updatedSelectedValues);
-    const updatedQuestionListRender = questionListRender.filter(
-      (_, i) => i !== index
-    );
-    setQuestionListRender(updatedQuestionListRender);
-    if (questionToRemove) {
-      const updatedResponseList = [...responseList, questionToRemove];
-      setResponseList(updatedResponseList);
-    }
-
-    console.log("Questão removida", questionToRemove);
-  };
-
   return (
     <div className="h-auto min-h-screen w-full flex flex-col items-center">
       <Header />
       <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
-        <form className="w-full pl-6 h-auto flex flex-col gap-9 pb-7 pt-10">
+        <form
+          
+          className="w-full pl-6 h-auto flex flex-col gap-9 pb-7 pt-10"
+        >
           <div className="">
-            <BackButton navigateTo="/" />
+            <BackButton navigateTo="/"/>
           </div>
           <div className="w-full h-12 flex items-center">
             <h1 className="text-3xl font-bold">Criação de formulário</h1>
@@ -258,27 +234,23 @@ export function CreateForms() {
                 className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center"
                 key={index}
               >
-                <div className="w-[95%] cursor-pointer flex flex-row gap-4">
+                <div className="w-[95%] cursor-pointer">
                   <Selected
                     selectedValue={selectedValues[index]?.questionPt}
                     setSelectedValue={(newValue: QuestionProps) =>
                       handleSelectChange(index, newValue)
                     }
-                    key={index}
+                    zIndex={25}
                     labelText="Pergunta"
                     question={responseList.filter(
                       (item: QuestionProps) => item.active
                     )}
                   />
-                  <button
-                    className="w-auto bg-boschGrayText/10 rounded-full"
-                    onClick={(event: MouseEvent) =>
-                      removeQuestion(index, event)
-                    }
-                  >
-                    <SparkIcon icName={"delete"} />
-                  </button>
-                </div>
+
+                </div>                  
+                <button>
+                    <SparkIcon icName={"delete"} noPadding={true} />
+                </button>
               </div>
             ))}
           </div>
