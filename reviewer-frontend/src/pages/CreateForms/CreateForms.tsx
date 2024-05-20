@@ -35,8 +35,8 @@ export function CreateForms() {
     const fetchData = async () => {
       try {
         const forms = await FormService.getAllForms(accessToken);
-       
-       setFormList(forms)
+
+        setFormList(forms);
       } catch (error) {
         console.error("Erro ao carregar formulários:", error);
       }
@@ -50,8 +50,10 @@ export function CreateForms() {
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
     ]);
-    const index = responseList.findIndex((eachQuestion: QuestionProps)=> eachQuestion === question)
-    responseList.splice(index, 1)
+    const index = responseList.findIndex(
+      (eachQuestion: QuestionProps) => eachQuestion === question
+    );
+    responseList.splice(index, 1);
     if (title && year && selectedValues.length > 0) {
       setValido(true);
     }
@@ -112,23 +114,22 @@ export function CreateForms() {
       showToastMessageError("Erro ao criar formulário");
     }
   };
-  
+
   const handleSelectChange = (index: number, newValue: QuestionProps) => {
     const questionExists = selectedValues.some(
       (question) => question.id === newValue.id
     );
-   
+
     if (!questionExists) {
       if (index >= 0 && index < selectedValues.length) {
         const updatedQuestions = [...selectedValues];
-        console.log(updatedQuestions)
+        console.log(updatedQuestions);
         updatedQuestions[index] = newValue;
         setSelectedValues(updatedQuestions);
-        setQuestion(newValue)
-        
+        setQuestion(newValue);
       } else {
         setSelectedValues([...selectedValues, newValue]);
-        setQuestion(newValue)
+        setQuestion(newValue);
       }
     } else {
       showToastMessageError("Essa pergunta já foi adicionada!");
@@ -164,10 +165,8 @@ export function CreateForms() {
   };
 
   const handleYearChange = (value: number) => {
-
     const currentFormFiltered = formList?.find(
-      (form: FormInterface) =>
-        convertToDate(form.year)?.getFullYear() === value
+      (form: FormInterface) => convertToDate(form.year)?.getFullYear() === value
     );
 
     if (currentFormFiltered) {
@@ -195,17 +194,17 @@ export function CreateForms() {
               <SparkTextfield
                 label="Título do feedback"
                 placeholder="Feedback"
-                defaultValue={title} // Use defaultValue para evitar controle explícito
+                defaultValue={title}
                 {...register("title", {
                   setValueAs: (value) => {
-                    setTitle(value); // Atualiza o estado
+                    setTitle(value);
                     return value;
                   },
                 })}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const newValue = e.target.value;
                   console.log("Novo valor do título:", newValue);
-                  setTitle(newValue); // Atualiza o estado
+                  setTitle(newValue);
                 }}
               />
             </div>
@@ -227,10 +226,13 @@ export function CreateForms() {
           </div>
           <div className="w-full h-auto flex flex-col gap-6">
             {questionListRender.map((component, index) => (
-              <div className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center">
+              <div
+                className="bg-[#F1F1F1] w-full h-[125px] flex justify-center items-center"
+                key={index}
+              >
                 <div className="w-[95%] cursor-pointer">
                   <Selected
-                    selectedValue={selectedValues}
+                    selectedValue={selectedValues[index]?.questionPt}
                     setSelectedValue={(newValue: QuestionProps) =>
                       handleSelectChange(index, newValue)
                     }
