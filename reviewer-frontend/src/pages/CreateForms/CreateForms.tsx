@@ -1,4 +1,4 @@
-import { SparkButton, SparkTextfield } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkNotification, SparkTextfield } from "@bosch-web-dds/spark-ui-react";
 import { Header } from "../../components/Header/Header";
 import { Selected } from "../../components/Select/Selected";
 import { ToastContainer, toast, Zoom } from "react-toastify";
@@ -55,7 +55,7 @@ export function CreateForms() {
       (eachQuestion: QuestionProps) => eachQuestion === question
     );
     responseList.splice(index, 1);
-    if (title && year && selectedValues.length > 0) {
+    if (title && year && questionListRender.length >= 4) {
       setValido(true);
     }
   };
@@ -190,8 +190,11 @@ export function CreateForms() {
           <div className="">
             <BackButton navigateTo="/"/>
           </div>
-          <div className="w-full h-12 flex items-center">
+          <div className="">
             <h1 className="text-3xl font-bold">Criação de formulário</h1>
+          </div>
+          <div>
+            <SparkNotification type="bar" variant="neutral" icon="info-i"><p>A quantidade mínima de perguntas são 5!</p></SparkNotification>
           </div>
           <div className="w-full flex flex-row justify-between">
             <div className="w-[74%]">
@@ -256,6 +259,7 @@ export function CreateForms() {
               text="Adicionar pergunta"
               icon="add"
               onClick={addNewQuestion}
+              disabled={!(title && year)?true:false}
             />
             <SparkButton
               text="Finalizar"
