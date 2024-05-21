@@ -50,7 +50,7 @@ export const Homepage = () => {
     <div className={`bg-[#fff] w-full h-screen flex justify-center items-center flex-col`}>
         <Header/>
             <div className="bg-boschWhite h-screen w-full flex items-center justify-center flex-col">
-                <div className='bg-[#fff] w-[90%] p-4 h-full flex flex-col justify-center items-center'>
+                <div className='bg-[#fff] w-[90%] h-full flex flex-col justify-center items-center'>
                     <div className='w-full h-16 flex'>
                         <h1 className='font-bold text-3xl'>Painel administrador</h1>
                     </div>
