@@ -85,7 +85,7 @@ export const SingleForm = () => {
     try {
       console.log(newQuestions);
 
-      const editForm: UpdateQuestion = {
+      const editForm: any = {
         newQuestions: newQuestions,
       };
 
