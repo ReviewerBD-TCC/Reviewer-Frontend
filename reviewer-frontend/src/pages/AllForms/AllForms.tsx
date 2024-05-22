@@ -4,7 +4,7 @@ import { useAuth } from "context/AuthProvider";
 import { useQuery } from "react-query";
 import CardForm from "components/CardForm/CardForm";
 import { FormService } from "services/FormService";
-import { FormInterface } from "interfaces/CreateForm";
+import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
 import { useEffect } from "react";
 import BackButton from "components/BackButton/BackButton";
 
