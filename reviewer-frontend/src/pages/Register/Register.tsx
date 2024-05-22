@@ -1,7 +1,7 @@
 import { SparkTextfield, SparkButton, SparkToggle } from "@bosch-web-dds/spark-ui-react"
 import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { UserData } from "../../interfaces/CreateUser";
+import { UserData } from "../../interfaces/UserInterfaces/CreateUser";
 import { ClienteResolver } from "../../validations/CreateUserResolver";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
