@@ -6,7 +6,7 @@ import {
   useEffect,
 } from "react";
 import { UserService } from "../services/UserService";
-import { User, UserData } from "../interfaces/CreateUser";
+import { User, UserData } from "../interfaces/UserInterfaces/CreateUser";
 
 interface AuthContextType {
   setDetailsUser: (values: UserData) => void;
