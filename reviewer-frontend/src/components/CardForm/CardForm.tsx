@@ -1,39 +1,13 @@
 import { SparkIcon } from '@bosch-web-dds/spark-ui-react';
-import { AllFormsInterface } from 'interfaces/AllForms'
-import { useAuth } from 'context/AuthProvider';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { ToastContainer, Bounce, toast } from "react-toastify";
 import ModalConfirmation from 'components/Modal/ModalConfirmation';
 import useModal from "../../hooks/useModal";
-
-interface cardFormProps {
-  titleForm: AllFormsInterface["title"];
-  id: number;
-  className: string,
-}
+import { cardFormProps } from 'interfaces/FormInterfaces/CardForm';
 
 const CardForm: React.FC<cardFormProps> = ({ titleForm, id, className }: cardFormProps) => {
-
-  const { accessToken } = useAuth();
   
   const {isOpen, toggle} = useModal()
-
-  // async function deleteForm(token: string | null, formId: number | null) {
-  //   try {
-  //       const response = await FormService.deleteForm(token, formId);
-  //       if(response.status === 204){
-  //         showToastMessage()
-  //         setTimeout(
-  //           ()=>{
-  //             window.location.reload()
-  //           }
-  //         )
-  //       }
-  //   } catch (error) {
-  //       console.error(error);
-  //   }
-  // }
 
   return (
     
@@ -57,7 +31,6 @@ const CardForm: React.FC<cardFormProps> = ({ titleForm, id, className }: cardFor
             formId={id} 
           />
         </div>
-        <ToastContainer/>
       </div>
     
   )
