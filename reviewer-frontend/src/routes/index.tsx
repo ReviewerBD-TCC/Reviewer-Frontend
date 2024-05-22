@@ -7,7 +7,7 @@ import {Login} from "../pages/Login/Login";
 import { Homepage } from "../pages/Homepage/Homepage";
 import EmailIndicationUser from "pages/EmailIndicationUser/EmailIndicationUser";
 import Form from "pages/Form/Form";
-import { Default, PrivateRoute } from "components";
+import { PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { Confirmation } from "pages/Confirmation/Confirmation";
 import { PublicRoute } from "components/PublicRoute/PublicRoute";
@@ -79,14 +79,14 @@ export const route = createBrowserRouter([
       </PrivateRoute>
     )
   },
-  {
-    path: "/dashboard",
-    element: (
-      <PrivateRoute>
-        <Default/>
-      </PrivateRoute>
-    )
-  },
+  // {
+  //   path: "/dashboard",
+  //   element: (
+  //     <PrivateRoute>
+    
+  //     </PrivateRoute>
+  //   )
+  // },
   {
     path: '/all-forms',
     element: (
