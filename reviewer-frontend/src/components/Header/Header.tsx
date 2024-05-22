@@ -29,12 +29,12 @@ export function Header() {
           </div>
 
           {location.pathname !== "/register" && (
-          <div className="w-auto">
-            <button className="w-auto h-auto flex justify-center items-center">
-              <SparkIcon
-                icName="logout"
-                noPadding={true}
-                onClick={() => logout()}
+            <div className="w-auto">
+              <button className="w-auto h-auto flex justify-center items-center">
+                <SparkIcon
+                  icName="logout"
+                  noPadding={true}
+                  onClick={() => logout()}
                 />
               </button>
             </div>
