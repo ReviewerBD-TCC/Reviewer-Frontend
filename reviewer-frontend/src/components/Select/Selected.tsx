@@ -1,21 +1,6 @@
-import { QuestionProps } from "interfaces/Question";
-import React, {
-  SelectHTMLAttributes,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { NewQuestions } from "interfaces/SendForm";
-
-interface SelectedProps
-  extends SelectHTMLAttributes<HTMLButtonElement | HTMLSelectElement> {
-  labelText: string;
-  options?: Array<string | number>;
-  question?: Array<QuestionProps>;
-  onSelect?: (newQuestion: NewQuestions) => void; 
-  setSelectedValue: any;
-  selectedValue?: number | string | Date | QuestionProps;
-}
+import React, { useEffect, useRef, useState } from "react";
+import { NewQuestions } from "interfaces/FormInterfaces/SendForm";
+import { SelectedProps } from "interfaces/Geral/SelectedProps";
 
 export const Selected: React.FC<SelectedProps> = (
   { labelText, options, question, onSelect, setSelectedValue, selectedValue },
@@ -30,7 +15,7 @@ export const Selected: React.FC<SelectedProps> = (
     setOptSelected(value);
 
     if (optSelected !== selectedValue) {
-      const e = question?.find((each)=>each.questionPt === selectedValue)
+      const e = question?.find((each) => each.questionPt === selectedValue);
 
       if (e) {
         const questionValue: NewQuestions = {

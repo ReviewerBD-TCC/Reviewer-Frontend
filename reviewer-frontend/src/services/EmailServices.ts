@@ -1,5 +1,5 @@
 import api from '../api/Api'
-import { Email } from "interfaces/Emaill";
+import { Email } from "interfaces/EmailInterfaces/Email";
 
 export const mailSender = (data: Email, token:string) =>  {
     console.log(data.body)

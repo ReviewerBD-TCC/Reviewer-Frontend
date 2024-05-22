@@ -6,11 +6,11 @@ import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
 import { toast, Zoom, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { QuestionProps } from "interfaces/Question";
+import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { FormService } from "services/FormService";
-import { FormInterface, FormResponseInterface } from "interfaces/CreateForm";
+import { FormInterface, FormResponseInterface } from "interfaces/FormInterfaces/CreateForm";
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
-import { Form, QuestionAnswer } from "interfaces/SendForm";
+import { Form, QuestionAnswer } from "interfaces/FormInterfaces/SendForm";
 
 const FormComponent = () => {
   const { accessToken, user, convertToDate } = useAuth();

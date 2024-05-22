@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import RightArrow from "../../assets/icons/forward-right.svg";
 import { Link } from "react-router-dom";
 import { SparkIcon } from "@bosch-web-dds/spark-ui-react";
-
-interface cardProps {
-  key: number;
-  text: string;
-  backgroundColor: string;
-  nav: string;
-  className: string;
-  description: string;
-}
+import { cardProps } from "interfaces/FormInterfaces/Card";
 
 export const Card: React.FC<cardProps> = ({
   text,
@@ -28,13 +19,21 @@ export const Card: React.FC<cardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="w-full h-full flex justify-center items-center relative">
-        <div className={`w-[80%] flex justify-between ${isHovered ? 'transform -translate-y-12 duration-300' : ''}`}>
+        <div
+          className={`w-[80%] flex justify-between ${
+            isHovered ? "transform -translate-y-12 duration-300" : ""
+          }`}
+        >
           {text}
-          <SparkIcon icName="wide-angled-arrow" pallete="primary" noPadding={true} />
+          <SparkIcon
+            icName="wide-angled-arrow"
+            pallete="primary"
+            noPadding={true}
+          />
         </div>
         {isHovered && (
           <div className="absolute bottom-2 left-0 right-0 p-4 text-white overflow-hidden">
-            <p className="text-xs">{description}</p>
+            <p className="text-sm">{description}</p>
           </div>
         )}
       </div>

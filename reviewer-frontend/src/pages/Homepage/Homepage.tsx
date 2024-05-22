@@ -56,7 +56,7 @@ export const Homepage = () => {
                     </div>
                     <div className='w-full h-2/4 flex justify-around items-center flex-row gap-4 bg-boschWhite'>
                         {cardList.map((i:any) => (
-                            <Card key={i.key} description={i.description} text={i.title} backgroundColor={i.backgroundColor} nav={i.nav} className={"hover:h-60 shadow-2xl ease-out duration-300"}/>
+                            <Card key={i.key} description={i.description} text={i.title} backgroundColor={i.backgroundColor} nav={i.nav} className={"hover:h-60 shadow-2xl ease-out duration-500"}/>
                         ))}
                     </div>
                 </div>

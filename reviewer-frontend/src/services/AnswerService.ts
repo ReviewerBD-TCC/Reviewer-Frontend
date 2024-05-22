@@ -1,4 +1,4 @@
-import { Form } from "interfaces/SendForm";
+import { Form } from "interfaces/FormInterfaces/SendForm";
 import api from "../api/Api";
 
 const postFormAnswers = async (token: string | null, data: Form) => {

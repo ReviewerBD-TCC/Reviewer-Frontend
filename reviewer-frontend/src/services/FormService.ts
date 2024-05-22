@@ -1,6 +1,6 @@
 import api from "../api/Api";
-import { FormInterface } from "interfaces/CreateForm";
-import { UpdateQuestion } from "interfaces/SendForm";
+import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
+import { UpdateQuestion } from "interfaces/FormInterfaces/SendForm";
 
 
 const createForm = async (data: FormInterface, token: string) => {

@@ -6,7 +6,7 @@ import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../services/UserService'
-import { UserLogin } from '../../interfaces/LoginUser'
+import { UserLogin } from '../../interfaces/UserInterfaces/LoginUser'
 import { useAuth } from 'context/AuthProvider'
 import api from '../../api/Api';
 import { LoginResolver } from 'validations/LoginResolver';

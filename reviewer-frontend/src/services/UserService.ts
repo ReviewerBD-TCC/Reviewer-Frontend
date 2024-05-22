@@ -1,6 +1,6 @@
-import { UserData } from "interfaces/CreateUser";
+import { UserData } from "interfaces/UserInterfaces/CreateUser";
 import api from "../api/Api";
-import { UserLogin } from "../interfaces/LoginUser";
+import { UserLogin } from "../interfaces/UserInterfaces/LoginUser";
 
 const handleLogin = (data: UserLogin) => api.post('/auth/login', data);
 

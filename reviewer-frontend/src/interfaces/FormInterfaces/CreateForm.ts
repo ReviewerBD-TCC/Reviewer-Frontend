@@ -1,5 +1,5 @@
-import { QuestionProps } from "./Question";
-import { QuestionList } from "./QuestionList";
+import { QuestionProps } from "../QuestionsInterface/Question";
+import { QuestionList } from "../QuestionsInterface/QuestionList";
 
 export interface FormInterface{
     id?: number;

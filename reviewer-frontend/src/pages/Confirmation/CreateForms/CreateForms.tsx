@@ -4,16 +4,16 @@ import { Selected } from "../../components/Select/Selected";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
-import { FormInterface } from "interfaces/CreateForm";
+import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
 import { FormService } from "services/FormService";
 import { useForm } from "react-hook-form";
 import { CreateFormResolver } from "validations/CreateFormResolver";
-import { QuestionService } from "services/questionService";
+import { QuestionService } from "services/QuestionService";
 import { useQuery } from "react-query";
-import { QuestionProps } from "interfaces/Question";
+import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { QuestionList } from "interfaces/QuestionList";
+import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
 import BackButton from "components/BackButton/BackButton";
 
 export function CreateForms() {

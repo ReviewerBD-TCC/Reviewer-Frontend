@@ -1,5 +1,6 @@
-import { UserIndicatedInterface } from "./UserIndicated";
-
+export interface UserIndicatedInterface{
+    userIndicated: number,
+}
 
 export interface CreateIndication{
     userIndication?: number;

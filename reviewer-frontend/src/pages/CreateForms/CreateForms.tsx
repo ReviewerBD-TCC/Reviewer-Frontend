@@ -1,19 +1,19 @@
-import { SparkButton, SparkNotification, SparkTextfield } from "@bosch-web-dds/spark-ui-react";
+import { SparkButton, SparkNotification, SparkTextfield, SparkIcon } from "@bosch-web-dds/spark-ui-react";
 import { Header } from "../../components/Header/Header";
 import { Selected } from "../../components/Select/Selected";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
-import { FormInterface } from "interfaces/CreateForm";
+import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
 import { FormService } from "services/FormService";
 import { useForm } from "react-hook-form";
 import { CreateFormResolver } from "validations/CreateFormResolver";
-import { QuestionService } from "services/questionService";
+import { QuestionService } from "services/QuestionService";
 import { useQuery } from "react-query";
-import { QuestionProps } from "interfaces/Question";
+import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { QuestionList } from "interfaces/QuestionList";
+import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
 import BackButton from "components/BackButton/BackButton";
 
 export function CreateForms() {
@@ -25,7 +25,6 @@ export function CreateForms() {
   const [selectedValues, setSelectedValues] = useState<QuestionProps[]>([]);
   const [valido, setValido] = useState<boolean>(false);
   const [formList, setFormList] = useState<FormInterface[]>([]);
-  const [question, setQuestion] = useState<QuestionProps>();
   const [responseList, setResponseList] = useState<QuestionProps[]>([]);
 
   const navigate = useNavigate();
@@ -130,11 +129,8 @@ export function CreateForms() {
         console.log(updatedQuestions);
         updatedQuestions[index] = newValue;
         setSelectedValues(updatedQuestions);
-        setQuestion(newValue);
-
       } else {
         setSelectedValues([...selectedValues, newValue]);
-        setQuestion(newValue);
       }
     } else {
       showToastMessageError("Essa pergunta já foi adicionada!");
@@ -236,7 +232,6 @@ export function CreateForms() {
             </div>
             <div className="w-[22%]">
               <Selected
-                zIndex={25}
                 labelText="Ano"
                 options={yearOptions}
                 selectedValue={year}

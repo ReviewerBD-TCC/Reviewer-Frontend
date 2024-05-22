@@ -1,6 +1,6 @@
 import { SparkButton, SparkTextarea, SparkTextfield } from '@bosch-web-dds/spark-ui-react'
 import { Header, Selected } from 'components'
-import { Email } from 'interfaces/Emaill'
+import { Email } from 'interfaces/EmailInterfaces/Email'
 import { EmailResolver } from 'validations/EmailResolver'
 import { useForm } from "react-hook-form";
 import { useAuth } from 'context/AuthProvider'
@@ -8,7 +8,7 @@ import ModalEmailConfirmation from 'components/Modal/ModalEmailConfirmation'
 import useModal from '../../hooks/useModal'
 import { UserService } from 'services/UserService'
 import { useEffect, useState } from 'react'
-import { User } from 'interfaces/CreateUser'
+import { User } from 'interfaces/UserInterfaces/CreateUser'
 import BackButton from 'components/BackButton/BackButton';
 
 export default function EmailIndicationUser() {
