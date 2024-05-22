@@ -3,12 +3,12 @@ import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MouseEventHandler, useEffect } from "react";
 import { Header, TableUser } from "../../components/index";
-import { CreateIndication } from "interfaces/CreateIndication";
+import { CreateIndication } from "interfaces/UserInterfaces/CreateIndication";
 import { useAuth } from "context/AuthProvider";
 import { IndicationService } from "services/IndicationService";
-import { UserIndicatedInterface } from "interfaces/UserIndicated";
+import { UserIndicatedInterface } from "interfaces/UserInterfaces/UserIndicated";
 import { useNavigate } from "react-router-dom";
-import { QuestionProps } from "interfaces/Question";
+import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import useModal from "../../hooks/useModal";
 import ModalIndication from "components/Modal/ModalIndication.tsx";
 
