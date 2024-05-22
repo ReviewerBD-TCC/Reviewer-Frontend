@@ -1,5 +1,5 @@
 import api from "../api/Api";
-import { CreateIndication } from "../interfaces/CreateIndication";
+import { CreateIndication } from "../interfaces/UserInterfaces/CreateIndication";
 
 const createIndication = async (token: string | null, data: CreateIndication) => {
     try{
