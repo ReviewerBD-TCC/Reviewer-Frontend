@@ -7,7 +7,6 @@ import { QuestionService } from "services/QuestionService";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 
 import error404 from "../../assets/images/404.png";
-import { useAuth } from "context/AuthProvider";
 import useModal from "../../hooks/useModal";
 import { useQuery } from "react-query";
 import { Header, Modal } from "components";
@@ -15,17 +14,16 @@ import { Input } from "components";
 import BackButton from "components/BackButton/BackButton";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
 
-function QuestionDb(props?: ModalProps) {
+function QuestionDb() {
   const { isOpen, toggle } = useModal();
-  const { accessToken } = useAuth();
 
   const {
     data: responseList = [],
     isLoading,
     error,
   } = useQuery("questions", () => {
-    console.log(accessToken);
-    return QuestionService.getQuestions(accessToken);
+  
+    return QuestionService.getQuestions();
   });
 
   return (
