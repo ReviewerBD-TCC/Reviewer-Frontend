@@ -23,7 +23,7 @@ const ModalEmailSelect: React.FC<EmailModal> = (props) => {
     });
   };
 
-  const { accessToken, selectedUsers } = useAuth();
+  const { selectedUsers } = useAuth();
 
   const sendEmailSelected = () => {
     const bccAccounts: string[] = [];
@@ -37,7 +37,7 @@ const ModalEmailSelect: React.FC<EmailModal> = (props) => {
     };
 
     try {
-      mailSender(data, accessToken);
+      mailSender(data);
 
       showToastMessage();
       setTimeout(() => {
