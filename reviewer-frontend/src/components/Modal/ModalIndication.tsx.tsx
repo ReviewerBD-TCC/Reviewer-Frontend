@@ -5,11 +5,12 @@ import { TableUser } from "components/Table/Table";
 import { SparkNotification } from "@bosch-web-dds/spark-ui-react";
 import { IndicationService } from "services/IndicationService";
 import { CreateIndication } from "interfaces/UserInterfaces/CreateIndication";
-import { UserIndicatedInterface } from "interfaces/UserInterfaces/UserIndicated";
+import { UserIndicatedInterface } from "interfaces/UserInterfaces/CreateIndication";
 import { ToastContainer, Bounce, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { EmailModal } from "interfaces/EmailInterfaces/EmailModal";
+import { useMsal } from "@azure/msal-react";
+import { User } from "interfaces/UserInterfaces/CreateUser";
 
 const ModalIndication: React.FC<EmailModal> = (props) => {
   const showToastMessage = () => {
@@ -26,13 +27,16 @@ const ModalIndication: React.FC<EmailModal> = (props) => {
     });
   };
 
-  const { accessToken, selectedUsers, user } = useAuth();
+  const { selectedUsers } = useAuth();
+  const { instance } = useMsal()
+
+  const account = instance.getActiveAccount();
   const navigate = useNavigate();
 
   const onSubmit: MouseEventHandler<HTMLSparkButtonElement> = async () => {
     try {
       const indicateds: UserIndicatedInterface[] = selectedUsers.map(
-        (userId: QuestionProps) => {
+        (userId: User) => {
           const eachUser: UserIndicatedInterface = {
             userIndicated: userId.id,
           };
@@ -40,14 +44,11 @@ const ModalIndication: React.FC<EmailModal> = (props) => {
         }
       );
       const requestData: CreateIndication = {
-        userIndication: user.id,
+        userIndication: account?.homeAccountId,
         indicateds: indicateds,
       };
 
-      const { status } = await IndicationService.createIndication(
-        accessToken,
-        requestData
-      );
+      const { status } = await IndicationService.createIndication(requestData);
 
       if (status === 201) {
         showToastMessage();
