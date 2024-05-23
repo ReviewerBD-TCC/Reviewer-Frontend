@@ -2,11 +2,9 @@ import { SparkButton } from "@bosch-web-dds/spark-ui-react";
 import React from "react";
 import { FormService } from "services/FormService";
 import { ToastContainer, Bounce, toast } from "react-toastify";
-import { useAuth } from "context/AuthProvider";
 import { ModalConfirmationProps } from "interfaces/ModalInterfaces/ModalConfirmation";
 
 const ModalConfirmation: React.FC<ModalConfirmationProps> = (props) => {
-  const { accessToken } = useAuth();
 
   const showToastMessage = () => {
     toast.success("Formulário deletado com sucesso!", {
