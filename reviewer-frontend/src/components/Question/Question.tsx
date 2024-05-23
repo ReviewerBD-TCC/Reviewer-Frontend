@@ -1,7 +1,6 @@
 import { SparkToggle } from "@bosch-web-dds/spark-ui-react";
 import Modal from "../Modal/Modal";
 import useModal from "../../hooks/useModal";
-import { useAuth } from "context/AuthProvider";
 import { useState } from "react";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
 import { QuestionService } from "services/QuestionService";
@@ -10,12 +9,10 @@ export const Question: React.FC<ModalProps> = (props: ModalProps) => {
   const { isOpen, toggle } = useModal();
   const [active, setActive] = useState<boolean>(props?.active);
   const id = props.id;
-  const { accessToken } = useAuth();
 
   const updateToggle = async (active: boolean) => {
     try {
        await QuestionService.updateQuestionActive(
-        accessToken,
         id,
         active
       );
