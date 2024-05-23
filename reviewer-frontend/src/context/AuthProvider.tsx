@@ -9,11 +9,6 @@ import { UserService } from "../services/UserService";
 import { User, UserData } from "../interfaces/UserInterfaces/CreateUser";
 
 interface AuthContextType {
-  setDetailsUser: (values: UserData) => void;
-  user: UserData;
-
-  accessToken: string;
-  setAccessToken: (token: string) => void;
 
   active: boolean;
   setActiveValue: (active: boolean) => void;
