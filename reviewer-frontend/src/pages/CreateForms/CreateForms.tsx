@@ -17,7 +17,7 @@ import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
 import BackButton from "components/BackButton/BackButton";
 
 export function CreateForms() {
-  const { accessToken, convertToDate } = useAuth();
+  const { convertToDate } = useAuth();
   const yearOptions: number[] = [];
   const [title, setTitle] = useState<string>("");
   const [year, setYear] = useState<number>();
@@ -30,7 +30,7 @@ export function CreateForms() {
   const navigate = useNavigate();
 
   const { data: initialResponseList = [] } = useQuery("question", () => {
-    return QuestionService.getQuestions(accessToken);
+    return QuestionService.getQuestions();
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export function CreateForms() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const forms = await FormService.getAllForms(accessToken);
+        const forms = await FormService.getAllForms();
 
         setFormList(forms);
       } catch (error) {
@@ -49,10 +49,9 @@ export function CreateForms() {
     };
 
     fetchData();
-  }, [accessToken]);
+  }, []);
 
   const addNewQuestion = () => {
-    console.log("adicionei");
     setQuestionListRender([
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
