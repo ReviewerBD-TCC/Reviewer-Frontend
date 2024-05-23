@@ -3,7 +3,6 @@ import { Header, Selected } from 'components'
 import { Email } from 'interfaces/EmailInterfaces/Email'
 import { EmailResolver } from 'validations/EmailResolver'
 import { useForm } from "react-hook-form";
-import { useAuth } from 'context/AuthProvider'
 import ModalEmailConfirmation from 'components/Modal/ModalEmailConfirmation'
 import useModal from '../../hooks/useModal'
 import { UserService } from 'services/UserService'
@@ -12,7 +11,6 @@ import { User } from 'interfaces/UserInterfaces/CreateUser'
 import BackButton from 'components/BackButton/BackButton';
 
 export default function EmailIndicationUser() {
-  const { accessToken } = useAuth();
   const yearOptions:number[] = []
   const responseTime = ["15 dias", "20 dias", "30 dias"]
   const [year, setYear] = useState<number>()
@@ -27,7 +25,7 @@ export default function EmailIndicationUser() {
   const [userList, setUserList] = useState<string[]>([])
 
   useEffect(() => {
-    UserService.getUsers(accessToken).then(
+    UserService.getUsers().then(
       user => {
         const email: string[] = user.map((item: User) => item.email)
         setUserList(email)
@@ -35,7 +33,7 @@ export default function EmailIndicationUser() {
 
   }, [])
   for(let i= 0; i<5;i++){
-    let year =new Date().getFullYear()+i
+    const year =new Date().getFullYear()+i
     yearOptions.push(year)
     console.log(i)
   }
