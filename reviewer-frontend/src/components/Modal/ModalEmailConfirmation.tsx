@@ -3,21 +3,18 @@ import { ToastContainer, Bounce, toast } from "react-toastify";
 import { SubmitHandler } from "react-hook-form";
 import { mailSender } from "services/EmailServices";
 import ModalEmailSelect from "./ModalEmailSelect";
-import { useAuth } from "context/AuthProvider";
 import useModal from "../../hooks/useModal";
 import { Email } from "interfaces/EmailInterfaces/Email";
 import React from "react";
 import { EmailModal } from "interfaces/EmailInterfaces/EmailModal";
 
 const ModalEmailConfirmation: React.FC<EmailModal> = (props) => {
-  const { accessToken } = useAuth();
   const { isOpen, toggle } = useModal();
 
   const sendEmail: SubmitHandler<Email> = async (values) => {
-    mailSender(values, accessToken);
+    mailSender(values);
     showToastMessage();
     setTimeout(() => {
-      console.log(accessToken);
       window.location.reload();
     }, 1500);
   };
