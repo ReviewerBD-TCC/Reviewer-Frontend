@@ -11,17 +11,21 @@ import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import useModal from "../../hooks/useModal";
 import ModalIndication from "components/Modal/ModalIndication.tsx";
+import { useMsal } from "@azure/msal-react";
 
 function Indication() {
 
-    const { accessToken, user, selectedUsers } = useAuth();
+    const { selectedUsers } = useAuth();
+    const { instance } = useMsal()
+
+    const account = instance.getActiveAccount();
 
     const {isOpen, toggle} = useModal()
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const { status } = await IndicationService.getUsers(accessToken);
+                const { status } = await IndicationService.getUsers();
                 if (status === 200) {
                     console.log(user)
                 }
@@ -30,7 +34,7 @@ function Indication() {
             }
         }
         fetchData();
-    }, [accessToken]);
+    }, []);
 
     console.log(selectedUsers)
 
@@ -41,7 +45,7 @@ function Indication() {
                 <div className="w-full h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7">
                     <form className="w-[87%] min-h-[90%] h-auto flex flex-col justify-center gap-10">
                         <div className="flex flex-col gap-2 mb-10">
-                            <h1 className="font-bold text-4xl mb-10">Olá, {user?.name}.</h1>
+                            <h1 className="font-bold text-4xl mb-10">Olá, {account?.name}.</h1>
                             <p className="font-regular text-x">Você tem um formulário de feedback novo, indique colegas do seu time para respondê-lo.</p>
                             <p className="font-regular text-x">Este formulário é referente ao ano de 2024</p>
                         </div>
