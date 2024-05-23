@@ -1,15 +1,19 @@
-import { useAuth } from "context/AuthProvider";
 import Logo from "../../assets/images/logo_symbol_red_black.png";
 import Supergraphic from "../../assets/images/Supergraphic.png";
 import { Link } from "react-router-dom";
 import { SparkIcon } from "@bosch-web-dds/spark-ui-react";
+import { useMsal } from "@azure/msal-react";
 
 export function Header() {
-  const { user } = useAuth();
+
+  const { instance } = useMsal()
+
+  const account = instance.getActiveAccount();
 
   function logout() {
-    localStorage.clear();
-    window.location.href = "/";
+    instance.logoutRedirect({
+      postLogoutRedirectUri: "/",
+  });
   }
 
   return (
@@ -24,7 +28,7 @@ export function Header() {
         <div className="w-[25%] flex flex-row items-center gap-6">
           <div className="w-[90%] text-end">
             <p className="font-medium text-boschGrayText text-[15px]">
-              {user?.name}
+              {account?.name}
             </p>
           </div>
 
