@@ -15,32 +15,32 @@ import { SingleForm } from "pages/SingleForm/SingleForm";
 
 export const route = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: (
-    <PublicRoute>
+
       <Login />
-    </PublicRoute>
+
     )
   },
   {
     path: "/register",
     element: (
-      <PublicRoute>
+   
         <Register />
-      </PublicRoute>
+ 
     )
   },
   {
 
     path: "/indication",
     element: (
-      <PrivateRoute>
+      // <PrivateRoute>
         <Indication />
-      </PrivateRoute>
+      // </PrivateRoute>
     ),
   },
   {
-    path: "/home",
+    path: "/",
     element: (
       <PrivateRoute>
         <Homepage />
