@@ -5,17 +5,20 @@ import { useForm } from 'react-hook-form'
 import { ToastContainer, Bounce, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
-import { UserService } from '../../services/UserService'
-import { UserLogin } from '../../interfaces/UserInterfaces/LoginUser'
-import { useAuth } from 'context/AuthProvider'
-import api from '../../api/Api';
-import { LoginResolver } from 'validations/LoginResolver';
+
+import { useMsal } from '@azure/msal-react';
+import { useEffect } from 'react';
 
 export const Login = () => {
-
-  const { setAccessToken, accessToken } = useAuth();
+  const { instance, accounts, inProgress } = useMsal();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(accounts[0] && inProgress == "none") {
+      navigate("/")
+    }
+  }, [accounts, inProgress])
 
   const showToastMessage = () => {
     toast.success('Login realizado com sucesso!', {
@@ -44,40 +47,6 @@ export const Login = () => {
     });
   }
 
-  const {
-    handleSubmit,
-    register,
-    formState: {  errors, isValid },
-    
-  } = useForm<UserLogin>({
-    defaultValues: { email: '', password: '' },
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    resolver: LoginResolver,
-  });
-
-
-  const handleLogin = async (values: UserLogin) => {
-    try {
-      const { status, data } = await UserService.handleLogin(values);
-
-      if (status === 200 && data['token']) {
-        setAccessToken(data['token']);
-        api.defaults.headers.Authorization = `Bearer ${data["token"]}`
-        showToastMessage()
-        setTimeout(() => {
-          console.log(accessToken)
-          navigate('/home')
-        }, 1500)
-      }
-    } catch (error) {
-
-      showToastMessageError()
-      
-      console.error(error);
-    }
-  };
-
 
 
   return (
@@ -91,7 +60,7 @@ export const Login = () => {
         <div className='w-[20rem]'>
           <h2 className='font-bold text-3xl'>Login</h2>
         </div>
-        <div className='w-[20rem] h-[50%] flex flex-col gap-6 justify-center'>
+        {/* <div className='w-[20rem] h-[50%] flex flex-col gap-6 justify-center'>
           <SparkTextfield
             {...register('email')}
             guid="1" type="text"
@@ -114,10 +83,10 @@ export const Login = () => {
           {errors.password && <span className="text-red-600 text-sm">A senha precisa ter no mínimo 8 caractéres</span>}
 
           <SparkLink type="primary" href='/register' target="" label="Não tem cadastro? Clique aqui" icon-position="" size="6xl" />
-        </div>
+        </div> */}
 
         <div className='flex w-full h-[25%] justify-center items-end'>
-          <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem" disabled={!isValid} onClick={handleSubmit(handleLogin)} />
+          <SparkButton type="submit" text="Login" pallete="primary" custom-width="20rem" onClick={() => instance.loginPopup()} />
         </div>
         <ToastContainer />
       </form>
