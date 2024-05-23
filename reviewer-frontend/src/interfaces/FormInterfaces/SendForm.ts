@@ -9,7 +9,7 @@ export interface QuestionAnswer{
 
 export interface Form{
     questionFormId: number,
-    userId: number,
+    userId: string,
     questionAnswer: QuestionAnswer[]
 }
 
