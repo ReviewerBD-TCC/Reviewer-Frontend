@@ -11,12 +11,16 @@ import { FormService } from "services/FormService";
 import { FormInterface, FormResponseInterface } from "interfaces/FormInterfaces/CreateForm";
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
 import { Form, QuestionAnswer } from "interfaces/FormInterfaces/SendForm";
+import { useMsal } from "@azure/msal-react";
 
 const FormComponent = () => {
-  const { accessToken, user, convertToDate } = useAuth();
+  const { convertToDate } = useAuth();
   const languageOptions = ["Português", "Inglês"];
   const [languageSelect, setLanguageSelect] = useState("Português");
   const [formData, setFormData] = useState<FormResponseInterface>();
+  const { instance } = useMsal()
+
+  const account = instance.getActiveAccount();
 
   const {
     handleSubmit,
@@ -34,7 +38,7 @@ const FormComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const forms = await FormService.getAllForms(accessToken);
+        const forms = await FormService.getAllForms();
         const currentYear = new Date().getFullYear();
         const currentFormFiltered = forms.find(
           (form: FormInterface) =>
@@ -48,7 +52,7 @@ const FormComponent = () => {
     };
 
     fetchData();
-  }, [accessToken]);
+  }, []);
 
   const form = formData;
   if (!form) {
@@ -96,13 +100,13 @@ const FormComponent = () => {
 
     const answerForm: Form = {
       questionFormId: formData.id,
-      userId: user.id,
+      userId: account?.homeAccountId,
       questionAnswer: questionAnswer,
     };
 
 
     try {
-      const response = await AnswerService.postFormAnswers(accessToken, answerForm);
+      const response = await AnswerService.postFormAnswers(answerForm);
 
       if(response?.status === 201){
         console.log(response?.data)
