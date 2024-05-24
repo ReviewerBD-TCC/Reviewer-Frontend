@@ -4,8 +4,6 @@ import {
   SparkActivityIndicator,
 } from "@bosch-web-dds/spark-ui-react";
 import { QuestionService } from "services/QuestionService";
-import { QuestionProps } from "interfaces/QuestionsInterface/Question";
-
 import error404 from "../../assets/images/404.png";
 import useModal from "../../hooks/useModal";
 import { useQuery } from "react-query";
