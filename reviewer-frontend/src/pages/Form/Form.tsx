@@ -12,7 +12,7 @@ import { FormInterface, FormResponseInterface } from "interfaces/FormInterfaces/
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
 import { Form, QuestionAnswer } from "interfaces/FormInterfaces/SendForm";
 import { useMsal } from "@azure/msal-react";
-import { ShowMessage } from "functions/ShowMessage";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 const FormComponent = () => {
   const { convertToDate } = useAuth();
