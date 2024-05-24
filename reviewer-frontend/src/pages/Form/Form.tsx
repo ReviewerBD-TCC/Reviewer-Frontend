@@ -4,7 +4,7 @@ import { SparkButton, SparkTextarea } from "@bosch-web-dds/spark-ui-react";
 import { AnswerService } from "services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
-import { toast, Zoom, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { FormService } from "services/FormService";
@@ -12,6 +12,7 @@ import { FormInterface, FormResponseInterface } from "interfaces/FormInterfaces/
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
 import { Form, QuestionAnswer } from "interfaces/FormInterfaces/SendForm";
 import { useMsal } from "@azure/msal-react";
+import { ShowMessage } from "functions/ShowMessage";
 
 const FormComponent = () => {
   const { convertToDate } = useAuth();
@@ -73,20 +74,6 @@ const FormComponent = () => {
     formattedYear = "Data não disponível";
   }
 
-  const showToastSuccessMessage = () => {
-    toast.success("Resposta enviadas com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
-  };
-
   const postAnswers = async () => {
 
     const answers = getValues()
@@ -110,7 +97,7 @@ const FormComponent = () => {
 
       if(response?.status === 201){
         console.log(response?.data)
-        showToastSuccessMessage();
+        ShowMessage.sucess("Respostas enviadas com sucesso!");
         setTimeout(() => {
           navigate("/confirmation");
         }, 1500);
@@ -118,7 +105,7 @@ const FormComponent = () => {
   
     } catch (error) {
       console.error("Erro ao enviar respostas:", error);
-      toast.error("Erro ao enviar respostas.");
+      ShowMessage.error("Erro ao enviar respostas.")
     }
   };
 
