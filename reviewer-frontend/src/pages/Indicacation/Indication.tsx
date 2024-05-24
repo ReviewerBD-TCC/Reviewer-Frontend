@@ -2,7 +2,6 @@ import { SparkButton } from "@bosch-web-dds/spark-ui-react";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { Header } from "../../components/index";
-import { useAuth } from "context/AuthProvider";
 import { IndicationService } from "services/IndicationService";
 import useModal from "../../hooks/useModal";
 import ModalIndication from "components/Modal/ModalIndication.tsx";
