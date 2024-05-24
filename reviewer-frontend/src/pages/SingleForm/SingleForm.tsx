@@ -5,7 +5,7 @@ import {
 import { Header, Selected } from "components";
 import { useAuth } from "context/AuthProvider";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
-import { ToastContainer, toast, Zoom } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
@@ -13,6 +13,7 @@ import { FormService } from "services/FormService";
 import { NewQuestions } from "interfaces/FormInterfaces/SendForm";
 import { useNavigate } from "react-router-dom";
 import { QuestionService } from "services/QuestionService";
+import { ShowMessage } from "functions/ShowMessage";
 
 export const SingleForm = () => {
   const { convertToDate } = useAuth();
@@ -44,20 +45,6 @@ export const SingleForm = () => {
     }
   }
 
-  const showToastMessage = (message: string) => {
-    toast.warning(message, {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
-  };
-
   const verification = (value: number) => {
     return questions.find((each) => each.id === value)
   }
@@ -70,7 +57,7 @@ export const SingleForm = () => {
       );
       setQuestions(updatedQuestions);
     } else {
-      showToastMessage("Essa pergunta já está no formulário");
+      ShowMessage.warning("Essa pergunta já está no formulário");
     }
   };
 
@@ -97,7 +84,7 @@ export const SingleForm = () => {
       console.log(editForm);
 
       if (status === 201) {
-        showToastMessage("Formulário editado com sucesso!");
+        ShowMessage.sucess("Formulário editado com sucesso!");
         setTimeout(() => {
           console.log(data);
           navigate("/home");
@@ -105,7 +92,7 @@ export const SingleForm = () => {
       }
     } catch (error) {
       console.error(error);
-      showToastMessage("Erro ao criar formulário");
+      ShowMessage.error("Erro ao criar formulário");
     }
   };
 
