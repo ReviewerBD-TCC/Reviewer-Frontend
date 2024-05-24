@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Header } from "../../components/index";
 import { UserService } from "services/UserService";
-import { ShowMessage } from "functions/ShowMessage";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 function Register() {
   const navigate = useNavigate();
