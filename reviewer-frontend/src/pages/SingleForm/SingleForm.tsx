@@ -13,7 +13,7 @@ import { FormService } from "services/FormService";
 import { NewQuestions } from "interfaces/FormInterfaces/SendForm";
 import { useNavigate } from "react-router-dom";
 import { QuestionService } from "services/QuestionService";
-import { ShowMessage } from "functions/ShowMessage";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 export const SingleForm = () => {
   const { convertToDate } = useAuth();
