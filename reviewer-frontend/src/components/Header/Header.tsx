@@ -21,7 +21,7 @@ export function Header() {
       <img src={Supergraphic} alt="Supergraphic" className="w-full" />
 
       <div className="w-[90%] flex flex-row justify-between items-center bg-boschWhite">
-        <Link className="w-[70%] pt-4 pb-4" to={"/home"}>
+        <Link className="w-[70%] pt-4 pb-4" to={"/"}>
           <img src={Logo} alt="CompanyLogo" className="w-40" />
         </Link>
 
