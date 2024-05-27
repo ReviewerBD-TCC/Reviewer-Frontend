@@ -10,7 +10,6 @@ import Form from "pages/Form/Form";
 import { PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { Confirmation } from "pages/Confirmation/Confirmation";
-import { PublicRoute } from "components/PublicRoute/PublicRoute";
 import { SingleForm } from "pages/SingleForm/SingleForm";
 
 export const route = createBrowserRouter([
@@ -22,14 +21,14 @@ export const route = createBrowserRouter([
 
     )
   },
-  {
-    path: "/register",
-    element: (
+  // {
+  //   path: "/register",
+  //   element: (
    
-        <Register />
+  //       <Register />
  
-    )
-  },
+  //   )
+  // },
   {
 
     path: "/indication",
