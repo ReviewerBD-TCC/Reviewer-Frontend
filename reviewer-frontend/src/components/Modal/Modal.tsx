@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
-import { QuestionService } from "services/QuestionService";
+import { QuestionService } from "services/questionService";
 import { CreateQuestionResolver } from "validations/CreateQuestionResolver";
 import { ShowMessage } from "../../functions/ShowMessage";
 
