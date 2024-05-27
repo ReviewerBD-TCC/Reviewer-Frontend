@@ -8,7 +8,7 @@ import { FormInterface } from "../../interfaces/FormInterfaces/CreateForm";
 import { FormService } from "../../services/FormService";
 import { useForm } from "react-hook-form";
 import { CreateFormResolver } from "../../validations/CreateFormResolver";
-import { QuestionService } from "../../services/questionService";
+import { QuestionService } from "../../services/QuestionService";
 import { useQuery } from "react-query";
 import { QuestionProps } from "../../interfaces/QuestionsInterface/Question";
 import { useNavigate } from "react-router-dom";
