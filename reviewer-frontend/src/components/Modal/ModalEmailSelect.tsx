@@ -5,24 +5,12 @@ import { TableUser } from "components/Table/Table";
 import { SparkNotification } from "@bosch-web-dds/spark-ui-react";
 import { mailSender } from "services/EmailServices";
 import { Email } from "interfaces/EmailInterfaces/Email";
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { EmailModal } from "interfaces/EmailInterfaces/EmailModal";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 const ModalEmailSelect: React.FC<EmailModal> = (props) => {
-  const showToastMessage = () => {
-    toast.success("Colaboradores indicados com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
-
+  
   const { selectedUsers } = useAuth();
 
   const sendEmailSelected = () => {
@@ -39,7 +27,7 @@ const ModalEmailSelect: React.FC<EmailModal> = (props) => {
     try {
       mailSender(data);
 
-      showToastMessage();
+      ShowMessage.sucess("Email enviado com sucesso")
       setTimeout(() => {
         window.location.reload();
       }, 1500);
