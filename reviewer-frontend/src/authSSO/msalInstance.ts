@@ -24,7 +24,4 @@ msalInstance.initialize().then(() => {
 			msalInstance.setActiveAccount(account);
 		}
 	});
-
-
-	  
 });
