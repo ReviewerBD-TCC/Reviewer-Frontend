@@ -92,7 +92,7 @@ export function CreateForms() {
           ShowMessage.sucess("Formulário criado com sucesso");
           setTimeout(() => {
             console.log(data);
-            navigate("/home");
+            navigate("/");
           }, 1500);
         } else {
           ShowMessage.error("Erro ao criar formulário");
