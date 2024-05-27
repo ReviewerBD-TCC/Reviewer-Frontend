@@ -87,7 +87,7 @@ export const SingleForm = () => {
         ShowMessage.sucess("Formulário editado com sucesso!");
         setTimeout(() => {
           console.log(data);
-          navigate("/home");
+          navigate("/");
         }, 1500);
       }
     } catch (error) {
