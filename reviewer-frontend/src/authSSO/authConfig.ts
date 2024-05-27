@@ -2,9 +2,9 @@ import { Configuration} from "@azure/msal-browser";
 
 export const msalConfig: Configuration = {
   auth: {
-      clientId: "b825ab28-a32b-409c-abf4-2e639af2d9c8",
-      authority: "https://login.microsoftonline.com/0ae51e19-07c8-4e4b-bb6d-648ee58410f4",
-      redirectUri: "http://localhost:5173/"
+      clientId: process.env.REACT_APP_CLIENT_ID || "",
+      authority: process.env.REACT_APP_AUTHORY,
+      redirectUri: process.env.REACT_APP_REDIRECT_URI
   },
   cache: {
       cacheLocation: "sessionStorage", // This configures where your cache will be stored
@@ -19,7 +19,7 @@ export const msalConfig: Configuration = {
 * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
 */
 export const loginRequest = {
-  scopes: ["User.Read"]
+  scopes: ["profile", "openid", "email", "offline_access"]
 };
 
 //"AppRoleAssignment.ReadWrite.All"
