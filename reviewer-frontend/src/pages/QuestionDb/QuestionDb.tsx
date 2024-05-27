@@ -3,7 +3,7 @@ import {
   SparkNotification,
   SparkActivityIndicator,
 } from "@bosch-web-dds/spark-ui-react";
-import { QuestionService } from "services/QuestionService";
+import { QuestionService } from "../../services/questionService";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 
 import error404 from "../../assets/images/404.png";
