@@ -2,6 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import { msalInstance } from "../authSSO/msalInstance";
 import { loginRequest } from "../authSSO/authConfig";
 import { AuthenticationResult } from "@azure/msal-common";
+import { string } from "prop-types";
 
 export const headers = {
   'Content-Type': 'application/json',
@@ -14,14 +15,13 @@ export const headers = {
 //URL em que fazemos as requisições da API
 export const API_URL = "http://10.234.81.220:8056/api/v1/"
  
- 
+
  
 //Definindo a instância da URL para as requisições utilizando AXIOS
 const instance = axios.create({
   baseURL: API_URL,
 });
- 
- 
+
 async function acquireToken(
   config: InternalAxiosRequestConfig
 ): Promise<InternalAxiosRequestConfig> {
@@ -29,7 +29,11 @@ async function acquireToken(
   try {
     const tokenResponse: AuthenticationResult = await msalInstance.acquireTokenSilent(loginRequest);
     const token = tokenResponse.idToken;
+
+    console.log(token);
+    
     config.headers.Authorization = `Bearer ${token}`
+   
     return config;
   } catch (error) {
     if (error) {
@@ -46,7 +50,6 @@ async function acquireToken(
     return config;
   }
 }
- 
  
 instance.interceptors.request.use(acquireToken);
  
