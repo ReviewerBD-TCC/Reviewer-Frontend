@@ -11,6 +11,7 @@ export async function callMsGraph() {
 		);
 	}
 
+
 	const response = await msalInstance.acquireTokenSilent({
 		...loginRequest,
 		account: account,
