@@ -8,7 +8,7 @@ import { ToastContainer, Bounce, toast } from "react-toastify";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
-import { QuestionService } from "services/QuestionService";
+import { QuestionService } from "services/questionService";
 import { CreateQuestionResolver } from "validations/CreateQuestionResolver";
 
 const Modal: React.FC<ModalProps> = (props: ModalProps) => {

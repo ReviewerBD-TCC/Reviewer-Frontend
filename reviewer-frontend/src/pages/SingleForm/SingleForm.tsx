@@ -3,15 +3,15 @@ import {
   SparkButton,
 } from "@bosch-web-dds/spark-ui-react";
 import { Header, Selected } from "components";
-import { useAuth } from "context/AuthProvider";
-import { QuestionProps } from "interfaces/QuestionsInterface/Question";
+import { useAuth } from "../../context/AuthProvider";
+import { QuestionProps } from "../../interfaces/QuestionsInterface/Question";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { FormService } from "services/FormService";
-import { QuestionService } from "services/QuestionService";
-import { NewQuestions, UpdateQuestion } from "interfaces/FormInterfaces/SendForm";
+import { FormService } from "../../services/FormService";
+import { QuestionService } from "../../services/questionService";
+import { NewQuestions, UpdateQuestion } from "../../interfaces/FormInterfaces/SendForm";
 import { useNavigate } from "react-router-dom";
 
 export const SingleForm = () => {

@@ -4,7 +4,7 @@ import useModal from "../../hooks/useModal";
 import { useAuth } from "context/AuthProvider";
 import { useState } from "react";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
-import { QuestionService } from "services/QuestionService";
+import { QuestionService } from "services/questionService";
 
 export const Question: React.FC<ModalProps> = (props: ModalProps) => {
   const { isOpen, toggle } = useModal();
