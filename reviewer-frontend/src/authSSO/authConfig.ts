@@ -1,14 +1,14 @@
-import { Configuration} from "@azure/msal-browser";
+import { Configuration } from "@azure/msal-browser";
 
 export const msalConfig: Configuration = {
   auth: {
-      clientId: process.env.REACT_APP_CLIENT_ID || "",
-      authority: process.env.REACT_APP_AUTHORY,
-      redirectUri: process.env.REACT_APP_REDIRECT_URI
+    clientId: process.env.REACT_APP_CLIENT_ID || "",
+    authority: process.env.REACT_APP_AUTHORITY || "",
+    redirectUri: process.env.REACT_APP_REDIRECT_URI || ""
   },
   cache: {
-      cacheLocation: "sessionStorage", // This configures where your cache will be stored
-      storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
+    cacheLocation: "sessionStorage", // This configures where your cache will be stored
+    storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
   },
 };
 
