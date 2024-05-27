@@ -51,7 +51,7 @@ function QuestionDb() {
                   active={question.active}
                   titleEn={question.questionEn}
                   id={question.id}
-                  className="mt-1 cursor-pointer"
+                  className="mt-1 cursor-pointer hover:bg-boschGray/25"
                 />
               ))}
               <div className="flex justify-center">
