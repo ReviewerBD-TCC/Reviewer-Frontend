@@ -52,7 +52,7 @@ const editFormQuestion = async (formId: number, data: UpdateQuestion) => {
 };
 
 
-const getFormIndicated = async (token: string | null, id:number) => {
+const getFormIndicated = async (id:string) => {
     try {
         const response = await api.get(`/indication_form/user/${id}`, {
             headers: {
