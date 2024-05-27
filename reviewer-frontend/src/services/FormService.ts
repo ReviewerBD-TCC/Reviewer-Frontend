@@ -78,6 +78,20 @@ const editFormQuestion = async (token: string | null, formId: number, data: Upda
 };
 
 
+const getFormIndicated = async (token: string | null, id:number) => {
+    try {
+        const response = await api.get(`/indication_form/user/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }
+        )
+        return response.data
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
 
 
@@ -86,5 +100,6 @@ export const FormService = {
     getFormQuestions,
     getAllForms,
     deleteForm,
-    editFormQuestion
+    editFormQuestion,
+    getFormIndicated
 }
