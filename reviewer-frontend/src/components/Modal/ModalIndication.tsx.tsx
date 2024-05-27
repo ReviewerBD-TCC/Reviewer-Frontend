@@ -6,26 +6,14 @@ import { SparkNotification } from "@bosch-web-dds/spark-ui-react";
 import { IndicationService } from "services/IndicationService";
 import { CreateIndication } from "interfaces/UserInterfaces/CreateIndication";
 import { UserIndicatedInterface } from "interfaces/UserInterfaces/CreateIndication";
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { EmailModal } from "interfaces/EmailInterfaces/EmailModal";
 import { useMsal } from "@azure/msal-react";
 import { User } from "interfaces/UserInterfaces/CreateUser";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 const ModalIndication: React.FC<EmailModal> = (props) => {
-  const showToastMessage = () => {
-    toast.success("Colaboradores indicados com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
 
   const { selectedUsers } = useAuth();
   const { instance } = useMsal()
@@ -51,9 +39,9 @@ const ModalIndication: React.FC<EmailModal> = (props) => {
       const { status } = await IndicationService.createIndication(requestData);
 
       if (status === 201) {
-        showToastMessage();
+        ShowMessage.sucess("Funcionários indicados com sucesso")
         setTimeout(() => {
-          navigate("/home");
+          navigate("/");
         }, 1500);
       }
     } catch (error) {
