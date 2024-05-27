@@ -25,12 +25,10 @@ const instance = axios.create({
 async function acquireToken(
   config: InternalAxiosRequestConfig
 ): Promise<InternalAxiosRequestConfig> {
-  console.log("hii")
+  
   try {
     const tokenResponse: AuthenticationResult = await msalInstance.acquireTokenSilent(loginRequest);
     const token = tokenResponse.idToken;
-
-    console.log(token);
     
     config.headers.Authorization = `Bearer ${token}`
    

@@ -41,10 +41,7 @@ const FormComponent = () => {
     const fetchData = async () => {
       try {
 
-        const forms = await FormService.getFormIndicated(user.id);
-        console.log(user.id)
-        const forms = await 
-       
+        const forms = await FormService.getFormIndicated(account?.homeAccountId);
         const currentYear = new Date().getFullYear();
         const currentFormFiltered = forms.find(
           (form: FormInterface) =>
