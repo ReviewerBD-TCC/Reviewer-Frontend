@@ -4,45 +4,16 @@ import {
   SparkToggle,
 } from "@bosch-web-dds/spark-ui-react";
 import React, { useState } from "react";
-import { ToastContainer, Bounce, toast } from "react-toastify";
-import { useAuth } from "context/AuthProvider";
+import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
 import { QuestionService } from "services/questionService";
 import { CreateQuestionResolver } from "validations/CreateQuestionResolver";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 const Modal: React.FC<ModalProps> = (props: ModalProps) => {
   const id = props.id;
-  const { accessToken } = useAuth();
   const [active, setActive] = useState<boolean>(true);
-
-  const showToastMessage = () => {
-    toast.success("Pergunta foi editada com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
-
-  const showToastMessageError400 = () => {
-    toast.warning("Por favor preencha os campos corretamente!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
 
   const { handleSubmit, register } = useForm<ModalProps>({
     defaultValues: {
@@ -65,25 +36,23 @@ const Modal: React.FC<ModalProps> = (props: ModalProps) => {
 
       if (id) {
         const { status } = await QuestionService.updateQuestion(
-          accessToken,
           question,
           id
         );
 
         if (status === 202) {
-          showToastMessage();
+          ShowMessage.sucess("Questão editada com sucesso")
           setTimeout(() => {
             window.location.reload();
           }, 1000);
         }
       } else {
         const { status } = await QuestionService.postQuestion(
-          accessToken,
           question
         );
 
         if (status === 201) {
-          showToastMessage();
+          ShowMessage.sucess("Questão criada com sucesso")
           setTimeout(() => {
             window.location.reload();
           }, 1000);

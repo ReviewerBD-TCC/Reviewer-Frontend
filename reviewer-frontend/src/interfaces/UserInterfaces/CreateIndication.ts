@@ -1,8 +1,8 @@
 export interface UserIndicatedInterface{
-    userIndicated: number,
+    userIndicated: string,
 }
 
 export interface CreateIndication{
-    userIndication?: number;
+    userIndication?: string;
     indicateds: UserIndicatedInterface[];
 }

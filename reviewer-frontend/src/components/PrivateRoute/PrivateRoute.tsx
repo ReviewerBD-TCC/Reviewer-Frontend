@@ -1,19 +1,17 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "context/AuthProvider";
-import React from "react";
+import { ReactNode } from "react";
+import { useMsal } from "@azure/msal-react";
 
 interface PrivateRouteProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export const PrivateRoute = ({
-  children,
-}: PrivateRouteProps): React.ReactElement => {
-  const { accessToken } = useAuth();
+export const PrivateRoute = ({children}: PrivateRouteProps) => {
+  const { accounts } = useMsal()
 
-  if (!accessToken) {
-    return <Navigate to="/" />;
+  if (!accounts[0]) {
+    return <Navigate to="/login" />;
   }
 
-  return <>{children}</>;
+  return children;
 };

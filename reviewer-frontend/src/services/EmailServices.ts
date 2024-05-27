@@ -1,9 +1,9 @@
 import api from '../api/Api'
 import { Email } from "interfaces/EmailInterfaces/Email";
 
-export const mailSender = (data: Email, token:string) =>  {
+export const mailSender = (data: Email) =>  {
     console.log(data.body)
-    api.defaults.headers.authorization = `Bearer ${token}`
+
     api.post("email", {
         bcc: data.bcc,
         to: "Feedback.BDXD-BR@br.bosch.com",

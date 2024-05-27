@@ -1,7 +1,7 @@
 import { SparkButton, SparkNotification, SparkTextfield, SparkIcon } from "@bosch-web-dds/spark-ui-react";
 import { Header } from "../../components/Header/Header";
 import { Selected } from "../../components/Select/Selected";
-import { ToastContainer, toast, Zoom } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
 import { FormInterface } from "../../interfaces/FormInterfaces/CreateForm";
@@ -12,12 +12,13 @@ import { QuestionService } from "../../services/questionService";
 import { useQuery } from "react-query";
 import { QuestionProps } from "../../interfaces/QuestionsInterface/Question";
 import { useNavigate } from "react-router-dom";
-import { format } from "date-fns";
-import { QuestionList } from "../../interfaces/QuestionsInterface/QuestionList";
-import BackButton from "../../components/BackButton/BackButton";
+import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
+import BackButton from "components/BackButton/BackButton";
+import { ShowMessage } from "../../functions/ShowMessage";
+import { generateDateWithYear } from "../../functions/GenerateDate";
 
 export function CreateForms() {
-  const { accessToken, convertToDate } = useAuth();
+  const { convertToDate } = useAuth();
   const yearOptions: number[] = [];
   const [title, setTitle] = useState<string>("");
   const [year, setYear] = useState<number>();
@@ -30,7 +31,7 @@ export function CreateForms() {
   const navigate = useNavigate();
 
   const { data: initialResponseList = [] } = useQuery("question", () => {
-    return QuestionService.getQuestions(accessToken);
+    return QuestionService.getQuestions();
   });
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export function CreateForms() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const forms = await FormService.getAllForms(accessToken);
+        const forms = await FormService.getAllForms();
 
         setFormList(forms);
       } catch (error) {
@@ -49,10 +50,9 @@ export function CreateForms() {
     };
 
     fetchData();
-  }, [accessToken]);
+  }, []);
 
   const addNewQuestion = () => {
-    console.log("adicionei");
     setQuestionListRender([
       ...questionListRender,
       questionListRender[questionListRender.length] + 1,
@@ -65,15 +65,6 @@ export function CreateForms() {
   const { register } = useForm<FormInterface>({
     resolver: CreateFormResolver,
   });
-
-  const generateDateWithYear = (year: number): string => {
-    const currentMonth = new Date().getMonth() + 1;
-    const currentDay = new Date().getDate();
-
-    const fullDate = new Date(year, currentMonth - 1, currentDay);
-
-    return format(fullDate, "yyyy-MM-dd");
-  };
 
   for (let i = 0; i < 5; i++) {
     const year = new Date().getFullYear() + i;
@@ -95,26 +86,23 @@ export function CreateForms() {
           questions,
         };
 
-        const { data, status } = await FormService.createForm(
-          requestData,
-          accessToken
-        );
+        const { data, status } = await FormService.createForm(requestData);
 
         if (status === 201) {
-          showToastSuccessMessage();
+          ShowMessage.sucess("Formulário criado com sucesso");
           setTimeout(() => {
             console.log(data);
-            navigate("/home");
+            navigate("/");
           }, 1500);
         } else {
-          showToastMessageError("Erro ao criar formulário");
+          ShowMessage.error("Erro ao criar formulário");
         }
       } else {
-        showToastMessageError("Erro ao criar formulário");
+        ShowMessage.error("Erro ao criar formulário");
       }
     } catch (error) {
       console.error(error);
-      showToastMessageError("Erro ao criar formulário");
+      ShowMessage.error("Erro ao criar formulário")
     }
   };
 
@@ -133,36 +121,8 @@ export function CreateForms() {
         setSelectedValues([...selectedValues, newValue]);
       }
     } else {
-      showToastMessageError("Essa pergunta já foi adicionada!");
+      ShowMessage.warning("Essa pergunta já foi adicionada!")
     }
-  };
-
-  const showToastMessageError = (message: string) => {
-    toast.warning(message, {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
-  };
-
-  const showToastSuccessMessage = () => {
-    toast.success("Formulário criado com sucesso!", {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
   };
 
   const handleYearChange = (value: number) => {
@@ -171,9 +131,7 @@ export function CreateForms() {
     );
 
     if (currentFormFiltered) {
-      showToastMessageError(
-        "Um formulário com esse ano já existe, verifique no banco de formulários"
-      );
+      ShowMessage.warning("Um formulário com esse ano já existe, verifique no banco de formulários")
     } else {
       setYear(value);
     }
@@ -193,8 +151,6 @@ export function CreateForms() {
       const updatedResponseList = [...responseList, questionToRemove];
       setResponseList(updatedResponseList);
     }
-
-    console.log("Questão removida", questionToRemove);
   };
 
   return (

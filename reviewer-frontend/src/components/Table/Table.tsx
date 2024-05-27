@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { UserService } from "services/UserService";
-import { useAuth } from "context/AuthProvider";
 import { SparkSearchBar } from "@bosch-web-dds/spark-ui-react";
 import { User } from "interfaces/UserInterfaces/CreateUser";
+import { useAuth } from "context/AuthProvider";
+import { useMsal } from "@azure/msal-react";
 
 export const TableUser: React.FC = () => {
-  const { accessToken } = useAuth();
+
   const [users, setUsers] = useState<User[]>([]);
-  const { selectedUsers, selectUser, user } = useAuth();
+  const { selectedUsers, selectUser } = useAuth();
   const [search, setSearch] = useState("");
 
-  const dataUser = UserService.getUsers(accessToken);
+  const { instance } = useMsal()
+
+  const account = instance.getActiveAccount();
+
+  const dataUser = UserService.getUsers();
 
   useEffect(() => {
     dataUser.then(function (response) {
@@ -45,7 +50,7 @@ export const TableUser: React.FC = () => {
   );
 
   users.findIndex((each: User, index: number) => {
-    if (each.name == user.name) {
+    if (each.name == account?.name) {
       users.splice(index, 1);
     }
   });

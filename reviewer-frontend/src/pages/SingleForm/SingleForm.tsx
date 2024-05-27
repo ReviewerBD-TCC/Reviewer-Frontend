@@ -3,26 +3,29 @@ import {
   SparkButton,
 } from "@bosch-web-dds/spark-ui-react";
 import { Header, Selected } from "components";
-import { useAuth } from "../../context/AuthProvider";
-import { QuestionProps } from "../../interfaces/QuestionsInterface/Question";
-import { ToastContainer, toast, Zoom } from "react-toastify";
+
+import { useAuth } from "context/AuthProvider";
+import { QuestionProps } from "interfaces/QuestionsInterface/Question";
+import { ToastContainer} from "react-toastify";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { FormService } from "../../services/FormService";
-import { QuestionService } from "../../services/questionService";
-import { NewQuestions, UpdateQuestion } from "../../interfaces/FormInterfaces/SendForm";
+import { FormService } from "services/FormService";
+import { NewQuestions } from "interfaces/FormInterfaces/SendForm";
+
 import { useNavigate } from "react-router-dom";
+import { QuestionService } from "services/QuestionService";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 export const SingleForm = () => {
-  const { accessToken, convertToDate } = useAuth();
+  const { convertToDate } = useAuth();
   const { id } = useParams();
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
   const { data: responseFormList = [], isLoading } = useQuery("form", () => {
-    return FormService.getFormQuestions(accessToken, id);
+    return FormService.getFormQuestions(id);
   });
   const { data: allQuestions = [] } = useQuery("questions", () => {
-    return QuestionService.getQuestions(accessToken);
+    return QuestionService.getQuestions();
   });
   const [newQuestions, setNewQuestions] = useState<NewQuestions[]>([]);
 
@@ -44,20 +47,6 @@ export const SingleForm = () => {
     }
   }
 
-  const showToastMessage = (message: string) => {
-    toast.warning(message, {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
-  };
-
   const verification = (value: number) => {
     return questions.find((each) => each.id === value)
   }
@@ -70,7 +59,7 @@ export const SingleForm = () => {
       );
       setQuestions(updatedQuestions);
     } else {
-      showToastMessage("Essa pergunta já está no formulário");
+      ShowMessage.warning("Essa pergunta já está no formulário");
     }
   };
 
@@ -90,7 +79,6 @@ export const SingleForm = () => {
       };
 
       const {data, status} = await FormService.editFormQuestion(
-        accessToken,
         form.id,
         editForm
       );
@@ -98,15 +86,15 @@ export const SingleForm = () => {
       console.log(editForm);
 
       if (status === 201) {
-        showToastMessage("Formulário editado com sucesso!");
+        ShowMessage.sucess("Formulário editado com sucesso!");
         setTimeout(() => {
           console.log(data);
-          navigate("/home");
+          navigate("/");
         }, 1500);
       }
     } catch (error) {
       console.error(error);
-      showToastMessage("Erro ao criar formulário");
+      ShowMessage.error("Erro ao criar formulário");
     }
   };
 

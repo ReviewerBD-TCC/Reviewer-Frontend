@@ -1,32 +1,17 @@
 import { SparkButton } from "@bosch-web-dds/spark-ui-react";
 import React from "react";
 import { FormService } from "services/FormService";
-import { ToastContainer, Bounce, toast } from "react-toastify";
-import { useAuth } from "context/AuthProvider";
+import { ToastContainer } from "react-toastify";
 import { ModalConfirmationProps } from "interfaces/ModalInterfaces/ModalConfirmation";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 const ModalConfirmation: React.FC<ModalConfirmationProps> = (props) => {
-  const { accessToken } = useAuth();
-
-  const showToastMessage = () => {
-    toast.success("Formulário deletado com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
 
   const deleteForm = async (formId: number) => {
     try {
-      const { status } = await FormService.deleteForm(accessToken, formId);
+      const { status } = await FormService.deleteForm(formId);
       if (status === 204) {
-        showToastMessage();
+        ShowMessage.sucess("Formulário deletado com sucesso")
         setTimeout(() => {
           window.location.reload();
         }, 1500);

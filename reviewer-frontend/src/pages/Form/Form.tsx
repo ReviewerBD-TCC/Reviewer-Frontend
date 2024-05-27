@@ -4,20 +4,25 @@ import { SparkButton, SparkTextarea } from "@bosch-web-dds/spark-ui-react";
 import { AnswerService } from "../../services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
-import { toast, Zoom, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { FormService } from "../../services/FormService";
 import { FormInterface, FormResponseInterface } from "interfaces/FormInterfaces/CreateForm";
 import { AnswerFormResolver } from "validations/AnswerFormValidationSchema";
 import { Form, QuestionAnswer } from "interfaces/FormInterfaces/SendForm";
+import { useMsal } from "@azure/msal-react";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 
 const FormComponent = () => {
-  const { accessToken, user, convertToDate } = useAuth();
+  const { convertToDate } = useAuth();
   const languageOptions = ["Português", "Inglês"];
   const [languageSelect, setLanguageSelect] = useState("Português");
   const [formData, setFormData] = useState<FormResponseInterface>();
+  const { instance } = useMsal()
+
+  const account = instance.getActiveAccount();
 
   const {
     handleSubmit,
@@ -35,8 +40,10 @@ const FormComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+
+        const forms = await FormService.getFormIndicated(user.id);
         console.log(user.id)
-        const forms = await FormService.getFormIndicated(accessToken, user.id);
+        const forms = await 
        
         const currentYear = new Date().getFullYear();
         const currentFormFiltered = forms.find(
@@ -50,7 +57,7 @@ const FormComponent = () => {
     };
 
     fetchData();
-  }, [accessToken]);
+  }, []);
 
   const form = formData;
   if (!form) {
@@ -71,20 +78,6 @@ const FormComponent = () => {
     formattedYear = "Data não disponível";
   }
 
-  const showToastSuccessMessage = () => {
-    toast.success("Resposta enviadas com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
-  };
-
   const postAnswers = async () => {
 
     const answers = getValues()
@@ -98,17 +91,17 @@ const FormComponent = () => {
 
     const answerForm: Form = {
       questionFormId: formData.id,
-      userId: user.id,
+      userId: account?.homeAccountId,
       questionAnswer: questionAnswer,
     };
 
 
     try {
-      const response = await AnswerService.postFormAnswers(accessToken, answerForm);
+      const response = await AnswerService.postFormAnswers(answerForm);
 
       if(response?.status === 201){
         console.log(response?.data)
-        showToastSuccessMessage();
+        ShowMessage.sucess("Respostas enviadas com sucesso!");
         setTimeout(() => {
           navigate("/confirmation");
         }, 1500);
@@ -116,7 +109,7 @@ const FormComponent = () => {
   
     } catch (error) {
       console.error("Erro ao enviar respostas:", error);
-      toast.error("Erro ao enviar respostas.");
+      ShowMessage.error("Erro ao enviar respostas.")
     }
   };
 

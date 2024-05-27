@@ -6,13 +6,9 @@ const handleLogin = (data: UserLogin) => api.post('/auth/login', data);
 
 const createClient = (data: UserData) => api.post('auth/register', data);
 
-const getUsers = async (token: string | null) => {
+const getUsers = async () => {
   try {
-    const response = await api.get('/users', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await api.get('/users')
     return response.data
   } catch (err) {
     console.error(err)
@@ -20,14 +16,9 @@ const getUsers = async (token: string | null) => {
 }
 
 
-const userDetails = async (token: string | null) => {
+const userDetails = async () => {
   try {
-    const response = await api.get('/users/me', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-      ,
-    });
+    const response = await api.get('/users/me');
 
     return response;
   } catch (error) {

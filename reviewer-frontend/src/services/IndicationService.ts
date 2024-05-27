@@ -1,13 +1,9 @@
 import api from "../api/Api";
 import { CreateIndication } from "../interfaces/UserInterfaces/CreateIndication";
 
-const createIndication = async (token: string | null, data: CreateIndication) => {
+const createIndication = async (data: CreateIndication) => {
     try{
-        const response = await api.post("/indication_form", data, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
+        const response = await api.post("/indication_form", data);
 
         return response;
     } catch(error){
@@ -15,13 +11,9 @@ const createIndication = async (token: string | null, data: CreateIndication) =>
     }
 }
 
-const getUsers = async (token: string | null) => {
+const getUsers = async () => {
     try {
-        const response = await api.get(`users`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        const response = await api.get(`users`);
 
         return response;
     } catch(error){

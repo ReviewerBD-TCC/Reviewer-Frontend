@@ -10,37 +10,36 @@ import Form from "pages/Form/Form";
 import { PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { Confirmation } from "pages/Confirmation/Confirmation";
-import { PublicRoute } from "components/PublicRoute/PublicRoute";
 import { SingleForm } from "pages/SingleForm/SingleForm";
 
 export const route = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: (
-    <PublicRoute>
+
       <Login />
-    </PublicRoute>
+
     )
   },
-  {
-    path: "/register",
-    element: (
-      <PublicRoute>
-        <Register />
-      </PublicRoute>
-    )
-  },
+  // {
+  //   path: "/register",
+  //   element: (
+   
+  //       <Register />
+ 
+  //   )
+  // },
   {
 
     path: "/indication",
     element: (
-      <PrivateRoute>
+      // <PrivateRoute>
         <Indication />
-      </PrivateRoute>
+      // </PrivateRoute>
     ),
   },
   {
-    path: "/home",
+    path: "/",
     element: (
       <PrivateRoute>
         <Homepage />

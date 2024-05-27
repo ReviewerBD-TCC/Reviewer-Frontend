@@ -1,6 +1,5 @@
 import { Header } from "components"
 import { SparkActivityIndicator, SparkNotification } from "@bosch-web-dds/spark-ui-react"
-import { useAuth } from "context/AuthProvider";
 import { useQuery } from "react-query";
 import CardForm from "components/CardForm/CardForm";
 import { FormService } from "services/FormService";
@@ -9,24 +8,21 @@ import { useEffect } from "react";
 import BackButton from "components/BackButton/BackButton";
 
 export const AllForms = () => {
-  const { accessToken } = useAuth();
 
   const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
-    return FormService.getAllForms(accessToken);
+    return FormService.getAllForms();
   });
 
   useEffect(() => {
     console.log(responseFormList)
   }, [responseFormList])
 
-
-
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
       <Header/>
       <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center pl-5 pt-7">
           <div className=" w-[90%] h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7 pr-1 pl-1">
-              <div className="w-full justify-start items-start w-auto">
+              <div className="w-full justify-start items-start">
                 <BackButton navigateTo="/"/>
               </div>
               <div className="w-full h-12 flex items-center">
