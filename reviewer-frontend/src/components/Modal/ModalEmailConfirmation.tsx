@@ -1,5 +1,5 @@
 import { SparkButton } from "@bosch-web-dds/spark-ui-react";
-import { ToastContainer, Bounce, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { SubmitHandler } from "react-hook-form";
 import { mailSender } from "services/EmailServices";
 import ModalEmailSelect from "./ModalEmailSelect";
@@ -7,30 +7,17 @@ import useModal from "../../hooks/useModal";
 import { Email } from "interfaces/EmailInterfaces/Email";
 import React from "react";
 import { EmailModal } from "interfaces/EmailInterfaces/EmailModal";
+import { ShowMessage } from "../../functions/ShowMessage";
 
 const ModalEmailConfirmation: React.FC<EmailModal> = (props) => {
   const { isOpen, toggle } = useModal();
 
   const sendEmail: SubmitHandler<Email> = async (values) => {
     mailSender(values);
-    showToastMessage();
+    ShowMessage.sucess("Email enviado com sucesso!")
     setTimeout(() => {
       window.location.reload();
     }, 1500);
-  };
-
-  const showToastMessage = () => {
-    toast.success("Colaboradores indicados com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
   };
 
   return (
