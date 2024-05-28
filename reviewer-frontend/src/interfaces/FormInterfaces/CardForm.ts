@@ -4,4 +4,5 @@ export interface cardFormProps {
     titleForm: AllFormsInterface["title"];
     id: number;
     className: string,
+    onClick?: () => void;
 }
