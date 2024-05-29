@@ -14,7 +14,7 @@ export const Homepage = () => {
     >
       <Header />
       <div className="bg-boschWhite h-screen w-full flex items-center justify-center flex-col">
-          {account?.idTokenClaims?.roles?.includes("admi")
+          {account?.idTokenClaims?.roles?.includes("admin")
             ? adminHomepage()
             : userBdHomepage()}
       </div>
