@@ -1,4 +1,4 @@
-import api from "../api/Api";
+import api, { api_temp } from "../api/Api";
 import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
 import { UpdateQuestion } from "interfaces/FormInterfaces/SendForm";
 
@@ -15,7 +15,11 @@ const createForm = async (data: FormInterface) => {
 
 const getFormQuestions = async (formId: number | null) => {
     try {
-        const response = await api.get(`/form/${formId}`);
+        const response = await api_temp.get(`/form/${formId}`, {
+            headers: {
+                Authorization: `Bearer `
+            }
+        });
         return response.data;
     } catch (error) {
         console.error(error);
