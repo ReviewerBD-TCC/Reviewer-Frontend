@@ -9,7 +9,8 @@ export interface QuestionAnswer{
 
 export interface Form{
     questionFormId: number,
-    userId: string,
+    whoAnsweredId: string,
+    forWhichUser: string,
     questionAnswer: QuestionAnswer[]
 }
 
