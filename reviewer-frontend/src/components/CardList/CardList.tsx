@@ -64,19 +64,6 @@ export const getCardList = () => {
         "Aqui você visualiza os formulários feitos e pode remove-los ou edita-los",
       className: "",
     },
-    {
-      key: 6,
-      title: (
-        <h2 className="text-white font-bold xl:text-xl lg:text-lg">
-          Realizar Indicação
-        </h2>
-      ),
-      backgroundColor: "bg-boschYellow",
-      nav: "/indication",
-      description:
-        "Aqui você pode indicar colaboradores para responder um feedback sobre você",
-      className: "",
-    },
   ]);
 
   return cardList;
