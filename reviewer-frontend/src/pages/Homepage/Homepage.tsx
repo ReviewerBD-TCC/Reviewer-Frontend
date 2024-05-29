@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, Header } from "../../components/index";
 import { useMsal } from "@azure/msal-react";
 import { getCardList } from "components/CardList/CardList";
@@ -35,7 +34,7 @@ export const Homepage = () => {
 
   const userBdHomepage = () => {
 
-    const filteredCards = cardList.filter((card: any)=> card.key == 5);
+    const filteredCards = cardList.filter((card: any)=> card.key == 6);
 
     return (
       <>
