@@ -10,6 +10,17 @@ const postFormAnswers = async (data: Form) => {
   }
 }
 
+const getAnswerByUserId = async (userId: string) => {
+  try {
+    const response = await api.get(`/answer_form/user/${userId}`,)
+    return response.data
+}
+catch(error){
+    console.error(error)
+}
+}
+
 export const AnswerService = {
-  postFormAnswers
+  postFormAnswers,
+  getAnswerByUserId
 };
