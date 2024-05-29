@@ -1,3 +1,7 @@
+import { QuestionProps } from "./Question";
+
 export interface QuestionList{
-    question: number,
+    questions: QuestionProps[];
+    id: number;
+    questionPt: string
 }
