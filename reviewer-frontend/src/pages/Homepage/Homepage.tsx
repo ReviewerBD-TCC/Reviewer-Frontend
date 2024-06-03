@@ -1,7 +1,18 @@
 import { useState } from 'react'
 import { Card, Header } from '../../components/index'
+import { AnswerPerQuestionService } from 'services/AnswerPerQuestionService';
+import { useQuery } from 'react-query';
+import { useAuth } from 'context/AuthProvider';
 
 export const Homepage = () => {
+
+    const { data: responseAnswerList = [] } = useQuery("answer", () => {
+        return AnswerPerQuestionService.getAnswerPerForm(1);
+      });
+
+      const { setDashboard } = useAuth();
+
+      setDashboard(responseAnswerList); 
 
     const [cardList]: any = useState([
         {
