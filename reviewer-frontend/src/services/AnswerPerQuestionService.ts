@@ -1,25 +1,18 @@
-import { api_temp } from "../api/Api";
+import api from "../api/Api";
 
 const getAnswerPerQuestion = async (userId: number, formId: number, questionId: number) => {
     try{
-        const response = await api_temp.get(`/answer_form?userId=${userId}&formId=${formId}&questionId=${questionId}`,{
-            headers: {
-                Authorization: `Bearer `
-            }
-        })
+        const response = await api.get(`/answer_form?userId=${userId}&formId=${formId}&questionId=${questionId}`)
         return response.data
-    }catch(error){
+    }
+    catch(error){
         console.error(error)
     }
 }
 
-const getAnswerPerForm = async (formId: number) => {
+const getAnswerPerForm = async (formId: number, user: string) => {
     try{
-        const response = await api_temp.get(`/answer_form/${formId}`, {
-            headers: {
-                Authorization: `Bearer `
-            }
-        })
+        const response = await api.get(`/answer_form/user/${user}/?formId=${formId}`)
         return response.data;
     }catch(error){
         console.error(error)
