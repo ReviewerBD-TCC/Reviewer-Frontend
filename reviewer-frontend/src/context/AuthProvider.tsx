@@ -7,6 +7,7 @@ import {
 } from "react";
 import { UserService } from "../services/UserService";
 import { User, UserData } from "../interfaces/UserInterfaces/CreateUser";
+import { DashboardInterface } from "interfaces/DashboardInterface/Dashboard";
 
 interface AuthContextType {
 
@@ -15,6 +16,9 @@ interface AuthContextType {
 
   selectedUsers: User[];
   selectUser: (selectedUsers: User) => void;
+
+  dashboard: DashboardInterface[];
+  setDashboard: (dashboard: DashboardInterface) => void;
 
   convertToDate: (input: Date) => Date | undefined;
 }
@@ -32,6 +36,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserData | null>();
   const selectedUsers: User[] = [];
   const [active, setActive] = useState<boolean>();
+  const dashboard: DashboardInterface[] = [];
 
   useEffect(() => {
     localStorage.setItem("accessToken", accessToken || "");
@@ -57,6 +62,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     }
   };
+
+  function setDashboard(values: any) {
+   
+    if (values.length > 0 && dashboard.findIndex((item: any) => item === values) === -1) {
+      console.log(values);
+      dashboard.push(values);
+    }
+  }
+  
 
   function setDetailsUser(values: UserData) {
     setUser(values);
@@ -85,6 +99,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
         selectedUsers,
         selectUser,
+        dashboard,
+        setDashboard,
         convertToDate
       }}
     >
