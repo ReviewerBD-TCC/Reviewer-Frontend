@@ -1,71 +1,56 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import { ChartInterface } from 'interfaces/DashboardInterface/Chart';
 
-interface ChartData {
-  label: string;
-  data: number[];
-}
-
-interface Props {
-  data: ChartData[];
-}
-
-const Graphic: React.FC<Props> = ({ data }) => {
-  const chartRef = useRef<Chart>();
-
-  const labels = ['Enviados', 'Respondidos'];
-  const datat = {
-    labels: labels,
-    datasets: [{
-      label: 'Taxa de adesão',
-      data: data,
-      backgroundColor: [
-        '#18837E',
-        '#9E2896',
-        ],
-      
-      },
-    ],
-  };
+const Graphic: React.FC<ChartInterface> = ({ data }) => {
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstance = useRef<Chart>();
 
   useEffect(() => {
     if (chartRef.current) {
-      chartRef.current.destroy();
-    }
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
 
-    const ctx = document.getElementById('myChart') as HTMLCanvasElement;
-    chartRef.current = new Chart(ctx, {
-      type: 'doughnut',
-      data: datat,
-      options: {
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                let label = context.label || '';
-
-                if (label) {
-                  label += ': ';
+      const ctx = chartRef.current.getContext('2d');
+      if (ctx) {
+        chartInstance.current = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Enviados', 'Respondidos'],
+            datasets: [{
+              label: 'Taxa de adesão',
+              data: data,
+              backgroundColor: [
+                '#18837E',
+                '#9E2896',
+              ],
+            }]
+          },
+          options: {
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    let label = context.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (context.parsed) {
+                      label += context.parsed.toFixed(0) + '%';
+                    }
+                    return label;
+                  }
                 }
-                if (context.parsed) {
-                  label += context.parsed.toFixed(0) + '%';
-                }
-                return label;
               }
             }
           }
-        }
+        });
       }
-    });
-
-    return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
-    };
+    }
   }, [data]);
 
-  return <canvas id="myChart" />;
+  return <canvas ref={chartRef} />;
 };
 
 export default Graphic;
