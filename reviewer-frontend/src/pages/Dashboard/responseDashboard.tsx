@@ -5,16 +5,19 @@ import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
 import BackButton from "components/BackButton/BackButton";
 import { FormService } from "services/FormService";
 import { useAuth } from "context/AuthProvider";
-import { useEffect, useState } from "react";
 import Graphic from "components/Chart/Chart";
+import { useMsal } from "@azure/msal-react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Header } from "components";
 
 function ResponseDashboard() {
   // const { accessToken } = useAuth();
-  const [questions, setQuestions] = useState<number>(1);
   const { dashboard } = useAuth();
-
+  const { instance } = useMsal();
+  const account = instance.getActiveAccount();
+  const [questions, setQuestions] = useState<number>(1);
+  
   const { data: responseFormQuestionList = [], isLoading } = useQuery(
     "form",
     () => {
@@ -23,7 +26,7 @@ function ResponseDashboard() {
   );
 
   const { data: responseAnswerList = [] } = useQuery("answer", () => {
-    return AnswerPerQuestionService.getAnswerPerForm(1);
+    return AnswerPerQuestionService.getAnswerPerForm(1, id);
   });
 
   const chartData: any[] = [];
@@ -67,6 +70,7 @@ function ResponseDashboard() {
 
   useEffect(() => {
     graphResponse(1);
+    console.log('estou ',responseAnswerList)
     console.log("useEffect ", dashboard);
   }, [questions, chartData]);
 
@@ -86,7 +90,7 @@ function ResponseDashboard() {
             <p>
               Estes são feedbacks referentes a:
               <span className="font-extrabold text-boschBlue pl-1">
-                Vitor Alves Santos
+                {responseAnswerList[0].whichUserName}
               </span>
               .
             </p>
@@ -95,7 +99,7 @@ function ResponseDashboard() {
           <div className="w-auto h-auto max-h-44 self-start flex flex-col items-center justify-center gap-1 p-1">
             <p className="font-bold text-lg">Taxa de adesão</p>
             {chartData ? (
-              <Graphic data={chartData} />
+              <Graphic data={chartData}/>
             ) : (
               <p>Gráfico indisponível</p>
             )}
