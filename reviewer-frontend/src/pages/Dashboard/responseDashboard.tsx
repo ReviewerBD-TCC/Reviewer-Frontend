@@ -11,8 +11,7 @@ import { useQuery } from "react-query";
 import { Header, Question } from "components";
 import React, { useEffect, useState } from "react";
 import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
-
-import Graphic from "components/BarChart/Chart";
+import Graphic from "components/Chart/Chart";
 
 function ResponseDashboard() {
   // const { accessToken } = useAuth();
@@ -30,13 +29,21 @@ function ResponseDashboard() {
     return AnswerPerQuestionService.getAnswerPerForm(1);
   });
 
-  // deve conter a taxa de aderencia para aquele usuário
-  const chartData = [
-    { label: '', data: [] },
-    { label: '', data: [] },
-  ];
+  const chartData:any [] = []
 
   useEffect(() => {
+    if (responseAnswerList) {
+     const quantityResp = responseAnswerList.filter((answer: AnswerPerQuestionInterface) =>
+      answer.quantityFormSent >= 0)
+
+      const quantityAnsweredForm = responseAnswerList.filter((answer: AnswerPerQuestionInterface) => 
+      answer.quantityAnsweredForm >= 0)
+      
+      chartData.push(quantityResp, quantityAnsweredForm)
+    }
+    else{
+      console.log("Errrrrrrou")
+    }
   }, [questions]);
 
   return (
@@ -60,7 +67,7 @@ function ResponseDashboard() {
             </p>
           </div>
 
-          <div className="w-auto h-44 self-start flex flex-col items-center gap-1">
+          <div className="w-auto h-auto max-h-44 self-start flex flex-col items-center justify-center gap-1 p-1">
             <p className="font-bold text-lg">Taxa de adesão</p>
             <Graphic data={chartData}/>
           </div>
