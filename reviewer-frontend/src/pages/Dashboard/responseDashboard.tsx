@@ -12,7 +12,6 @@ import { useQuery } from "react-query";
 import { Header } from "components";
 
 function ResponseDashboard() {
-  // const { accessToken } = useAuth();
   const { dashboard } = useAuth();
   const { instance } = useMsal();
   const account = instance.getActiveAccount();
