@@ -11,6 +11,7 @@ import { PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { Confirmation } from "pages/Confirmation/Confirmation";
 import { SingleForm } from "pages/SingleForm/SingleForm";
+import ResponseDashboard from "pages/Dashboard/responseDashboard";
 import Dashboard from "pages/Dashboard/Dashboard";
 
 export const route = createBrowserRouter([
@@ -80,10 +81,20 @@ export const route = createBrowserRouter([
     )
   },
   {
+
+    path: "/dashboard/response-dashboard",
+    element: (
+      <PrivateRoute>
+        <ResponseDashboard/>
+      </PrivateRoute>
+      )
+     },
+  {
     path: "/dashboard",
     element: (
       <PrivateRoute>
         <Dashboard/>
+
       </PrivateRoute>
     )
   },
