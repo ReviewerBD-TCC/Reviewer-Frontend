@@ -1,12 +1,25 @@
-import { Header } from "../../components/index";
+import { useState } from 'react'
+import { Card, Header } from '../../components/index'
+import { AnswerPerQuestionService } from 'services/AnswerPerQuestionService';
+import { useQuery } from 'react-query';
+import { useAuth } from 'context/AuthProvider';
 import { useMsal } from "@azure/msal-react";
 import adminHomepage from "./AdminHomepage";
 import userBdHomepage from "./UserBdHomepage";
 
 export const Homepage = () => {
-  const { instance } = useMsal();
 
-  const account = instance.getActiveAccount();
+    const { data: responseAnswerList = [] } = useQuery("answer", () => {
+      return AnswerPerQuestionService.getAnswerPerForm(1);
+    });
+
+    const { setDashboard } = useAuth();
+
+    setDashboard(responseAnswerList); 
+
+    const { instance } = useMsal();
+ 
+    const account = instance.getActiveAccount();
 
   return (
     <div
