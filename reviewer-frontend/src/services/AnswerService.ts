@@ -20,18 +20,7 @@ catch(error){
 }
 }
 
-const getAnswersFormPending = async (userId: string) => {
-  try {
-    const response = await api.get(`/answer_form/pending/${userId}`,)
-    return response.data
-}
-catch(error){
-    console.error(error)
-}
-}
-
 export const AnswerService = {
   postFormAnswers,
   getAnswerByUserId,
-  getAnswersFormPending
 };
