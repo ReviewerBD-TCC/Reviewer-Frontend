@@ -103,6 +103,7 @@ function Dashboard() {
                   <div className="flex flex-col gap-2">
                     {usersFormListFiltered.map((e, index) => (
                       <DashboardCardForm
+                        linkNav={`dashboard/response-dashboard/${e.id}/${e.whichUserName}`}
                         titleForm={e.whichUserName}
                         key={index}
                         className="hover:bg-boschGray/25 cursor-pointer"
