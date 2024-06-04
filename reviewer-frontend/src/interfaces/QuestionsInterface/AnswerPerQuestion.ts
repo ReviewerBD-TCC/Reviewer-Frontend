@@ -5,6 +5,7 @@ export interface AnswerPerQuestionInterface{
     question: QuestionProps;
     questionPt: string;
     answer: string;
+    whichUserName: string;
     whoAnsweredName: string;
     quantityAnsweredForm: number,
     quantityFormSent: number,
