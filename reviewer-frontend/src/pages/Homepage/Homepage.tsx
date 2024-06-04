@@ -8,13 +8,17 @@ export const Homepage = () => {
 
   const account = instance.getActiveAccount();
 
+  console.log(account?.localAccountId)
+
+  console.log(account?.idToken)
+
   return (
     <div
       className={`bg-[#fff] w-full h-screen flex justify-center items-center flex-col`}
     >
       <Header />
       <div className="bg-boschWhite h-screen w-full flex items-center justify-center flex-col">
-          {account?.idTokenClaims?.roles?.includes("admin")
+          {account?.idTokenClaims?.roles?.includes("User.Read")
             ? adminHomepage()
             : userBdHomepage()}
       </div>
