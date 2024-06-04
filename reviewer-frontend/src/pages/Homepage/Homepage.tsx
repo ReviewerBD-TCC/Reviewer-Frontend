@@ -27,7 +27,7 @@ export const Homepage = () => {
     >
       <Header />
       <div className="bg-boschWhite h-screen w-full flex items-center justify-center flex-col">
-          {account?.idTokenClaims?.roles?.includes("User.Read")
+          {account?.idTokenClaims?.roles?.includes("User.Reada")
             ? adminHomepage()
             : userBdHomepage()}
       </div>
