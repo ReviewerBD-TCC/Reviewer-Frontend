@@ -2,7 +2,6 @@ import { AnswerPerQuestionInterface } from "interfaces/QuestionsInterface/Answer
 import { SparkAccordion, SparkActivityIndicator } from "@bosch-web-dds/spark-ui-react";
 import { AnswerPerQuestionService } from "services/AnswerPerQuestionService";
 import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
-import BackButton from "components/BackButton/BackButton";
 import { FormService } from "services/FormService";
 import { useAuth } from "context/AuthProvider";
 import Graphic from "components/Chart/Chart";
@@ -10,8 +9,11 @@ import { useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Header } from "components";
+import { useParams } from "react-router-dom";
 
 function ResponseDashboard() {
+  const { userId, formId } = useParams();
+  console.log(userId, formId)
   const { dashboard } = useAuth();
   const { instance } = useMsal();
   const account = instance.getActiveAccount();
@@ -27,7 +29,7 @@ function ResponseDashboard() {
   );
 
   const { data: responseAnswerList = [] } = useQuery("answer", () => {
-    return AnswerPerQuestionService.getAnswerPerForm(1, id);
+    return AnswerPerQuestionService.getAnswerPerForm(formId, userId);
   });
 
   const chartData: any[] = [];
@@ -54,10 +56,6 @@ function ResponseDashboard() {
           const quantityFormSent = object.quantityFormSent;
 
           chartData.push(quantityFormSent * 20, quantityAnsweredForm * 20)
-
-          console.log("char", chartData);
-          console.log(quantityAnsweredForm);
-          console.log(quantityFormSent);
         }
         return chartData
       }
@@ -66,8 +64,6 @@ function ResponseDashboard() {
     }
     return chartData
   };
-
-  console.log('teste do chart',chartData)
 
   useEffect(() => {
     graphResponse(1);
@@ -84,9 +80,6 @@ function ResponseDashboard() {
       <Header />
       <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center pt-7">
         <div className=" w-[90%] h-auto flex flex-col justify-center items-center gap-6 pt-7 pb-7">
-          <div className="w-full justify-start items-start">
-            <BackButton navigateTo="/"/>
-          </div>
           <div className="w-full h-auto flex flex-col gap-2">
             <h1 className="font-bold text-3xl">
               Formulário de responsabilidade social
