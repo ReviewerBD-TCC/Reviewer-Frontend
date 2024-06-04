@@ -6,13 +6,13 @@ import { useState } from "react";
 import { AnswerService } from "services/AnswerService";
 import { useMsal } from "@azure/msal-react";
 import { IndicationService } from "services/IndicationService";
+import { useParams } from "react-router-dom";
 
 const userBdHomepage = () => {
 
     const { instance } = useMsal()
 
     const account = instance.getActiveAccount();
-    console.log(account?.localAccountId)
 
     const [formList, setFormList] = useState<FormInterface[]>([])
 
@@ -24,15 +24,16 @@ const userBdHomepage = () => {
 
     const getAnswersByUserId = async () => {
         const data = await AnswerService.getAnswerByUserId(userId)
-        setFormList(data)
+        if(data) setFormList(data)
     }
     
     const getAnswersFormPending = async () => {
       const data = await IndicationService.getIndicationFormPending(userId)
-      setPendingForms(data)
-      console.log(pendingForms)
+      if(data) setPendingForms(data)
+     
     }
 
+    const {formId} = useParams()
 
     return (
     <div className="bg-[#fff] w-[90%] h-full flex flex-col items-center pt-14 gap-2">
@@ -48,24 +49,35 @@ const userBdHomepage = () => {
             }}
             />         
         </div>
+        
         <div className="flex flex-col gap-2 w-full">
           {
             tabValue == "1" ? (
               pendingForms.map((item, index)=>( 
-                <DashboardCardForm 
-                  key={index}
-                  id={item.id}
-                  titleForm={item.title}
-                  onClick={()=>{}}
-                />
+                <div className="">
+                  <DashboardCardForm 
+                    key={index}
+                    id={item.id}
+                    titleForm={item.title}
+                    subTitle={item.user.name}
+                    onClick={()=>{}}
+                    className="hover:bg-boschGray/25 cursor-pointer"
+                  />
+                  
+                </div>
                 ))
           ) : 
       
               [...new Map(formList.map(item => [item.whichUserName, item])).values()]
               .map((i: FormInterface, index: number) => (
-                  <DashboardCardForm key={i.id} id={i.id} titleForm={i.whichUserName} />
+                  <DashboardCardForm className="k" key={i.id} id={i.id} titleForm={i.whichUserName} linkNav={`/form/${i.id}`} />
               ))
           }
+          {(pendingForms.length == 0) && tabValue == "1" || (formList.length == 0) && tabValue == "2"? (
+            <div className="h-auto w-full justify-center flex items-center mt-40">
+              <p className="text-2xl text-bold text-boschBlue">Ops... Parece que não há formulários.</p>
+            </div>
+          ): null}
         </div>
 
     </div>
