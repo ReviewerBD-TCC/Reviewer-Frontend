@@ -59,7 +59,7 @@ function Dashboard() {
                     }
                     { tabValue == "1"  ?
                       responseFormList.map((i: FormInterface, index: number) =>(
-                          <DashboardCardForm key={index} id={i.id} titleForm={i.title} className="hover:bg-boschGray/25 cursor-pointer" onClick={()=>getUsersByForm(i.id)}/>
+                          <DashboardCardForm key={index} id={i.id} titleForm={i.title} className="hover:bg-boschGray/25 cursor-pointer" onClick={()=>getUsersByForm(i.id)} linkNav={`form/${i.id}`} />
                         )
                       ):
                         <div className='flex-col w-full flex gap-10 items-start'>
