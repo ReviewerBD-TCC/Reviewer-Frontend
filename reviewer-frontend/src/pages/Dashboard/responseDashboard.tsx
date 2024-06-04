@@ -17,6 +17,8 @@ function ResponseDashboard() {
   const account = instance.getActiveAccount();
   const [questions, setQuestions] = useState<number>(1);
   
+  const [userName, setUserName] = useState('');
+
   const { data: responseFormQuestionList = [], isLoading } = useQuery(
     "form",
     () => {
@@ -71,8 +73,11 @@ function ResponseDashboard() {
     graphResponse(1);
     console.log('estou ',responseAnswerList)
     console.log("useEffect ", dashboard);
-  }, [questions, chartData]);
 
+    if (responseAnswerList.length > 0) {
+      setUserName(responseAnswerList[0].whichUserName);
+    }
+  }, [questions, chartData]);
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -89,7 +94,7 @@ function ResponseDashboard() {
             <p>
               Estes são feedbacks referentes a:
               <span className="font-extrabold text-boschBlue pl-1">
-                {responseAnswerList[0].whichUserName}
+                {userName}
               </span>
               .
             </p>
@@ -113,11 +118,9 @@ function ResponseDashboard() {
                     key={i}
                     onClick={() => {
                       setQuestions(element.id);
-                      // setOpenAccordionId(openAccordionId === element.id ? null : element.id);
                     }}
                     headline={element.questionPt}
                     size="normal"
-                    // open={openAccordionId === element.id}
                   >
                     {responseAnswerList
                       .filter(
