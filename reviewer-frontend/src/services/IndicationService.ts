@@ -21,7 +21,18 @@ const getUsers = async () => {
     }
 }
 
+const getIndicationFormPending = async (userId: string) => {
+    try {
+      const response = await api.get(`/indication_form/pending/${userId}`,)
+      return response.data
+  }
+  catch(error){
+      console.error(error)
+  }
+  }
+
 export const IndicationService = {
     createIndication,
-    getUsers
+    getUsers,
+    getIndicationFormPending
 }
