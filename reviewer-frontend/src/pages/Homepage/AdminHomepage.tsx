@@ -4,7 +4,7 @@ import { Card } from "components";
 const adminHomepage = () => {
 
   const cardList = getCardList()
-
+  
     return (
       <div className="bg-[#fff] w-[90%] h-full flex flex-col items-center justify-center">
 
