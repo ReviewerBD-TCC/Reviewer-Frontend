@@ -2,9 +2,8 @@ import { SparkTabNavigation } from "@bosch-web-dds/spark-ui-react";
 import { SparkTabNavigationItem } from "@bosch-web-dds/spark-ui/dist/types/components";
 import DashboardCardForm from "components/DashboardCardForm/DashboardCardForm";
 import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnswerService } from "services/AnswerService";
-import { FormService } from "services/FormService";
 import { useMsal } from "@azure/msal-react";
 import { IndicationService } from "services/IndicationService";
 
