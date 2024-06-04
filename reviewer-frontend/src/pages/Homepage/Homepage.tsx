@@ -8,10 +8,6 @@ export const Homepage = () => {
 
   const account = instance.getActiveAccount();
 
-  console.log(account?.localAccountId)
-
-  console.log(account?.idToken)
-
   return (
     <div
       className={`bg-[#fff] w-full h-screen flex justify-center items-center flex-col`}
