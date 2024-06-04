@@ -4,61 +4,37 @@ import BackButton from 'components/BackButton/BackButton'
 import DashboardCardForm from 'components/DashboardCardForm/DashboardCardForm';
 import { useQuery } from "react-query";
 import { FormService } from "services/FormService";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
-import { useAuth } from 'context/AuthProvider'
 import { SparkActivityIndicator } from '@bosch-web-dds/spark-ui-react'
 import {  SparkTabNavigationItem } from '@bosch-web-dds/spark-ui/dist/types/components/spark-tab-navigation/spark-tab-navigation';
 
 function Dashboard() {
 
-  const [formData, setFormData] = useState<FormInterface>();
   const [usersFormList, setUsersFormList] = useState<FormInterface[]>([])
-  const { accessToken, user, convertToDate } = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const forms = await FormService.getAllForms(accessToken);
-        const currentYear = new Date().getFullYear();
-              const currentFormFiltered = forms.find(
-                (form: FormInterface) =>
-                  convertToDate(form.year)?.getFullYear() === currentYear
-              );
-      
-              setFormData(currentFormFiltered || null);
-      
-      } catch (error) {
-        console.error("Erro ao carregar formulários: ", error);
-      }
-    };
-
-    fetchData();
-  }, [accessToken]);
-
+  const usersFormListFiltered = []
 
   const { data: responseFormList = [], isLoading} = useQuery("forms", () => {
-    return FormService.getAllForms(accessToken);
+    return FormService.getAllForms();
   });
   
-  const getUsers = async ()=>{
-    const data = await FormService.getUsersByForms(accessToken, user.id, formData?.id)
+  const getUsersByForm = async (formId: number)=>{
+    const data = await FormService.getUsersByForms(formId)
     setUsersFormList(data)
     console.log(usersFormList)
   }
 
-  const usersFormListFiltered = []
-
   const seenNames = new Set();
 
   for (const user of usersFormList) {
-    if (!seenNames.has(user.whoAnsweredName)) {
+    if (!seenNames.has(user.whichUserName)) {
       usersFormListFiltered.push(user);
-      seenNames.add(user.whoAnsweredName);
+      seenNames.add(user.whichUserName);
     }
   }
 
-  console.log(usersFormListFiltered)
+  console.log(usersFormList)
 
   const [tabValue, setTabValue] = useState("1")
   
@@ -74,8 +50,8 @@ function Dashboard() {
                     <h1 className="font-bold text-3xl text-start w-full">Dashboard</h1>
                   </div>
                   <div className='flex w-[95%]'>
-                    <SparkTabNavigation items={[{value:"1", label:"Formulários"}, {value:"2", label:"Colaborador"}]} whenChange={(value:Event, data: SparkTabNavigationItem)=>{setTabValue(data.value)
-                    getUsers()}}/>
+                    <SparkTabNavigation items={[{value:"1", label:"Formulários"}, {value:"2", label:"Colaborador", disabled: usersFormList.length > 0?false:true}]}  whenChange={(value:Event, data: SparkTabNavigationItem)=>{setTabValue(data.value)
+                    }}/>
                   </div>
                   <div className="h-auto flex flex-col gap-4 w-[95%]">
                     {
@@ -83,19 +59,25 @@ function Dashboard() {
                     }
                     { tabValue == "1"  ?
                       responseFormList.map((i: FormInterface, index: number) =>(
-                          <DashboardCardForm key={index} id={i.id} titleForm={i.title} className="hover:bg-boschGray/25 cursor-pointer" onClick={()=>setFormData(i)}/>
+                          <DashboardCardForm key={index} id={i.id} titleForm={i.title} className="hover:bg-boschGray/25 cursor-pointer" onClick={()=>getUsersByForm(i.id)}/>
                         )
-                      ): 
+                      ):
                         <div className='flex-col w-full flex gap-10 items-start'>
                             <SparkTextfield type='search' placeholder='Nome do colaborador'/>
                         <div className='flex-col w-full h-auto'>
-                        {usersFormListFiltered.map((e, index) => (
+                        <div className='flex flex-col gap-2'>
+
+                        {
+                         usersFormListFiltered.map((e, index) => (
                           <DashboardCardForm 
-                            titleForm={e.whoAnsweredName}
-                            key={index} 
+                            titleForm={e.whichUserName}
+                            key={index}
                             className="hover:bg-boschGray/25 cursor-pointer"
+                            id={e.id}
                           />
+                        
                         ))}
+                        </div>
                         </div>
                         </div>
                     }
