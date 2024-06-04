@@ -62,13 +62,9 @@ const getFormIndicated = async (id:string) => {
     }
 }
 
-const getUsersByForms = async (token: string | null, userId: number, formId: number) =>{
+const getUsersByForms = async (  formId: number) =>{
     try {
-        const response = await api.get(`/answer_form/user/${userId}?formId=${formId}`,{
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        })
+        const response = await api.get(`/answer_form/${formId}`)
         return response.data
     }
     catch(error){

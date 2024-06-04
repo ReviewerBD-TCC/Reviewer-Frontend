@@ -41,17 +41,21 @@ const FormComponent = () => {
     const fetchData = async () => {
       try {
 
-        const forms = await FormService.getFormIndicated(account?.homeAccountId);
+        const forms = await FormService.getFormIndicated(account?.localAccountId);
         const currentYear = new Date().getFullYear();
         const currentFormFiltered = forms.find(
           (form: FormInterface) =>
             convertToDate(form.year)?.getFullYear() === currentYear
         );
         setFormData(currentFormFiltered || null);
+        console.log(currentFormFiltered)
       } catch (error) {
         console.error("Erro ao carregar formulários: ", error);
       }
     };
+
+    console.log(account?.localAccountId)
+
 
     fetchData();
   }, []);
@@ -88,7 +92,8 @@ const FormComponent = () => {
 
     const answerForm: Form = {
       questionFormId: formData.id,
-      userId: account?.homeAccountId,
+      whoAnsweredId: account?.localAccountId,
+      forWhichUser: formData.user.id,
       questionAnswer: questionAnswer,
     };
 
@@ -113,6 +118,8 @@ const FormComponent = () => {
   const handleLanguageChange = (value: string) => {
     setLanguageSelect(value);
   };
+
+  console.log(formData.id)
 
   return (
     <div className="h-auto min-h-screen w-full flex flex-col items-center">

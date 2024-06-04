@@ -13,7 +13,8 @@ export const headers = {
 };
  
 //URL em que fazemos as requisições da API
-export const API_URL = "http://10.234.81.220:8056/api/v1/"
+// export const API_URL = "http://10.234.81.220:8056/api/v1/"
+export const API_URL = "http://10.234.88.116:8056/api/v1/"
  
 
  
@@ -29,7 +30,7 @@ async function acquireToken(
   try {
     const tokenResponse: AuthenticationResult = await msalInstance.acquireTokenSilent(loginRequest);
     const token = tokenResponse.idToken;
-    
+
     config.headers.Authorization = `Bearer ${token}`
    
     return config;
