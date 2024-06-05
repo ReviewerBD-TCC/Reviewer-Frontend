@@ -1,7 +1,10 @@
 import { MsalProvider } from "@azure/msal-react";
 import { msalInstance } from "../src/authSSO/msalInstance";
 // import { AuthProvider } from "context/AuthProvider";
-import { QueryClient, QueryClientProvider } from "react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 import AppRoutes from "routes";
 import { AuthProvider } from "context/AuthProvider";
 
