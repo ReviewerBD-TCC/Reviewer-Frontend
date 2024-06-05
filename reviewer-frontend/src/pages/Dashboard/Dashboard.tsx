@@ -1,5 +1,6 @@
 import { SparkTabNavigationItem } from "@bosch-web-dds/spark-ui/dist/types/components/spark-tab-navigation/spark-tab-navigation";
 import {
+  SparkSearchBar,
   SparkTabNavigation,
   SparkTextfield,
 } from "@bosch-web-dds/spark-ui-react";
@@ -9,27 +10,24 @@ import { FormInterface } from "interfaces/FormInterfaces/CreateForm";
 import { SparkActivityIndicator } from "@bosch-web-dds/spark-ui-react";
 import { Header } from "components";
 import BackButton from "components/BackButton/BackButton";
-import { useQuery } from "react-query";
 import { FormService } from "services/FormService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import {
+  useQuery,
+} from '@tanstack/react-query'
 
 function Dashboard() {
-  const { data: responseAnswerList = [] } = useQuery("answer", () => {
-    return AnswerPerQuestionService.getAnswerPerForm(1);
-  });
-
-  const { setDashboard } = useAuth();
-
-  setDashboard(responseAnswerList); 
-
+  const [search, setSearch] = useState("");
   const [usersFormList, setUsersFormList] = useState<FormInterface[]>([]);
-
+  const [formData, setformData] = useState<number>()
   const usersFormListFiltered = [];
+  const navigate = useNavigate()
 
-  const { data: responseFormList = [], isLoading } = useQuery("forms", () => {
-    return FormService.getAllForms();
-  });
+  const { data: responseFormList = [] } = useQuery({
+    queryKey: ['forms'],
+    queryFn: () => FormService.getAllForms()})
 
   const getUsersByForm = async (formId: number) => {
     const data = await FormService.getUsersByForms(formId);
@@ -37,8 +35,6 @@ function Dashboard() {
     if(tabValue == "1"){
       setTabValue("2")
     }
-    
-    console.log(usersFormList);
   };
 
   const seenNames = new Set();
@@ -50,9 +46,21 @@ function Dashboard() {
     }
   }
 
-  console.log(usersFormList);
-
   const [tabValue, setTabValue] = useState("1");
+
+  const { isLoading ,data: responseAnswerList = [] } = useQuery({
+    queryKey: ['answer'],
+    queryFn: () => AnswerPerQuestionService.getAnswerByFormId(formData)})
+
+  const { setDashboard } = useAuth();
+ 
+  const filteredUsers = usersFormListFiltered.filter((user: FormInterface) =>
+      user.whichUserName.toLowerCase().includes(search.toLowerCase())
+  );
+  
+  useEffect(() => {
+    setDashboard(responseAnswerList);
+  }, [responseAnswerList])
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center">
@@ -90,24 +98,27 @@ function Dashboard() {
                   id={i.id}
                   titleForm={i.title}
                   className="hover:bg-boschGray/25 cursor-pointer"
-                  onClick={() => getUsersByForm(i.id)}
+                  onClick={() => {
+                    setformData(i.id);
+                    getUsersByForm(i.id)}}
                 />
               ))
             ) : (
               <div className="flex-col w-full flex gap-10 items-start">
-                <SparkTextfield
-                  type="search"
-                  placeholder="Nome do colaborador"
+                <SparkSearchBar
+                  inputs='{"placeholder":"Pesquise sua indicação"}'
+                  button-label="Search"
+                  whenSearch={(value: any) => setSearch(value)}
                 />
                 <div className="flex-col w-full h-auto">
                   <div className="flex flex-col gap-2">
-                    {usersFormListFiltered.map((e, index) => (
+                    {filteredUsers?.map((e, index) => (
                       <DashboardCardForm
-                        linkNav={`dashboard/response-dashboard/${e.id}/${e.whichUserName}`}
+                        onClick={()=> navigate(`response-dashboard/${e.questionFormId}/${e.forWhichUser}`)}
                         titleForm={e.whichUserName}
                         key={index}
-                        className="hover:bg-boschGray/25 cursor-pointer"
-                        id={e.id}
+                        className="hover:bg-boschGray/25 cursor-pointer duration-1000 ease-in"
+                        id={e.forWhichUser}
                       />
                     ))}
                   </div>

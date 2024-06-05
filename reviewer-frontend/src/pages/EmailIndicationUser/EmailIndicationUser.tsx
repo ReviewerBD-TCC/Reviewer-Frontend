@@ -12,7 +12,6 @@ import BackButton from 'components/BackButton/BackButton';
 
 export default function EmailIndicationUser() {
   const yearOptions:number[] = []
-  const responseTime = ["15 dias", "20 dias", "30 dias"]
   const [year, setYear] = useState<number>()
   const [responseTimeSelect, setResponseTimeSelect] = useState<string>()
 
@@ -48,16 +47,12 @@ export default function EmailIndicationUser() {
     setYear(value);
   };
 
-  const handleResponseTimeChange = (value: string) => {
-    setResponseTimeSelect(value);
-  };
-
   return (
     <div className='h-auto min-h-screen w-full flex flex-col items-center'>
       <Header />
       <div className="bg-boschWhite h-auto w-full flex justify-center items-center">
         <div className='h-auto w-[90%] flex items-center justify-center pt-10 pb-10'>
-          <form className="w-full pl-7 pt-7 h-auto flex flex-col justify-center gap-10">
+          <form className="w-full pt-7 h-auto flex flex-col justify-center gap-10">
             <div>
               <BackButton navigateTo='/'/>
             </div>
@@ -78,15 +73,7 @@ export default function EmailIndicationUser() {
                   })}
                 />
               </div>
-              <div className='w-[35%] lg:w-[45%] cursor-pointer'>
-                <Selected
-                  labelText='Tempo de resposta' 
-                  options={responseTime}
-                  zIndex={50}
-                  selectedValue={responseTimeSelect}
-                  setSelectedValue={handleResponseTimeChange}
-                />
-              </div>
+
 
             </div>
             <SparkTextfield placeholder='Assunto do e-mail' {...register("subject")} />

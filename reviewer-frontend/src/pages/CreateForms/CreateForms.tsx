@@ -1,21 +1,25 @@
-import { SparkButton, SparkNotification, SparkTextfield, SparkIcon } from "@bosch-web-dds/spark-ui-react";
-import { Header } from "../../components/Header/Header";
+import { 
+  SparkButton, 
+  SparkNotification, 
+  SparkTextfield, 
+  SparkIcon } from "@bosch-web-dds/spark-ui-react";
+import { QuestionProps } from "../../interfaces/QuestionsInterface/Question";
+import { FormInterface } from "../../interfaces/FormInterfaces/CreateForm";
+import { CreateFormResolver } from "../../validations/CreateFormResolver";
+import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
+import { QuestionService } from "../../services/QuestionService";
+import { generateDateWithYear } from "../../functions/GenerateDate";
 import { Selected } from "../../components/Select/Selected";
+import { FormService } from "../../services/FormService";
+import { Header } from "../../components/Header/Header";
+import BackButton from "components/BackButton/BackButton";
+import { ShowMessage } from "../../functions/ShowMessage";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider";
-import { FormInterface } from "../../interfaces/FormInterfaces/CreateForm";
-import { FormService } from "../../services/FormService";
 import { useForm } from "react-hook-form";
-import { CreateFormResolver } from "../../validations/CreateFormResolver";
-import { QuestionService } from "../../services/QuestionService";
-import { useQuery } from "react-query";
-import { QuestionProps } from "../../interfaces/QuestionsInterface/Question";
 import { useNavigate } from "react-router-dom";
-import { QuestionList } from "interfaces/QuestionsInterface/QuestionList";
-import BackButton from "components/BackButton/BackButton";
-import { ShowMessage } from "../../functions/ShowMessage";
-import { generateDateWithYear } from "../../functions/GenerateDate";
+import { useQuery } from '@tanstack/react-query'
 
 export function CreateForms() {
   const { convertToDate } = useAuth();
@@ -27,12 +31,13 @@ export function CreateForms() {
   const [valido, setValido] = useState<boolean>(false);
   const [formList, setFormList] = useState<FormInterface[]>([]);
   const [responseList, setResponseList] = useState<QuestionProps[]>([]);
-
   const navigate = useNavigate();
 
-  const { data: initialResponseList = [] } = useQuery("question", () => {
-    return QuestionService.getQuestions();
-  });
+  const { data: initialResponseList = [] } = useQuery({
+    queryKey: ['question'],
+    queryFn: () => QuestionService.getQuestions()
+    }
+  )
 
   useEffect(() => {
     setResponseList(initialResponseList);
@@ -157,7 +162,7 @@ export function CreateForms() {
     <div className="h-auto min-h-screen w-full flex flex-col items-center">
       <Header />
       <div className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
-        <form className="w-full pl-6 h-auto flex flex-col gap-9 pb-7 pt-10">
+        <form className="w-full h-auto flex flex-col gap-9 pb-7 pt-10">
           <div className="">
             <BackButton navigateTo="/" />
           </div>

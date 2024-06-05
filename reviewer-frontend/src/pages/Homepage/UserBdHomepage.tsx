@@ -8,23 +8,16 @@ import { useMsal } from "@azure/msal-react";
 import { IndicationService } from "services/IndicationService";
 
 const userBdHomepage = () => {
-
     const { instance } = useMsal()
-
     const account = instance.getActiveAccount();
-    console.log(account?.localAccountId)
-
     const [formList, setFormList] = useState<FormInterface[]>([])
-
     const [tabValue, setTabValue] = useState("1")
-
     const [pendingForms, setPendingForms] = useState <FormInterface[]>([])
-
     const userId = account?.localAccountId
 
     const getAnswersByUserId = async () => {
-        const data = await AnswerService.getAnswerByUserId(userId)
-        setFormList(data)
+      const data = await AnswerService.getAnswerByUserId(userId)
+      setFormList(data)
     }
     
     const getAnswersFormPending = async () => {
@@ -32,7 +25,6 @@ const userBdHomepage = () => {
       setPendingForms(data)
       console.log(pendingForms)
     }
-
 
     return (
     <div className="bg-[#fff] w-[90%] h-full flex flex-col items-center pt-14 gap-2">

@@ -6,29 +6,26 @@ import {
 import { QuestionService } from "services/QuestionService";
 import error404 from "../../assets/images/404.png";
 import useModal from "../../hooks/useModal";
-import { useQuery } from "react-query";
 import { Header, Modal } from "components";
 import { Input } from "components";
 import BackButton from "components/BackButton/BackButton";
 import { ModalProps } from "interfaces/ModalInterfaces/Modal";
+import { useQuery } from '@tanstack/react-query'
 
 function QuestionDb() {
   const { isOpen, toggle } = useModal();
 
-  const {
-    data: responseList = [],
-    isLoading,
-    error,
-  } = useQuery("questions", () => {
-  
-    return QuestionService.getQuestions();
-  });
+  const { error,isLoading, data: responseList = [] } = useQuery({
+    queryKey: ['questions'],
+    queryFn: () => QuestionService.getQuestions()
+    }
+  )
 
   return (
     <div className="h-auto min-h-screen w-full flex flex-col items-center">
       <Header />
       <div className="bg-boschWhite w-full h-auto flex items-center justify-center">
-        <div className="w-full h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7 pl-7">
+        <div className="w-full h-auto flex flex-col justify-center items-center gap-8 pt-7 pb-7">
           <div className="flex flex-col pt-7 pb-7 justify-center items-start gap-4 lg:w-[90%]">
             <div className="">
               <BackButton navigateTo="/" />
