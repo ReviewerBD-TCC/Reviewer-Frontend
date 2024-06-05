@@ -6,7 +6,10 @@ export interface FormInterface{
     id?: number;
     title: string;
     year: Date;
+    whichUserName: string;
     questions?: QuestionList[];
+    forWhichUser: number;
+    questionFormId: number;
 }
 
 export interface FormResponseInterface{
