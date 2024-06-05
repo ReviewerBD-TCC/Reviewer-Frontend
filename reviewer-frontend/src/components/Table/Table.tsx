@@ -6,7 +6,6 @@ import { useAuth } from "context/AuthProvider";
 import { useMsal } from "@azure/msal-react";
 
 export const TableUser: React.FC = () => {
-
   const [users, setUsers] = useState<User[]>([]);
   const { selectedUsers, selectUser } = useAuth();
   const [search, setSearch] = useState("");
@@ -57,13 +56,13 @@ export const TableUser: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="flex w-full max-w-full">
+      {/* <div className="flex w-full max-w-full"> */}
         <SparkSearchBar
           inputs='{"placeholder":"Pesquise sua indicação"}'
           button-label="Search"
           whenSearch={(value: any) => setSearch(value)}
         ></SparkSearchBar>
-      </div>
+      {/* </div> */}
       <div
         id="tableUser"
         className="w-auto h-40 max-h-62 bg-boschWhite overflow-y-auto p-1"
