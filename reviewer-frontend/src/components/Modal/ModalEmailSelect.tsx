@@ -48,7 +48,7 @@ const ModalEmailSelect: React.FC<EmailModal> = (props) => {
               className="flex bg-boschWhite 2xl:h-[70%] md:h-[90%] md:w-[50%] flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="border-b-black border-y-2 border-t-transparent  items-start p-1">
+              <div className="border-b-black border-y-[1px] border-t-transparent items-start p-3">
                 <p className="flexpl-3 font-bold">Disparo de indicações</p>
               </div>
               <div className="w-[95%] h-auto flex flex-col justify-center gap-14 m-auto">
