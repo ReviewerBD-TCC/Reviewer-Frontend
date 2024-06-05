@@ -11,7 +11,7 @@ import { PrivateRoute } from "components";
 import { AllForms } from "pages/AllForms/AllForms";
 import { Confirmation } from "pages/Confirmation/Confirmation";
 import { SingleForm } from "pages/SingleForm/SingleForm";
-import ResponseDashboard from "pages/Dashboard/responseDashboard";
+import ResponseDashboard from "pages/Dashboard/UserDashboard";
 import Dashboard from "pages/Dashboard/Dashboard";
 import { Notfound } from "pages/NotFound/Notfound";
 
