@@ -24,8 +24,8 @@ export const Login = () => {
         <img src={Supergraphic} alt="" />
         <img src={Logo} width={150} />
       </div>
-      <form className='w-[24rem] h-[30rem] bg-boschWhite flex flex-col justify-center items-center'>
-        <div className='w-[20rem]'>
+      <form className='w-[24rem] h-[20rem] p-7 gap-8 bg-boschWhite flex flex-col justify-center items-center'>
+        <div className='w-full h-fit'>
           <h2 className='font-bold text-3xl'>Login</h2>
         </div>
         <div className='flex w-full h-[25%] justify-center items-end'>
