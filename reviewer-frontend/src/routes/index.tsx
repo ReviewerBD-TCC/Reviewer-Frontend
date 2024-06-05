@@ -83,7 +83,7 @@ export const route = createBrowserRouter([
   },
   {
 
-    path: "/dashboard/response-dashboard",
+    path: "/dashboard/response-dashboard/:formId/:userId",
     element: (
       <PrivateRoute>
         <ResponseDashboard/>
@@ -95,7 +95,6 @@ export const route = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Dashboard/>
-
       </PrivateRoute>
     )
   },
