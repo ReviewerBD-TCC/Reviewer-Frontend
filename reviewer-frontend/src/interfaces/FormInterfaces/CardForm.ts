@@ -2,7 +2,8 @@ import { AllFormsInterface } from "./AllForms";
 
 export interface cardFormProps {
     titleForm: AllFormsInterface["title"];
-    id: number;
+    subTitle?: string;
+    id?: number;
     className: string,
     onClick?: () => void;
 }
