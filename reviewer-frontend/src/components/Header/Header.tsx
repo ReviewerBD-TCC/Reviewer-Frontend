@@ -5,9 +5,7 @@ import { SparkIcon } from "@bosch-web-dds/spark-ui-react";
 import { useMsal } from "@azure/msal-react";
 
 export function Header() {
-
   const { instance } = useMsal()
-
   const account = instance.getActiveAccount();
 
   function logout() {
