@@ -74,7 +74,7 @@ export const route = createBrowserRouter([
     )
   },
   {
-    path: "/form",
+    path: "/form/:formId/",
     element: (
       <PrivateRoute>
         <Form />
