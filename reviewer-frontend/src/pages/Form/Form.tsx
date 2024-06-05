@@ -125,7 +125,7 @@ const FormComponent = () => {
     <div className="h-auto min-h-screen w-full flex flex-col items-center">
       <Header />
       <form className="bg-boschWhite w-[90%] h-auto flex items-center justify-center">
-        <div className="w-full pl-7 h-auto flex flex-col gap-9 pb-7 pt-10">
+        <div className="w-full h-auto flex flex-col gap-9 pb-10 pt-10">
           <div className="w-full flex justify-between">
             <div className="w-4/5 h-auto">
               <h1 className="font-bold text-4xl">{formatTitle}</h1>
