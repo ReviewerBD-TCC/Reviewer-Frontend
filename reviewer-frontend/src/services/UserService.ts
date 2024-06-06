@@ -15,7 +15,6 @@ const getUsers = async () => {
   }
 }
 
-
 const userDetails = async () => {
   try {
     const response = await api.get('/users/me');
@@ -26,6 +25,15 @@ const userDetails = async () => {
   }
 }
 
+const saveUserLogged = async () => {
+  try {
+    const response = await api.post('/user')
+    return response.data
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const UserService = {
-  handleLogin, userDetails, getUsers, createClient
+  handleLogin, userDetails, getUsers, createClient, saveUserLogged
 };

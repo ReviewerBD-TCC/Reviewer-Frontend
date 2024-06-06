@@ -14,14 +14,13 @@ import { SingleForm } from "pages/SingleForm/SingleForm";
 import ResponseDashboard from "pages/Dashboard/UserDashboard";
 import Dashboard from "pages/Dashboard/Dashboard";
 import { Notfound } from "pages/NotFound/Notfound";
+import { NotfoundUser } from "pages/NotFound/NotFoundUser";
 
 export const route = createBrowserRouter([
   {
     path: "/login",
     element: (
-
       <Login />
-
     )
   },
   // {
@@ -121,6 +120,10 @@ export const route = createBrowserRouter([
   {
     path: '*',
     element: <Notfound/>
+  },
+  {
+    path: '/unauthorized',
+    element: <NotfoundUser/>
   }
 ]);
 
