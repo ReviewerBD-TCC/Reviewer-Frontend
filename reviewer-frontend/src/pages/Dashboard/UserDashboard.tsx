@@ -8,34 +8,33 @@ import { useAuth } from "context/AuthProvider";
 import Graphic from "components/Chart/Chart";
 import { useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from '@tanstack/react-query'
 import { Header } from "components";
+import { useParams } from "react-router-dom";
 
 function ResponseDashboard() {
+  const { userId, formId } = useParams()
   const { dashboard } = useAuth();
   const { instance } = useMsal();
   const account = instance.getActiveAccount();
   const [questions, setQuestions] = useState<number>(1);
-  
   const [userName, setUserName] = useState('');
 
-  const { data: responseFormQuestionList = [], isLoading } = useQuery(
-    "form",
-    () => {
-      return FormService.getFormQuestions(1);
+  const { data: responseFormQuestionList = [] } = useQuery({
+    queryKey: ['form'],
+    queryFn: () => FormService.getFormQuestions(parseInt(formId)
+      )
     }
-  );
+  )
 
-  const { data: responseAnswerList = [] } = useQuery("answer", () => {
-    return AnswerPerQuestionService.getAnswerPerForm(1, id);
-  });
+  const { isLoading, data: responseAnswerList = [] } = useQuery({
+    queryKey: ['answer'],
+    queryFn: () => AnswerPerQuestionService.getAnswerPerForm(parseInt(formId), userId)})
 
   const chartData: any[] = [];
 
   const graphResponse = (id: number) => {
     if (dashboard) {
-      console.log("dentro da função", dashboard[0]);
-
       const array = dashboard.find((subArray: any) => {
         let found = false;
         subArray.forEach((obj: any) => {
@@ -54,26 +53,17 @@ function ResponseDashboard() {
           const quantityFormSent = object.quantityFormSent;
 
           chartData.push(quantityFormSent * 20, quantityAnsweredForm * 20)
-
-          console.log("char", chartData);
-          console.log(quantityAnsweredForm);
-          console.log(quantityFormSent);
         }
         return chartData
       }
     } else {
-      console.log("erro");
+
     }
     return chartData
   };
 
-  console.log('teste do chart',chartData)
-
   useEffect(() => {
     graphResponse(1);
-    console.log('estou ',responseAnswerList)
-    console.log("useEffect ", dashboard);
-
     if (responseAnswerList.length > 0) {
       setUserName(responseAnswerList[0].whichUserName);
     }

@@ -19,7 +19,19 @@ const getAnswerPerForm = async (formId: number, user: string) => {
     }
 }
 
+const getAnswerByFormId = async (formId: number | string) => {
+    try {
+      const response = await api.get(`/answer_form/${formId}`,)
+      return response.data
+  }
+  catch(error){
+    console.error(error)
+  }
+}
+
+
 export const AnswerPerQuestionService = {
     getAnswerPerQuestion,
-    getAnswerPerForm
+    getAnswerPerForm,
+    getAnswerByFormId
 }

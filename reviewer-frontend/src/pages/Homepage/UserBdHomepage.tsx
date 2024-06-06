@@ -9,19 +9,12 @@ import { IndicationService } from "services/IndicationService";
 import { useNavigate } from "react-router-dom";
 
 const userBdHomepage = () => {
-  const { instance } = useMsal();
-
-  const navigate = useNavigate()
-
-  const account = instance.getActiveAccount();
-
-  const [formList, setFormList] = useState<FormInterface[]>([]);
-
-  const [tabValue, setTabValue] = useState("1");
-
-  const [pendingForms, setPendingForms] = useState<FormInterface[]>([]);
-
-  const userId = account?.localAccountId;
+    const { instance } = useMsal()
+    const account = instance.getActiveAccount();
+    const [formList, setFormList] = useState<FormInterface[]>([])
+    const [tabValue, setTabValue] = useState("1")
+    const [pendingForms, setPendingForms] = useState <FormInterface[]>([])
+    const userId = account?.localAccountId
 
   const getAnswersByUserId = async () => {
     const data = await AnswerService.getAnswerByUserId(userId);
@@ -32,7 +25,6 @@ const userBdHomepage = () => {
     const data = await IndicationService.getIndicationFormPending(userId);
     if (data) setPendingForms(data);
   };
-
 
   return (
     <div className="bg-[#fff] w-[90%] h-full flex flex-col items-center pt-14 gap-2">
