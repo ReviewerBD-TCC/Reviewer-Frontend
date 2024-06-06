@@ -75,7 +75,7 @@ function ResponseDashboard() {
       <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center pt-7">
         <div className=" w-[90%] h-auto flex flex-col justify-center items-center gap-6 pt-7 pb-7">
           <div className="w-full justify-start items-start">
-            <BackButton navigateTo="/"/>
+            <BackButton navigateTo="/dashboard"/>
           </div>
           <div className="w-full h-auto flex flex-col gap-2">
             <h1 className="font-bold text-3xl">
