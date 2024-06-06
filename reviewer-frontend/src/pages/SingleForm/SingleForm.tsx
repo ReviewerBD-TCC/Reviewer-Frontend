@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { QuestionService } from "services/QuestionService";
 import { ShowMessage } from "../../functions/ShowMessage";
 import { useQuery } from "@tanstack/react-query";
+import BackButton from "components/BackButton/BackButton";
 
 export const SingleForm = () => {
   const { convertToDate } = useAuth();
@@ -108,6 +109,9 @@ export const SingleForm = () => {
       <Header />
       <div className="bg-boschWhite w-full min-h-[90%] h-auto flex items-center justify-center">
         <div className="w-[90%] h-auto flex flex-col justify-center items-center gap-10 pt-10 pb-10">
+        <div className="w-full justify-start items-start">
+            <BackButton navigateTo="/all-forms"/>
+          </div>
           <div className="w-full h-12 flex flex-col justify-center">
             {form && (
               <>
