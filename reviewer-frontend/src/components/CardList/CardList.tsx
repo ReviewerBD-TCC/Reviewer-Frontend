@@ -11,7 +11,7 @@ export const getCardList = () => {
       ),
       backgroundColor: "bg-boschPurple",
       nav: "/questions",
-      description: "Aqui é onde você vê as perguntas que foram adicionadas ao banco",
+      description: "Visualize e gerencie as perguntas adicionadas ao banco de dados.",
       className: "",
     },
     {
@@ -23,7 +23,7 @@ export const getCardList = () => {
       ),
       backgroundColor: `bg-boschBlue`,
       nav: "/create-form",
-      description: "Aqui é onde você pode fazer o formulário anualmente",
+      description: "Crie formulários anuais com rapidez e facilidade. ",
       className: "",
     },
     {
@@ -36,7 +36,7 @@ export const getCardList = () => {
       backgroundColor: "bg-boschTurquoise",
       nav: "/send-indication",
       description:
-        "Aqui é onde você monta o corpo do email para enviar o formulário de indicação para os funcionários",
+        "Escreva o e-mail para encaminhar o formulário de indicação aos funcionários.",
       className: "",
     },
     {
@@ -48,7 +48,7 @@ export const getCardList = () => {
       ),
       backgroundColor: "bg-boschGreen",
       nav: "/dashboard",
-      description: "Aqui você visualiza todas as respostas dadas no feedback",
+      description: "Visualize as respostas dos formulários.",
       className: "",
     },
     {
@@ -61,7 +61,7 @@ export const getCardList = () => {
       backgroundColor: "bg-boschRed",
       nav: "/all-forms",
       description:
-        "Aqui você visualiza os formulários feitos e pode remove-los ou edita-los",
+        "Visualize, edite e remova os formulários criado.",
       className: "",
     },
   ]);
