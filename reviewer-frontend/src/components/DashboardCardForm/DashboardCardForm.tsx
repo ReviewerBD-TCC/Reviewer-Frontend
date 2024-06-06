@@ -1,4 +1,3 @@
-import React from 'react'
 import { cardFormProps } from 'interfaces/FormInterfaces/CardForm'
 
 const DashboardCardForm: React.FC<cardFormProps> = ({titleForm, id, className, onClick, subTitle}: cardFormProps) => {
@@ -18,5 +17,5 @@ const DashboardCardForm: React.FC<cardFormProps> = ({titleForm, id, className, o
     </div>
   )
 }
-
+ 
 export default DashboardCardForm

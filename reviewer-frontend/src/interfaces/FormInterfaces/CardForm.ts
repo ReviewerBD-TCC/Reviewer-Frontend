@@ -1,5 +1,5 @@
 import { AllFormsInterface } from "./AllForms";
-
+ 
 export interface cardFormProps {
     titleForm: AllFormsInterface["title"];
     subTitle?: string;
