@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 import { useMsal } from '@azure/msal-react';
 import { useEffect } from 'react';
+import { UserService } from '../../services/UserService'
 
 export const Login = () => {
   const { instance, accounts, inProgress } = useMsal();
@@ -14,11 +15,11 @@ export const Login = () => {
   useEffect(() => {
     if(accounts[0] && inProgress == "none") {
       navigate("/")
+      UserService.saveUserLogged()
     }
   }, [accounts, inProgress])
 
   return (
-
     <div className="w-full h-screen bg-login-background bg-no-repeat bg-center bg-cover flex justify-center flex-col items-center" >
       <div className='top-0 absolute'>
         <img src={Supergraphic} alt="" />
