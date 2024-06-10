@@ -14,7 +14,7 @@ export const headers = {
  
 //URL em que fazemos as requisições da API
 // export const API_URL = "http://10.234.81.220:8056/api/v1/"
-export const API_URL = "http://10.234.88.116:8056/api/v1/"
+export const API_URL = "http://10.234.89.243:8056/api/v1/"
  
 
  

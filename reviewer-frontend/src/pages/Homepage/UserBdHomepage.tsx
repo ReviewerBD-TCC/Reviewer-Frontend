@@ -7,8 +7,10 @@ import { AnswerService } from "services/AnswerService";
 import { useMsal } from "@azure/msal-react";
 import { IndicationService } from "services/IndicationService";
 import { useNavigate } from "react-router-dom";
+import { title } from "process";
 
 const userBdHomepage = () => {
+    const navigate = useNavigate()
     const { instance } = useMsal()
     const account = instance.getActiveAccount();
     const [formList, setFormList] = useState<FormInterface[]>([])
@@ -70,7 +72,8 @@ const userBdHomepage = () => {
                 className="k"
                 key={i.id}
                 id={i.id}
-                titleForm={i.whichUserName}
+                titleForm={i.questionFormTitle}
+                subTitle={i.whichUserName}
               />
             ))}
         {(pendingForms.length == 0 && tabValue == "1") ||
