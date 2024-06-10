@@ -10,7 +10,7 @@ const DashboardCardForm: React.FC<cardFormProps> = ({titleForm, id, className, o
         {
           subTitle ? (
           <h2>
-          <span>Indicado por:</span> <span className='text-boschBlue text-base font-bold'> {subTitle} </span>
+          <span>Referente a:</span> <span className='text-boschBlue text-base font-bold'> {subTitle} </span>
         </h2>) : <p></p>
         }
       </div>

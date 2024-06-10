@@ -4,7 +4,7 @@ import { QuestionList } from "../QuestionsInterface/QuestionList";
 
 export interface FormInterface{
     id?: number;
-    title: string;
+    questionFormTitle: string;
     year: Date;
     whichUserName: string;
     questions?: QuestionList[];
