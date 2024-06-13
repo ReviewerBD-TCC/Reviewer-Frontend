@@ -7,7 +7,6 @@ import { AnswerService } from "services/AnswerService";
 import { useMsal } from "@azure/msal-react";
 import { IndicationService } from "services/IndicationService";
 import { useNavigate } from "react-router-dom";
-import { title } from "process";
 
 const userBdHomepage = () => {
     const navigate = useNavigate()
@@ -58,7 +57,8 @@ const userBdHomepage = () => {
                   id={item.id}
                   titleForm={item.title}
                   subTitle={item.user.name}
-                  onClick={()=>navigate(`/form/${item.id}`)}
+                  onClick={()=>navigate(`/form/${item.id}/${item.user.id}`)}
+                  // onClick={()=>console.log(item)}
                   className="hover:bg-boschGray/25 cursor-pointer"
                 />
               </div>

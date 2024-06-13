@@ -5,7 +5,7 @@ import { AnswerService } from "../../services/AnswerService";
 import { useAuth } from "context/AuthProvider";
 import { useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { QuestionProps } from "interfaces/QuestionsInterface/Question";
 import { FormService } from "../../services/FormService";
 import { FormInterface, FormResponseInterface } from "interfaces/FormInterfaces/CreateForm";
@@ -21,6 +21,7 @@ const FormComponent = () => {
   const [languageSelect, setLanguageSelect] = useState("Português");
   const [formData, setFormData] = useState<FormResponseInterface>();
   const { instance } = useMsal()
+  const {userId} = useParams()
 
   const account = instance.getActiveAccount();
 
@@ -45,16 +46,19 @@ const FormComponent = () => {
         const currentYear = new Date().getFullYear();
         const currentFormFiltered = forms.find(
           (form: FormInterface) =>
-            convertToDate(form.year)?.getFullYear() === currentYear
+            form.user.id === userId
         );
         setFormData(currentFormFiltered || null);
         console.log(currentFormFiltered)
+        console.log(forms)
+
       } catch (error) {
         console.error("Erro ao carregar formulários: ", error);
       }
     };
 
     console.log(account?.localAccountId)
+9
 
 
     fetchData();
